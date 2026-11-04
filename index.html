@@ -1,0 +1,1582 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>[hidden]{display:none!important}body{margin:0}</style><title>Prime Time English</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.cn">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Fraunces:opsz,wght,SOFT@9..144,600..800,100&family=Yellowtail&family=Caveat:wght@500;700&family=Nunito:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;700&family=Noto+Serif+SC:wght@600;700&family=ZCOOL+KuaiLe&family=JetBrains+Mono:wght@700&display=swap" media="print" onload="this.media='all'">
+<style>
+/* Layout: a warm, dim sitcom coffee house after dark — brick wall + neon sign up top, a wooden counter as the channel bar, foam-colored menu cards on an espresso room lit by amber pendant lamps. One committed warm look in both host themes. */
+:root{
+  color-scheme: dark;
+  --bg:#21140E;
+  --paper:#F6EAD9;
+  --paper2:#EFDDC6;
+  --ink:#3A2318;
+  --muted:#8C6B55;
+  --line:#E2CBB0;
+  --navy:#5A3422;
+  --red:#B4472F;
+  --yellow:#E1A05A;
+  --teal:#6E8B5E;
+  --pink:#D58E7B;
+  --sky:#E9B872;
+  --orange:#C9772E;
+  --good:#5E8A4A;
+  --warn:#C98A1E;
+  --bad:#B43A2A;
+  --glow:#FFB65C;
+  --neon:#FF9A4A;
+  --chalkbg:#27332C;
+  --chalk:#F2EBDD;
+  --wood:#5A3824;
+  --wood2:#3F2618;
+  --cream:#F3E2C8;
+  --display:"Fraunces","Noto Serif SC","Songti SC",Georgia,serif;
+  --script:"Yellowtail","Brush Script MT",cursive;
+  --hand:"Caveat","ZCOOL KuaiLe","Kaiti SC",cursive;
+  --body:"Nunito","Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
+  --r:18px;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.65;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 18% 0%,rgba(255,170,80,.28),transparent 70%),
+    radial-gradient(ellipse 50% 35% at 82% 4%,rgba(255,150,70,.22),transparent 70%),
+    radial-gradient(ellipse 90% 60% at 50% 110%,rgba(120,60,25,.45),transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .8 0 0 0 0 .6 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:#3A1F14}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--glow);outline-offset:2px}
+a{color:var(--red)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* ---------- Masthead: brick wall + neon sign ---------- */
+.mast{position:relative;color:var(--cream);
+  background:
+    linear-gradient(180deg,rgba(33,20,14,.15),rgba(33,20,14,.75)),
+    repeating-linear-gradient(0deg,#4A2418 0 22px,#2B150D 22px 25px),
+    #4A2418;
+  overflow:hidden}
+.mast::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(90deg,transparent 0 58px,rgba(43,21,13,.95) 58px 61px);
+  -webkit-mask:repeating-linear-gradient(0deg,#000 0 25px,transparent 25px 50px);mask:repeating-linear-gradient(0deg,#000 0 25px,transparent 25px 50px)}
+.mast::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(90deg,transparent 0 29px,rgba(43,21,13,.95) 29px 32px,transparent 32px 61px);
+  -webkit-mask:repeating-linear-gradient(0deg,transparent 0 25px,#000 25px 50px);mask:repeating-linear-gradient(0deg,transparent 0 25px,#000 25px 50px)}
+.mast .wrap{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:22px 18px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo-mark{font-family:var(--script);font-size:44px;line-height:1;color:#FFE2B8;
+  text-shadow:0 0 4px #fff3,0 0 10px var(--neon),0 0 22px var(--neon),0 0 42px rgba(255,120,40,.7);animation:hum 6s infinite}
+.logo-mark span,.logo-mark em{font-style:normal;color:inherit}
+@keyframes hum{0%,100%{opacity:1}47%{opacity:1}48%{opacity:.72}49%{opacity:1}72%{opacity:.9}73%{opacity:1}}
+.onair{font-family:var(--body);font-size:12px;font-weight:800;letter-spacing:3px;color:#FFD1D1;padding:3px 10px;border:2px solid #FF6B6B;border-radius:8px;
+  box-shadow:0 0 8px #FF6B6B,inset 0 0 8px rgba(255,107,107,.5);text-shadow:0 0 6px #FF6B6B;display:inline-flex;gap:6px;align-items:center}
+.onair i{display:none}
+.sync{font-family:var(--hand);font-size:18px;color:#E9CBA7}
+
+/* ---------- Channel bar: wooden counter ---------- */
+.chbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;
+  background:
+    repeating-linear-gradient(90deg,rgba(0,0,0,.06) 0 3px,transparent 3px 11px,rgba(255,220,180,.04) 11px 13px,transparent 13px 29px),
+    linear-gradient(180deg,#6B4429,var(--wood) 45%,var(--wood2));
+  border-top:3px solid #8A5A36;box-shadow:0 8px 18px rgba(0,0,0,.45)}
+.chbar .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:9px;scrollbar-width:none}
+.chbar .wrap::-webkit-scrollbar{display:none}
+.ch{flex:0 0 auto;border:0;border-radius:999px;padding:7px 16px;background:transparent;color:#E8CFAF;display:flex;align-items:baseline;gap:8px;white-space:nowrap}
+.ch b{font-family:var(--hand);font-size:17px;font-weight:600;opacity:.75}
+.ch span{font-weight:800;font-size:15px}
+.ch:hover{background:rgba(255,220,180,.1);color:#FFF1DE}
+.ch[aria-selected="true"]{background:var(--cream);color:var(--ink);box-shadow:0 0 0 2px rgba(255,190,110,.35),0 0 18px rgba(255,170,80,.35)}
+.ch[aria-selected="true"] b{opacity:1;color:var(--red)}
+
+main{padding-block:28px 72px}
+.view{display:grid;gap:22px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.25}
+h2{font-family:var(--display);font-size:23px;font-weight:700;letter-spacing:.2px;color:var(--ink);font-variation-settings:"SOFT" 100}
+h3{font-family:var(--display);font-size:18px;font-weight:700}
+p{margin:0}
+.muted{color:var(--muted)}
+.eyebrow{font-family:var(--hand);font-size:19px;color:var(--red);line-height:1.1}
+
+.card{position:relative;background:var(--paper);border:1px solid #D8BE9D;border-radius:var(--r);padding:22px;min-width:0;
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 18px 40px -18px rgba(0,0,0,.65),0 0 0 1px rgba(0,0,0,.15)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:820px){.grid2,.grid3{grid-template-columns:minmax(0,1fr)}}
+
+.btn{border:0;background:var(--ink);color:var(--cream);border-radius:999px;padding:9px 18px;font-weight:800;
+  box-shadow:0 2px 0 rgba(0,0,0,.25),0 6px 14px -6px rgba(58,35,24,.6);transition:transform .1s, filter .1s}
+.btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;filter:none}
+.btn.red{background:var(--red);color:#FFF1E6}
+.btn.teal{background:var(--teal);color:#F7F5EA}
+.btn.pink{background:var(--yellow);color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px #C9A985}
+.btn.ghost:hover{background:var(--paper2)}
+.btn.sm{padding:5px 12px;font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.field{display:grid;gap:6px}
+.field label{font-weight:700;font-size:13px;color:var(--navy)}
+input[type=text],textarea,select{width:100%;border:1.5px solid #D2B693;border-radius:12px;padding:10px 13px;background:#FFF8EE;color:var(--ink)}
+input[type=text]::placeholder,textarea::placeholder{color:#B39780}
+textarea{min-height:96px;resize:vertical}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;border:1px solid #CDAE8A;background:#FFF6EA;color:var(--navy);white-space:nowrap}
+.note{font-size:13px;color:var(--muted)}
+.ai-out{border-top:1.5px dashed #D2B693;padding-top:14px;display:grid;gap:10px}
+.ai-out:empty{display:none}
+.err{color:var(--bad);font-weight:700}
+
+/* ---------- TODAY: chalkboard special ---------- */
+.hero{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center;color:var(--chalk);
+  background:
+    radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.07),transparent 60%),
+    radial-gradient(ellipse at 80% 90%,rgba(255,255,255,.05),transparent 55%),
+    var(--chalkbg);
+  border:12px solid #6B4429;border-image:linear-gradient(135deg,#8A5A36,#4A2C1A 50%,#7A4C2D) 1;border-radius:6px;
+  box-shadow:0 22px 44px -16px rgba(0,0,0,.8)}
+@media (max-width:720px){.hero{grid-template-columns:minmax(0,1fr)}}
+.marquee{position:relative;text-align:center;min-width:190px;padding:6px 20px 12px;border:2px dashed rgba(242,235,221,.35);border-radius:14px}
+.marquee .lbl{font-family:var(--hand);font-size:22px;color:#F7C98B;line-height:1.1}
+.marquee .num{font-family:var(--display);font-weight:800;font-size:76px;line-height:1;color:var(--chalk);font-variant-numeric:tabular-nums;text-shadow:0 0 1px rgba(255,255,255,.6)}
+.marquee .num small{font-size:26px;color:rgba(242,235,221,.55);font-weight:600}
+.hero h1{font-family:var(--hand);font-size:34px;font-weight:700;line-height:1.15;color:var(--chalk)}
+.hero .sub{color:rgba(242,235,221,.8);margin-top:6px}
+.hero .stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.hero .stat{border:1.5px solid rgba(242,235,221,.28);border-radius:999px;padding:4px 14px;font-size:13px;color:rgba(242,235,221,.85)}
+.hero .stat b{font-family:var(--display);font-size:17px;margin-right:4px;color:#F7C98B}
+
+.banner{border-radius:14px;padding:13px 18px;background:linear-gradient(90deg,#F3D2A2,#F6E2C2);color:var(--ink);font-weight:700;
+  box-shadow:0 0 0 1px #D9B381,0 10px 30px -10px rgba(255,170,80,.6)}
+.banner a{color:var(--red)}
+.steps{display:grid;gap:4px}
+.step{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 6px;border-bottom:1.5px dotted #CDAE8A;cursor:pointer;transition:background .15s}
+.step:last-child{border-bottom:0}
+.step:hover{background:rgba(225,160,90,.12);border-radius:10px}
+.step input{width:21px;height:21px;accent-color:var(--red);cursor:pointer}
+.step .t{font-family:var(--display);font-weight:700;font-size:16.5px}
+.step .d{font-size:13px;color:var(--muted)}
+.step .min{font-family:var(--hand);font-size:20px;font-weight:700;color:var(--red);white-space:nowrap}
+.step.done .t{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;color:var(--muted)}
+.step.core .t::after{content:"招牌";font-family:var(--body);font-size:11px;margin-left:8px;padding:1px 7px;border-radius:999px;background:var(--yellow);color:var(--ink);font-weight:800;vertical-align:3px}
+
+.cal{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px}
+.cal div{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;background:#EBD9C1;color:#A88A70;max-width:100%}
+.cal .ok{background:radial-gradient(circle at 50% 45%,#C9935C 0 38%,#6B3F22 40% 100%);color:#FFF4E6}
+.cal .part{background:#E8B77A;color:var(--ink)}
+.cal .miss{background:#F1CDBF;color:var(--bad)}
+.cal .now{box-shadow:0 0 0 2.5px var(--ink)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:4px;vertical-align:-2px}
+
+.score{font-family:var(--display);font-weight:800;font-size:44px;color:var(--red);line-height:1}
+.fix{display:grid;gap:2px;padding:10px 13px;border-left:4px solid var(--yellow);background:#FBEBD6;border-radius:0 12px 12px 0}
+.fix s{color:var(--bad)}
+.fix b{color:var(--good)}
+.fix span{font-size:13px;color:var(--muted)}
+
+/* ---------- SHOWS: menu board ---------- */
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1.5px solid #CDAE8A;background:#FFF6EA;color:var(--navy);border-radius:999px;padding:4px 14px;font-weight:700;font-size:13px}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--cream)}
+.shows{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}
+.show{display:flex;flex-direction:column;gap:10px;padding:0;overflow:hidden}
+.poster{height:124px;padding:14px 16px;display:flex;flex-direction:column;justify-content:space-between;color:#FFF3E2;position:relative;overflow:hidden}
+.poster::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 75% 0%,rgba(255,200,120,.45),transparent 60%);pointer-events:none}
+.poster::after{content:"";position:absolute;right:-26px;bottom:-26px;width:110px;height:110px;border-radius:50%;border:7px solid rgba(255,235,210,.14);pointer-events:none}
+.poster .ttl{font-family:var(--display);font-weight:800;font-size:23px;line-height:1.05;position:relative;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+.poster .yr{font-family:var(--hand);font-size:18px;opacity:.9;position:relative}
+.show .body{padding:2px 18px 18px;display:grid;gap:8px;flex:1}
+.show .meta{display:flex;gap:6px;flex-wrap:wrap}
+.lv1{background:#E3EBD3!important}.lv2{background:#F6E0B8!important}.lv3{background:#F2CDBF!important}
+.show .learn{font-size:14px}
+.show .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.show.picked{box-shadow:0 0 0 3px var(--yellow),0 0 30px rgba(255,170,80,.5),0 18px 40px -18px rgba(0,0,0,.65)}
+.linkbtn{font-size:13px;font-weight:700;border-radius:999px;padding:5px 12px;text-decoration:none;color:var(--ink);box-shadow:inset 0 0 0 1.5px #C9A985}
+.linkbtn:hover{background:var(--paper2)}
+
+/* ---------- WORDS: kraft cup sleeve ---------- */
+.deckbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.counts{display:flex;gap:8px;flex-wrap:wrap}
+.flash{min-height:236px;display:grid;place-items:center;text-align:center;border-radius:16px;padding:24px;gap:10px;color:var(--ink);
+  background:
+    repeating-linear-gradient(0deg,rgba(90,52,34,.05) 0 1px,transparent 1px 4px),
+    linear-gradient(160deg,#D6AE7E,#C39565);
+  box-shadow:inset 0 0 0 2px rgba(90,52,34,.25),inset 0 0 40px rgba(90,52,34,.25)}
+.flash .w{font-family:var(--display);font-weight:800;font-size:36px;line-height:1.1;color:#3A2318;word-break:break-word}
+.flash .ex{font-size:16px;color:#4E3020;max-width:52ch}
+.flash .mean{font-family:var(--hand);font-size:26px;font-weight:700;color:#7A2E1C}
+.flash .src{font-family:var(--hand);font-size:18px;color:#6B4429}
+.flash .btn{background:var(--ink)}
+.rate{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.wlist{display:grid;gap:8px;max-height:460px;overflow:auto;padding-right:4px}
+.witem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start;padding:10px 12px;border-radius:12px;background:#FFF7EC;box-shadow:inset 0 0 0 1px #E6D0B4}
+.witem .w{font-weight:800;font-family:var(--display)}
+.witem .x{font-size:13px;color:var(--muted);font-family:var(--body);font-weight:400}
+.witem .due{font-family:var(--hand);font-size:17px;color:var(--red);white-space:nowrap}
+.tag-ex{font-family:var(--body);font-size:10px;font-weight:800;background:#EBD9C1;color:var(--muted);padding:1px 6px;border-radius:5px;margin-left:6px;vertical-align:2px}
+.phr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px 12px;background:#FBEBD6;border-radius:12px}
+.phr b{color:var(--red)}
+.phr .x{font-size:13px;color:var(--muted)}
+
+/* ---------- TALK ---------- */
+.scenes{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.scene{border:0;border-radius:14px;padding:12px 14px;background:#FFF7EC;text-align:left;display:grid;gap:4px;box-shadow:inset 0 0 0 1.5px #E2CBB0;color:var(--ink);transition:box-shadow .15s}
+.scene:hover{box-shadow:inset 0 0 0 1.5px var(--yellow),0 6px 18px -8px rgba(225,160,90,.8)}
+.scene b{font-family:var(--display);font-size:16px}
+.scene span{font-size:12px;color:var(--muted);line-height:1.4}
+.scene[aria-pressed="true"]{background:var(--ink);color:var(--cream);box-shadow:0 0 22px -4px rgba(255,170,80,.7)}
+.scene[aria-pressed="true"] span{color:#E1C6A4}
+.chat{display:grid;gap:12px;min-height:280px;max-height:520px;overflow-y:auto;padding:18px;border-radius:14px;
+  background:linear-gradient(180deg,#F2E1CA,#EAD3B5);box-shadow:inset 0 2px 10px rgba(90,52,34,.18)}
+.msg{max-width:84%;display:grid;gap:6px}
+.msg .bub{padding:10px 15px;border-radius:18px;white-space:pre-wrap;word-break:break-word;box-shadow:0 3px 8px -4px rgba(58,35,24,.35)}
+.msg.ai{justify-self:start}
+.msg.ai .bub{background:#FFFBF4;border-bottom-left-radius:5px}
+.msg.me{justify-self:end}
+.msg.me .bub{background:#C8915A;color:#FFF7EC;border-bottom-right-radius:5px}
+.msg .who{font-family:var(--hand);font-size:16px;color:var(--muted);line-height:1}
+.msg.me .who{text-align:right}
+.coach{font-size:13px;background:#FFF2DF;border:1.5px dashed var(--yellow);border-radius:12px;padding:8px 11px;display:grid;gap:4px}
+.coach s{color:var(--bad)} .coach b{color:var(--good)}
+.composer{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end}
+.composer textarea{min-height:54px}
+.speak{border:0;background:transparent;font-size:12px;font-weight:800;color:var(--red);padding:0;text-decoration:underline;text-underline-offset:3px;justify-self:start}
+
+/* ---------- FUN: wood-cased retro TV ---------- */
+.tv{border-radius:30px;padding:20px;display:grid;gap:14px;
+  background:repeating-linear-gradient(100deg,rgba(0,0,0,.08) 0 4px,transparent 4px 14px),linear-gradient(160deg,#8A5A36,#5A3824 60%,#3F2618);
+  box-shadow:inset 0 2px 0 rgba(255,220,180,.25),0 22px 44px -16px rgba(0,0,0,.85)}
+.screen{position:relative;border-radius:22px / 26px;min-height:196px;color:#FFF0DC;display:grid;place-items:center;text-align:center;padding:24px;overflow:hidden;
+  background:radial-gradient(ellipse at center,#9B5A2E 0%,#4A2616 70%,#2A150C 100%);box-shadow:inset 0 0 40px rgba(0,0,0,.7),0 0 0 6px #2A170E}
+.screen::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,220,180,.06) 0 2px,transparent 2px 4px);pointer-events:none}
+.screen.static{background:#6E5E52}
+.screen.static::before{content:"";position:absolute;inset:-50%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:noise .2s steps(3) infinite;opacity:.8}
+@keyframes noise{0%{transform:translate(0,0)}33%{transform:translate(-12%,8%)}66%{transform:translate(9%,-10%)}100%{transform:translate(0,0)}}
+.screen .chn{position:absolute;top:12px;right:18px;font-family:var(--mono);font-weight:700;color:#FFC877;font-size:14px;z-index:1;text-shadow:0 0 8px rgba(255,180,90,.8)}
+.screen .big{font-family:var(--display);font-weight:800;font-size:25px;line-height:1.25;position:relative;z-index:1;max-width:28ch}
+.screen .small{font-size:14px;color:#EBCDA8;position:relative;z-index:1;margin-top:8px}
+.knobs{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.knobs .dots{display:flex;gap:10px}
+.knobs .dots i{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#E9D2B0,#8C6B55 70%);box-shadow:0 2px 3px rgba(0,0,0,.5)}
+.knobs .btn.ghost{color:var(--cream);box-shadow:inset 0 0 0 1.5px rgba(243,226,200,.5)}
+.knobs .btn.ghost:hover{background:rgba(243,226,200,.1)}
+.quiz{display:grid;gap:12px}
+.qprompt{font-family:var(--display);font-size:19px;font-weight:700}
+.qline{font-size:16px;background:#FBEBD6;padding:12px 15px;border-radius:12px;border-left:4px solid var(--yellow)}
+.opts{display:grid;gap:8px}
+.opt{border:0;border-radius:12px;padding:10px 14px;background:#FFF7EC;text-align:left;font-weight:600;color:var(--ink);box-shadow:inset 0 0 0 1.5px #E2CBB0}
+.opt:hover:not(:disabled){box-shadow:inset 0 0 0 1.5px var(--yellow);background:#FFF1DC}
+.opt.right{background:#E3EBD3;box-shadow:inset 0 0 0 2px var(--good)}
+.opt.wrong{background:#F6D6CB;box-shadow:inset 0 0 0 2px var(--bad)}
+.opt:disabled{cursor:default}
+.qbar{height:10px;background:#EBD9C1;border-radius:999px;overflow:hidden}
+.qbar i{display:block;height:100%;background:linear-gradient(90deg,#8A5A36,var(--yellow));transition:width .3s}
+.explain{font-size:14px;background:#FBEBD6;padding:10px 13px;border-radius:12px}
+.scoreboard{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ---------- Ambience: string lights, bokeh, steam, sound ---------- */
+.mast .wrap{padding-block:22px 4px}
+.mast-r{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sound{border:1.5px solid rgba(255,200,140,.55);background:rgba(33,20,14,.6);color:#FFE2B8;border-radius:999px;padding:6px 14px 6px 11px;font-weight:800;font-size:13px;display:inline-flex;align-items:center;gap:8px}
+.sound:hover{background:rgba(70,40,24,.8)}
+.sound i{width:16px;height:14px;display:inline-flex;gap:2px;align-items:flex-end}
+.sound i b{flex:1;background:var(--glow);border-radius:2px;height:35%}
+.sound i b:nth-child(2){height:70%}
+.sound i b:nth-child(3){height:50%}
+.sound[aria-pressed="true"]{box-shadow:0 0 14px rgba(255,170,80,.55)}
+.sound[aria-pressed="true"] i b{animation:eq .8s ease-in-out infinite alternate}
+.sound[aria-pressed="true"] i b:nth-child(2){animation-delay:-.3s}
+.sound[aria-pressed="true"] i b:nth-child(3){animation-delay:-.55s}
+@keyframes eq{from{height:20%}to{height:100%}}
+#vol{width:84px;accent-color:var(--glow)}
+.bulbs{position:relative;z-index:1;height:50px}
+.bulbs svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.bulb{position:absolute;width:12px;height:22px;margin-left:-6px;transform-origin:50% 0;animation:sway 5s ease-in-out infinite alternate;animation-delay:var(--d)}
+.bulb::before{content:"";position:absolute;left:3px;top:0;width:6px;height:7px;background:#1E120B;border-radius:2px}
+.bulb::after{content:"";position:absolute;left:0;top:6px;width:12px;height:15px;border-radius:50% 50% 45% 45%;
+  background:radial-gradient(circle at 50% 38%,#FFF6DC,#FFC66E 58%,#E0892D);
+  box-shadow:0 0 10px 3px rgba(255,170,70,.75),0 0 30px 10px rgba(255,140,50,.3);animation:flick 9s infinite;animation-delay:var(--d)}
+@keyframes flick{0%,100%{opacity:1}61%{opacity:1}62%{opacity:.5}63%{opacity:1}64%{opacity:.75}65%{opacity:1}}
+@keyframes sway{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+#bokeh{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.vignette{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 35%,transparent 50%,rgba(8,4,2,.65))}
+
+.hero{grid-template-columns:auto minmax(0,1fr) auto}
+.greet{font-family:var(--hand);font-size:22px;color:#F7C98B;margin-bottom:2px;line-height:1.2}
+.cupwrap{position:relative;width:132px;height:150px;align-self:end}
+.steam{position:absolute;left:26px;top:0;width:72px;height:72px}
+.steam i{position:absolute;bottom:0;width:9px;height:62px;border-radius:50%;background:linear-gradient(transparent,rgba(242,235,221,.6),transparent);filter:blur(4px);animation:steam 4.2s ease-in-out infinite;opacity:0}
+.steam i:nth-child(1){left:12px}
+.steam i:nth-child(2){left:31px;animation-delay:1.4s}
+.steam i:nth-child(3){left:50px;animation-delay:2.8s}
+@keyframes steam{0%{transform:translateY(12px) scaleX(1);opacity:0}30%{opacity:.9}100%{transform:translate(7px,-42px) scaleX(2.4);opacity:0}}
+.cup{position:absolute;left:16px;top:70px;width:90px;height:60px;background:linear-gradient(90deg,#D9C2A2,#FFF6E8 42%,#E4CFB1);border-radius:6px 6px 40px 40px}
+.cup::before{content:"";position:absolute;left:-1px;right:-1px;top:-9px;height:18px;border-radius:50%;
+  background:radial-gradient(ellipse at 50% 50%,#FBE9CB 0 22%,#D49A62 40%,#8A5530 78%);border:3px solid #F3E4CC}
+.cup::after{content:"";position:absolute;right:-22px;top:10px;width:26px;height:28px;border:7px solid #E4CFB1;border-left:0;border-radius:0 18px 18px 0}
+.saucer{position:absolute;left:0;bottom:6px;width:128px;height:17px;border-radius:50%;background:linear-gradient(#FFF6E8,#C9AE8E);box-shadow:0 10px 16px rgba(0,0,0,.5)}
+@media (max-width:720px){.hero{grid-template-columns:minmax(0,1fr)}.cupwrap{display:none}}
+
+.juke{position:fixed;z-index:8;top:calc(env(safe-area-inset-top,0px) + 132px);right:max(16px,env(safe-area-inset-right,0px));width:min(380px,calc(100vw - 32px));
+  display:grid;gap:14px;padding:16px 18px;border-radius:18px;color:var(--cream);
+  background:linear-gradient(170deg,rgba(74,44,28,.97),rgba(38,22,14,.97));border:1px solid rgba(255,200,140,.35);
+  box-shadow:0 0 30px rgba(255,160,70,.25),0 24px 50px -10px rgba(0,0,0,.8)}
+.juke-h{display:flex;justify-content:space-between;align-items:center}
+.juke-h b{font-family:var(--script);font-size:28px;font-weight:400;color:#FFE2B8;text-shadow:0 0 10px var(--neon)}
+.jx{border:1px solid rgba(243,226,200,.4);background:transparent;color:var(--cream);border-radius:999px;padding:3px 12px;font-size:13px;font-weight:700}
+.jx:hover{background:rgba(243,226,200,.12)}
+.jrow{display:grid;gap:8px}
+.jl{font-family:var(--hand);font-size:19px;color:#F7C98B;line-height:1}
+.jchips{display:flex;gap:6px;flex-wrap:wrap}
+.jchip{border:1px solid rgba(243,226,200,.35);background:rgba(0,0,0,.2);color:var(--cream);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700}
+.jchip:hover{border-color:var(--glow)}
+.jchip[aria-pressed="true"]{background:var(--yellow);border-color:var(--yellow);color:var(--ink);box-shadow:0 0 12px rgba(255,170,80,.5)}
+.jvol{display:flex;align-items:center;gap:8px;font-size:12px;color:#D9BC98}
+.jvol input{flex:1;accent-color:var(--glow)}
+.np{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:10px;border-top:1px dashed rgba(243,226,200,.25)}
+#nowPlaying{font-weight:700;font-size:14px}
+.jcred{font-size:12px;color:#D9BC98}
+.jcred summary{cursor:pointer;font-weight:700}
+.jcred ul{margin:8px 0 0;padding-left:18px;display:grid;gap:4px}
+.jcred a,.ccred a{color:#F7C98B}
+.ccred{font-size:12px;color:var(--muted)}
+.ccred summary{cursor:pointer;font-weight:700}
+.ccred ul{margin:8px 0 0;padding-left:18px;columns:2;column-gap:24px}
+.ccred a{color:var(--red)}
+@media (max-width:640px){.ccred ul{columns:1}}
+.poster{height:150px}
+.poster.has-img{height:230px;background-size:cover!important}
+.poster.has-img::after{display:none}
+.upl{cursor:pointer}
+
+
+/* ---------- The room: real café photo, warm shade, rain on glass ---------- */
+body{background-image:none}
+.bgphoto{position:fixed;inset:-14px;z-index:-3;background:#21140E center/cover no-repeat;filter:blur(2.5px) saturate(1.08) brightness(.66) sepia(.22);transition:background-image .8s}
+.bgshade{position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(30,16,9,.30),rgba(30,16,9,.50) 55%,rgba(22,11,6,.82)),radial-gradient(ellipse 70% 50% at 50% 0%,rgba(255,170,80,.20),transparent 70%)}
+.rain{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity 1.6s}
+.rain.on{opacity:1}
+.rain i{position:absolute;top:-15%;width:1.5px;border-radius:2px;background:linear-gradient(transparent,rgba(255,236,214,.55));animation:fall linear infinite}
+.rain b{position:absolute;border-radius:50% 50% 48% 48%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(255,230,200,.10) 55%,rgba(255,255,255,0) 72%);box-shadow:0 2px 3px rgba(0,0,0,.25);animation:slide ease-in infinite}
+@keyframes fall{to{transform:translateY(125vh)}}
+@keyframes slide{0%,55%{transform:translateY(0);opacity:1}100%{transform:translateY(38vh);opacity:0}}
+.mast{background:linear-gradient(180deg,rgba(18,9,5,.82),rgba(18,9,5,.25))}
+.mast::before,.mast::after{display:none}
+.chbar{background:repeating-linear-gradient(90deg,rgba(0,0,0,.06) 0 3px,transparent 3px 11px,rgba(255,220,180,.04) 11px 13px,transparent 13px 29px),linear-gradient(180deg,rgba(107,68,41,.94),rgba(90,56,36,.94) 45%,rgba(63,38,24,.96))}
+.card{background:rgba(246,234,217,.94);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.seat span{display:none}
+.juke[hidden]{display:none}
+.card.hero{background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.07),transparent 60%),radial-gradient(ellipse at 80% 90%,rgba(255,255,255,.05),transparent 55%),var(--chalkbg);-webkit-backdrop-filter:none;backdrop-filter:none}
+.poster .art{position:absolute;inset:0;width:100%;height:100%;display:block}
+.poster .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,10,6,.15),transparent 30%,transparent 50%,rgba(20,10,6,.85));pointer-events:none}
+.poster > div:not(.shade){position:relative;z-index:1}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .steam i{opacity:.5}
+}
+</style>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="logo">
+      <div class="logo-mark">Prime Time English</div>
+      <div class="onair" aria-hidden="true"><i></i>OPEN</div>
+    </div>
+    <div class="mast-r">
+      <button class="sound seat" id="seatBtn">换个座位</button>
+      <button class="sound" id="soundBtn" aria-pressed="false" aria-expanded="false" aria-controls="juke"><i aria-hidden="true"><b></b><b></b><b></b></i><span>店内点唱机</span></button>
+      <div class="sync" id="sync">本机保存中</div>
+    </div>
+  </div>
+  <div class="bulbs" id="bulbs" aria-hidden="true"></div>
+</header>
+<canvas id="bokeh" aria-hidden="true"></canvas>
+<div class="bgphoto" id="bgPhoto" aria-hidden="true"></div>
+<div class="bgshade" aria-hidden="true"></div>
+<div class="rain" id="rainLayer" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<aside class="juke" id="juke" hidden aria-label="店内点唱机">
+  <div class="juke-h"><b>Café Jukebox</b><button class="jx" id="jukeClose" aria-label="收起点唱机">收起</button></div>
+  <div class="jrow">
+    <div class="jl">环境声</div>
+    <div class="jchips" id="ambChips"></div>
+    <label class="jvol">音量<input type="range" id="ambVol" min="0" max="100" value="45"></label>
+  </div>
+  <div class="jrow">
+    <div class="jl">音乐</div>
+    <div class="jchips" id="musChips"></div>
+    <label class="jvol">音量<input type="range" id="musVol" min="0" max="100" value="50"></label>
+  </div>
+  <div class="np"><div><div class="jl">正在播放</div><div id="nowPlaying">还没放音乐</div></div><button class="jx" id="musNext">下一首</button></div>
+  <details class="jcred"><summary>音源与授权</summary><ul id="audioCredits"></ul></details>
+</aside>
+
+<nav class="chbar" aria-label="频道">
+  <div class="wrap" role="tablist">
+    <button class="ch" role="tab" data-v="today" style="--c:var(--yellow)"><b>CH 01</b><span>今日节目</span></button>
+    <button class="ch" role="tab" data-v="shows" style="--c:var(--pink)"><b>CH 02</b><span>美剧片单</span></button>
+    <button class="ch" role="tab" data-v="words" style="--c:#7CE0D6"><b>CH 03</b><span>台词词卡</span></button>
+    <button class="ch" role="tab" data-v="talk" style="--c:#9CC2FF"><b>CH 04</b><span>AI 对练</span></button>
+    <button class="ch" role="tab" data-v="fun" style="--c:var(--orange)"><b>CH 05</b><span>娱乐频道</span></button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= CH 01 TODAY ================= -->
+<section class="view" id="v-today">
+  <div class="card hero">
+    <div class="marquee">
+      <div class="lbl">Today's Episode</div>
+      <div class="num"><span id="dayNum">1</span><small>/30</small></div>
+      <div class="lbl" id="weekLbl">WEEK 1</div>
+    </div>
+    <div>
+      <p class="greet" id="greet">Good evening. The usual?</p>
+      <h1 id="heroTitle">第 1 周：选定一部剧，跑通流程</h1>
+      <p class="sub" id="heroSub">同一部剧反复吃透，比每天换新材料有效得多。</p>
+      <div class="stats">
+        <div class="stat"><b id="stStreak">0</b>天连续</div>
+        <div class="stat"><b id="stDone">0</b>天完成</div>
+        <div class="stat"><b id="stDue">0</b>张卡片待复习</div>
+        <div class="stat">本月主剧：<b id="stShow" style="font-family:var(--body)">未选择</b></div>
+      </div>
+    </div>
+    <div class="cupwrap" aria-hidden="true"><div class="steam"><i></i><i></i><i></i></div><div class="saucer"></div><div class="cup"></div></div>
+  </div>
+
+  <div class="banner" id="milestone" hidden></div>
+
+  <div class="grid2">
+    <div class="card" style="display:grid;gap:14px">
+      <div class="row" style="justify-content:space-between">
+        <h2>今日菜单</h2>
+        <label class="row" style="gap:6px;font-size:13px;font-weight:700;cursor:pointer">
+          <input type="checkbox" id="minMode" style="width:18px;height:18px;accent-color:var(--pink)"> 今天很累，只做最低版本
+        </label>
+      </div>
+      <div class="steps" id="steps"></div>
+      <p class="note" id="stepNote"></p>
+    </div>
+
+    <div style="display:grid;gap:20px;align-content:start">
+      <div class="card" style="display:grid;gap:12px">
+        <h2>今天练的片段</h2>
+        <div class="field">
+          <label for="clipNote">剧名 · 集数 · 时间段（比如 S01E03 05:10–06:40）</label>
+          <input type="text" id="clipNote" placeholder="Superstore S01E01 03:20–04:50">
+        </div>
+        <div class="field">
+          <label for="retell">用英文复述这段（打字或语音输入都行）</label>
+          <textarea id="retell" placeholder="The manager tried to fix a sale sign, but everything went wrong because..."></textarea>
+        </div>
+        <div class="row">
+          <button class="btn teal" id="retellBtn">AI 批改复述</button>
+          <span class="note">会用你自己的 Claude 额度</span>
+        </div>
+        <div class="ai-out" id="retellOut"></div>
+      </div>
+
+      <div class="card" style="display:grid;gap:12px">
+        <div class="row" style="justify-content:space-between"><h2>30 天节目表</h2><button class="btn sm ghost" id="resetStart">重新设定第 1 天</button></div>
+        <div class="cal" id="cal"></div>
+        <div class="legend"><span><i style="background:#6B3F22"></i>完成</span><span><i style="background:#E8B77A"></i>做了一部分</span><span><i style="background:#F1CDBF"></i>漏了</span><span><i style="background:#EBD9C1"></i>还没到</span></div>
+        <div class="row" id="resetConfirm" hidden>
+          <span class="note">把今天设为第 1 天？打卡记录会保留，但进度天数会重新计算。</span>
+          <button class="btn sm red" id="resetYes">确认</button><button class="btn sm ghost" id="resetNo">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CH 02 SHOWS ================= -->
+<section class="view" id="v-shows" hidden>
+  <div class="card" style="display:grid;gap:12px">
+    <h2>美剧片单</h2>
+    <p class="muted">挑一部当本月主剧，30 天都从这一部里取材。网页里不能直接播放视频，点“去看”会跳转到外部网站搜索。正版可在 Netflix、Apple TV+、腾讯视频、爱奇艺等平台看，各平台片库不一样，以实际上架为准。封面是为这个页面原创绘制的复古海报风插画，画的是每部剧最有代表性的场景，不是官方海报。想用官方海报可以点“换封面”自己上传，图片只保存在你自己的页面里。</p>
+    <div class="filters" id="showFilters"></div>
+  </div>
+  <div class="shows" id="shows"></div>
+</section>
+
+<!-- ================= CH 03 WORDS ================= -->
+<section class="view" id="v-words" hidden>
+  <div class="grid2">
+    <div class="card" style="display:grid;gap:14px">
+      <h2>台词拆解机</h2>
+      <p class="muted">把剧里听到、看不懂的一句台词粘贴进来，AI 会讲清楚意思、语气和里面的地道短语，一键加入词卡。</p>
+      <div class="field">
+        <label for="lineIn">台词</label>
+        <textarea id="lineIn" placeholder="I'm not gonna sugarcoat it — we dropped the ball on this one."></textarea>
+      </div>
+      <div class="field">
+        <label for="lineSrc">出处（选填）</label>
+        <input type="text" id="lineSrc" placeholder="The Office S02E05">
+      </div>
+      <div class="row"><button class="btn teal" id="lineBtn">拆解这句</button><button class="btn ghost sm" id="lineSpeak">朗读</button></div>
+      <div class="ai-out" id="lineOut"></div>
+    </div>
+
+    <div class="card" style="display:grid;gap:14px">
+      <div class="deckbar">
+        <h2>今日复习</h2>
+        <div class="counts"><span class="pill" id="cDue">待复习 0</span><span class="pill" id="cAll">共 0 张</span><span class="pill" id="cNew">今日新增 0/15</span></div>
+      </div>
+      <div class="flash" id="flash"></div>
+      <div class="rate" id="rate" hidden>
+        <button class="btn red" data-r="0">忘了</button>
+        <button class="btn" data-r="1">模糊</button>
+        <button class="btn teal" data-r="2">记得</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card" style="display:grid;gap:12px">
+      <h2>手动加卡</h2>
+      <div class="field"><label for="wWord">单词或短语</label><input type="text" id="wWord" placeholder="drop the ball"></div>
+      <div class="field"><label for="wMean">中文意思</label><input type="text" id="wMean" placeholder="搞砸了；失误"></div>
+      <div class="field"><label for="wEx">原句（一定要带上，靠语境记）</label><input type="text" id="wEx" placeholder="We really dropped the ball on this launch."></div>
+      <div class="field"><label for="wSrc">出处</label><input type="text" id="wSrc" placeholder="Brooklyn Nine-Nine S03E10"></div>
+      <div class="row"><button class="btn" id="wAdd">加入词卡</button><span class="note" id="wMsg"></span></div>
+    </div>
+    <div class="card" style="display:grid;gap:12px">
+      <div class="row" style="justify-content:space-between"><h2>我的词卡</h2><button class="btn sm ghost" id="clearEx" hidden>清除示例卡</button></div>
+      <div class="wlist" id="wlist"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CH 04 TALK ================= -->
+<section class="view" id="v-talk" hidden>
+  <div class="card" style="display:grid;gap:14px">
+    <h2>选一个场景开演</h2>
+    <p class="muted">AI 扮演对手戏，每次回复后会指出你上一句可以说得更地道的地方。说不出来就先打中文，它会教你怎么说。</p>
+    <div class="scenes" id="scenes"></div>
+  </div>
+  <div class="card" style="display:grid;gap:12px">
+    <div class="row" style="justify-content:space-between">
+      <h3 id="sceneTitle">还没选场景</h3>
+      <div class="row"><button class="btn sm ghost" id="talkReset">重新开始</button><button class="btn sm red" id="talkStop" hidden>停止</button></div>
+    </div>
+    <div class="chat" id="chat" aria-live="polite"></div>
+    <div class="composer">
+      <textarea id="talkIn" placeholder="先选一个场景，再在这里输入你的台词"></textarea>
+      <button class="btn teal" id="talkSend">发送</button>
+    </div>
+    <p class="note">按 Ctrl/⌘ + Enter 发送。对话不会保存，关掉网页就清空。</p>
+  </div>
+</section>
+
+<!-- ================= CH 05 FUN ================= -->
+<section class="view" id="v-fun" hidden>
+  <div class="grid2">
+    <div class="tv">
+      <div class="screen" id="screen">
+        <div class="chn" id="chn">CH 05</div>
+        <div>
+          <div class="big" id="chBig">换台挑战</div>
+          <div class="small" id="chSmall">按下“换台”，随机抽一个 2 分钟口语小挑战</div>
+        </div>
+      </div>
+      <div class="knobs">
+        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="row"><button class="btn sm ghost" id="chSpeak">朗读题目</button><button class="btn red" id="surf">换台</button></div>
+      </div>
+    </div>
+
+    <div class="card quiz" id="slangCard">
+      <div class="row" style="justify-content:space-between">
+        <h2>美式俚语快问快答</h2>
+        <div class="scoreboard"><span class="pill" id="slScore">0 / 0</span><span class="pill" id="slBest">最佳 0</span></div>
+      </div>
+      <div class="qbar"><i id="slBar" style="width:0%"></i></div>
+      <div id="slBody" class="quiz"></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card quiz">
+      <div class="row" style="justify-content:space-between">
+        <h2>情景剧填空</h2>
+        <span class="pill" id="scScore">0 / 0</span>
+      </div>
+      <p class="note">原创的情景喜剧小片段，选出最自然的那句。</p>
+      <div id="scBody" class="quiz"></div>
+    </div>
+
+    <div class="card" style="display:grid;gap:12px;align-content:start">
+      <h2>AI 加更</h2>
+      <p class="muted">题刷完了？让 AI 按主题再出一轮俚语题，加到快问快答里。</p>
+      <div class="field">
+        <label for="genTopic">主题</label>
+        <select id="genTopic">
+          <option value="workplace and office small talk">办公室闲聊</option>
+          <option value="e-commerce, online shopping and marketing">电商与营销</option>
+          <option value="dating and friendship">约会与友情</option>
+          <option value="food, coffee shops and restaurants">吃喝点餐</option>
+          <option value="Gen Z internet slang">Z 世代网络梗</option>
+          <option value="sports idioms used in daily life">体育类习语</option>
+        </select>
+      </div>
+      <div class="row"><button class="btn pink" id="genBtn">再出 5 道</button></div>
+      <div class="ai-out" id="genOut"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* ============ utilities ============ */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad = n => String(n).padStart(2, "0");
+const dkey = (d = new Date()) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const parseKey = k => { const [y, m, d] = k.split("-").map(Number); return new Date(y, m - 1, d); };
+const addDays = (k, n) => { const d = parseKey(k); d.setDate(d.getDate() + n); return dkey(d); };
+const diffDays = (a, b) => Math.round((parseKey(b) - parseKey(a)) / 864e5);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const uid = () => Math.random().toString(36).slice(2, 10);
+
+/* ============ text to speech ============ */
+const tts = "speechSynthesis" in window ? window.speechSynthesis : null;
+function speak(text) {
+  if (!tts || !text) return;
+  try {
+    tts.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US"; u.rate = 0.92;
+    const v = tts.getVoices().find(v => v.lang === "en-US");
+    if (v) u.voice = v;
+    tts.speak(u);
+  } catch {}
+}
+
+/* ============ state & storage ============ */
+const LS = "pte-state-v1";
+const EXAMPLE_CARDS = [
+  { word: "drop the ball", mean: "搞砸了；失职", ex: "I totally dropped the ball on the client email.", src: "示例" },
+  { word: "I'm down", mean: "我愿意；算我一个", ex: "Tacos tonight? — Yeah, I'm down.", src: "示例" },
+  { word: "touch base", mean: "简单碰一下；跟进沟通", ex: "Let's touch base on Friday about the launch.", src: "示例" },
+];
+function freshState() {
+  const today = dkey();
+  return {
+    v: 1, start: today, show: null, days: {}, quizBest: 0, extraSlang: [], covers: {},
+    cards: EXAMPLE_CARDS.map(c => ({ id: uid(), ...c, lvl: 0, due: today, added: today, sample: true })),
+  };
+}
+let S = freshState();
+try { const raw = localStorage.getItem(LS); if (raw) S = Object.assign(freshState(), JSON.parse(raw)); } catch {}
+
+let dbRef = null, saving = false, dirty = false, saveTimer = null;
+const syncEl = $("#sync");
+function save() {
+  try { localStorage.setItem(LS, JSON.stringify(S)); } catch {}
+  if (!dbRef) return;
+  dirty = true;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(flush, 900);
+}
+async function flush() {
+  if (!dbRef || saving || !dirty) return;
+  saving = true; dirty = false;
+  syncEl.textContent = "正在同步…";
+  try {
+    await dbRef.set(JSON.parse(JSON.stringify(S)));
+    syncEl.textContent = "已同步到云端";
+  } catch (e) {
+    syncEl.textContent = e?.code === "quota_exceeded" ? "云端空间已满，仅本机保存" : "同步失败，已存在本机";
+  } finally {
+    saving = false;
+    if (dirty) flush();
+  }
+}
+(async () => {
+  try {
+    if (!window.claude?.use) { syncEl.textContent = "仅本机保存"; return; }
+    const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+    const id = user ? await user.id() : null;
+    if (!db || !id) { syncEl.textContent = "仅本机保存"; return; }
+    dbRef = db.doc(`data/users/${id}/state`);
+    const snap = await dbRef.get();
+    if (snap.exists) {
+      S = Object.assign(freshState(), snap.data());
+      try { localStorage.setItem(LS, JSON.stringify(S)); } catch {}
+      renderAll();
+      syncEl.textContent = "已同步到云端";
+    } else {
+      dirty = true; flush();
+    }
+  } catch { syncEl.textContent = "仅本机保存"; }
+})();
+
+/* ============ AI (sample) ============ */
+let samplePromise = null;
+const getSample = () => (samplePromise ??= (window.claude?.use ? claude.use("sample") : Promise.resolve(null)));
+const AI_ERR = {
+  not_granted: "你没有允许这个网页使用 Claude。可以在网页的权限菜单里打开。",
+  sampling_disabled: "当前账号暂时不能在网页里使用 Claude。",
+  rate_limited: "请求太频繁或额度用完了，过一会儿再试。",
+  session_expired: "登录已过期，请重新登录 claude.ai。",
+  invalid_json: "AI 返回的格式不对，再点一次试试。",
+  refused: "AI 没有回答这条内容，换个说法试试。",
+  prompt_too_large: "内容太长了，删短一点再试。",
+};
+const aiErr = e => AI_ERR[e?.code] || "AI 暂时没响应，稍后再点一次。";
+async function askJSON(prompt, opts = {}) {
+  const sample = await getSample();
+  if (!sample) throw { code: "unavailable_here" };
+  return sample.json(prompt, opts);
+}
+function noAI(el) { el.innerHTML = `<p class="err">这里用不了 AI 功能。请在 claude.ai 里打开这个网页。</p>`; }
+
+/* ============ navigation ============ */
+const VIEWS = ["today", "shows", "words", "talk", "fun"];
+function go(v) {
+  if (!VIEWS.includes(v)) v = "today";
+  VIEWS.forEach(x => { $("#v-" + x).hidden = x !== v; });
+  $$(".ch").forEach(b => b.setAttribute("aria-selected", b.dataset.v === v));
+  try { history.replaceState(null, "", "#" + v); } catch {}
+  try { sessionStorage.setItem("pte-view", v); } catch {}
+  if (v === "words") renderFlash();
+  window.scrollTo({ top: 0 });
+}
+$$(".ch").forEach(b => b.addEventListener("click", () => go(b.dataset.v)));
+
+/* ============ CH 01 TODAY ============ */
+const STEPS = [
+  { t: "盲听", d: "关字幕听 2 遍 1–2 分钟片段，记下大概听懂了什么", m: 5 },
+  { t: "对字幕", d: "开字幕逐句对，标出“认识但没听出来”的地方", m: 10 },
+  { t: "收词", d: "只收影响理解的词，连原句一起加进 CH 03 词卡，最多 15 个", m: 10 },
+  { t: "影子跟读", d: "落后半拍跟着念，模仿语速、连读、语气；先看字幕跟，再不看跟", m: 20, core: true },
+  { t: "复述", d: "关掉视频用自己的话说一遍，写在右边让 AI 批改", m: 10 },
+  { t: "复习词卡", d: "去 CH 03 刷完今天到期的卡片", m: 10, core: true },
+];
+const WEEKS = [
+  { h: "第 1 周：选定一部剧，跑通流程", s: "先去 CH 02 选好本月主剧。这周只求每天不断，不求完美。" },
+  { h: "第 2 周：跟读做到脱稿", s: "继续同一部剧。目标是关掉字幕也能跟上原声的节奏。" },
+  { h: "第 3 周：多说，多复述", s: "复述时间加长，开始用学到的短语讲你自己的事，去 CH 04 多对练。" },
+  { h: "第 4 周：回头检验", s: "重听第 1 周的片段，你会发现它变简单了。第 30 天做一次对比测试。" },
+];
+const dayNo = () => Math.min(30, Math.max(1, diffDays(S.start, dkey()) + 1));
+const dayRec = k => (S.days[k] ??= { steps: [false, false, false, false, false, false], min: false });
+function dayStatus(k) {
+  const r = S.days[k]; if (!r) return "none";
+  const n = r.steps.filter(Boolean).length;
+  if (n >= 5 || (r.min && r.steps[3] && r.steps[5])) return "ok";
+  return n > 0 ? "part" : "none";
+}
+function streak() {
+  let k = dkey(), n = 0;
+  if (dayStatus(k) !== "ok") k = addDays(k, -1);
+  while (dayStatus(k) === "ok") { n++; k = addDays(k, -1); }
+  return n;
+}
+function renderToday() {
+  const n = dayNo(), w = WEEKS[Math.min(3, Math.floor((n - 1) / 7))];
+  $("#dayNum").textContent = n;
+  $("#weekLbl").textContent = "Week " + Math.min(4, Math.floor((n - 1) / 7) + 1);
+  $("#heroTitle").textContent = w.h;
+  $("#heroSub").textContent = w.s;
+  $("#stStreak").textContent = streak();
+  $("#stDone").textContent = Object.keys(S.days).filter(k => dayStatus(k) === "ok").length;
+  $("#stDue").textContent = dueCards().length;
+  $("#stShow").textContent = S.show ? SHOWS.find(s => s.id === S.show)?.title ?? "未选择" : "未选择";
+
+  const ms = $("#milestone");
+  if (n === 1) { ms.hidden = false; ms.textContent = "第 1 天：找一段 3 分钟的英文视频关字幕盲听，记下能听懂几成；再用手机录 1 分钟英文自我介绍存好。第 30 天用同样的材料再测一次。"; }
+  else if (n === 30) { ms.hidden = false; ms.textContent = "第 30 天：拿出第 1 天的视频和录音，再听一遍、再录一遍，对比一下变化。"; }
+  else if (!S.show) { ms.hidden = false; ms.innerHTML = `还没选本月主剧，<a href="#shows" id="toShows">去 CH 02 挑一部</a>。`; $("#toShows").onclick = e => { e.preventDefault(); go("shows"); }; }
+  else ms.hidden = true;
+
+  const rec = S.days[dkey()] || { steps: [], min: false };
+  $("#minMode").checked = !!rec.min;
+  $("#steps").innerHTML = STEPS.map((s, i) => {
+    const off = rec.min && !s.core;
+    return `<label class="step ${rec.steps[i] ? "done" : ""} ${s.core ? "core" : ""}" style="${off ? "opacity:.45" : ""}">
+      <input type="checkbox" data-i="${i}" ${rec.steps[i] ? "checked" : ""}>
+      <div><div class="t">${s.t}</div><div class="d">${s.d}</div></div>
+      <span class="min">${s.m} 分钟</span></label>`;
+  }).join("");
+  const done = (rec.steps || []).filter(Boolean).length;
+  $("#stepNote").textContent = rec.min
+    ? "最低版本：完成两项“核心”就算今天打卡。保住习惯比做满更重要。"
+    : `已完成 ${done}/6，完成 5 项就算打卡。漏了一天就接着做，不用补。`;
+
+  const cal = [];
+  for (let i = 0; i < 30; i++) {
+    const k = addDays(S.start, i), st = dayStatus(k), past = k < dkey();
+    const cls = st === "ok" ? "ok" : st === "part" ? "part" : past ? "miss" : "";
+    cal.push(`<div class="${cls} ${k === dkey() ? "now" : ""}" title="${k}">${i + 1}</div>`);
+  }
+  $("#cal").innerHTML = cal.join("");
+  $("#clipNote").value = S.days[dkey()]?.clip ?? "";
+}
+$("#steps").addEventListener("change", e => {
+  const i = +e.target.dataset.i; if (Number.isNaN(i)) return;
+  dayRec(dkey()).steps[i] = e.target.checked; save(); renderToday();
+});
+$("#minMode").addEventListener("change", e => { dayRec(dkey()).min = e.target.checked; save(); renderToday(); });
+$("#clipNote").addEventListener("change", e => { dayRec(dkey()).clip = e.target.value.trim(); save(); });
+$("#resetStart").onclick = () => { $("#resetConfirm").hidden = false; };
+$("#resetNo").onclick = () => { $("#resetConfirm").hidden = true; };
+$("#resetYes").onclick = () => { S.start = dkey(); $("#resetConfirm").hidden = true; save(); renderToday(); };
+
+$("#retellBtn").onclick = async () => {
+  const text = $("#retell").value.trim(), out = $("#retellOut"), btn = $("#retellBtn");
+  if (text.length < 10) { out.innerHTML = `<p class="err">先写几句英文复述再批改。</p>`; return; }
+  btn.disabled = true; out.innerHTML = `<p class="muted">AI 正在看你的复述…</p>`;
+  try {
+    const clip = $("#clipNote").value.trim() || "a short clip from an American TV show";
+    const r = await askJSON(
+`You are a friendly American English coach for a Chinese adult learner. They watched: "${clip}" and retold it in English.
+Learner's retell:
+"""${text.slice(0, 3000)}"""
+Reply with ONLY a JSON object:
+{"score": integer 1-10 for clarity and naturalness,
+ "praise": one encouraging sentence in Simplified Chinese naming something specific they did well,
+ "fixes": up to 5 items [{"wrong": exact phrase from the retell, "right": natural American English, "why": short reason in Simplified Chinese}],
+ "upgrade": a natural spoken American English version of their retell, similar length, keeping their meaning}`, { modelTier: "quick", cache: false });
+    out.innerHTML = `
+      <div class="row" style="align-items:flex-end;gap:14px"><div class="score">${esc(r.score)}<span style="font-size:18px;color:var(--muted)">/10</span></div><p>${esc(r.praise)}</p></div>
+      ${(r.fixes || []).map(f => `<div class="fix"><div><s>${esc(f.wrong)}</s> → <b>${esc(f.right)}</b></div><span>${esc(f.why)}</span></div>`).join("")}
+      <div><div class="eyebrow">地道版本</div><p style="margin-top:4px">${esc(r.upgrade)}</p><button class="speak" id="upSpeak">朗读地道版本，跟着念</button></div>`;
+    $("#upSpeak").onclick = () => speak(r.upgrade);
+    const rec = dayRec(dkey()); if (!rec.steps[4]) { rec.steps[4] = true; save(); renderToday(); }
+  } catch (e) { e?.code === "unavailable_here" ? noAI(out) : out.innerHTML = `<p class="err">${aiErr(e)}</p>`; }
+  finally { btn.disabled = false; }
+};
+
+/* ============ CH 02 SHOWS ============ */
+const SHOWS = [
+  { id: "friends", title: "Friends", cn: "老友记", yr: "1994–2004", lv: 1, c: ["#9C4A2A", "#E1A05A"], tags: ["日常", "友情"],
+    learn: "最经典的入门剧。生活口语密度高，语速适中，笑点帮助记忆。", focus: "日常寒暄、约会、合租用语" },
+  { id: "young-sheldon", title: "Young Sheldon", cn: "小谢尔顿", yr: "2017–2024", lv: 1, c: ["#5E6B45", "#B9935A"], tags: ["家庭"],
+    learn: "有旁白、发音清楚、剧情简单，适合基础一般的人起步。", focus: "家庭对话、学校场景、美国南方口音" },
+  { id: "modern-family", title: "Modern Family", cn: "摩登家庭", yr: "2009–2020", lv: 1, c: ["#A0522D", "#D58E7B"], tags: ["家庭", "幽默"],
+    learn: "伪纪录片形式，角色常对镜头说话，独白很适合跟读。", focus: "家庭生活、反讽语气、口头禅" },
+  { id: "emily", title: "Emily in Paris", cn: "艾米丽在巴黎", yr: "2020–", lv: 1, c: ["#7A3B4B", "#D9907E"], tags: ["职场", "营销"],
+    learn: "女主做社交媒体营销，品牌、KOL、活动策划词汇多，和出海工作很搭。", focus: "营销提案、社媒运营、客户沟通" },
+  { id: "superstore", title: "Superstore", cn: "百味超市", yr: "2015–2021", lv: 2, c: ["#4F5B4A", "#C9772E"], tags: ["零售", "职场"],
+    learn: "大卖场员工群像，零售、促销、顾客服务场景一网打尽。", focus: "零售与客服用语、职场吐槽" },
+  { id: "office", title: "The Office", cn: "办公室", yr: "2005–2013", lv: 2, c: ["#4A2C1D", "#8C6B55"], tags: ["职场", "幽默"],
+    learn: "美式职场文化百科，尴尬幽默。有些角色说话含糊，适合进阶后看。", focus: "开会、销售、办公室闲聊" },
+  { id: "b99", title: "Brooklyn Nine-Nine", cn: "神烦警探", yr: "2013–2021", lv: 2, c: ["#B5651D", "#5A3824"], tags: ["幽默", "职场"],
+    learn: "节奏快、梗密集，每集都能收一堆俚语。", focus: "俚语、玩笑、团队互怼" },
+  { id: "good-place", title: "The Good Place", cn: "善地", yr: "2016–2020", lv: 2, c: ["#6E8B5E", "#3F4A35"], tags: ["奇幻", "幽默"],
+    learn: "发音清楚，每集 20 分钟，适合整集精听。", focus: "表达观点、讨论对错" },
+  { id: "ted-lasso", title: "Ted Lasso", cn: "足球教练", yr: "2020–2023", lv: 2, c: ["#3E3A5A", "#C98A4E"], tags: ["励志", "体育"],
+    learn: "美国人去英国执教，美音和英音对比着听，台词温暖有梗。", focus: "鼓励人的说法、体育习语" },
+  { id: "shark-tank", title: "Shark Tank", cn: "创智赢家", yr: "2009–", lv: 3, c: ["#2E1F18", "#9C5B30"], tags: ["商业", "电商"],
+    learn: "真人创业者向投资人路演。电商品牌、估值、利润率讨论很多，非常适合出海和跨境从业者。", focus: "产品路演、谈判、商业数字" },
+  { id: "suits", title: "Suits", cn: "金装律师", yr: "2011–2019", lv: 3, c: ["#3A2318", "#7A5A45"], tags: ["商务", "职场"],
+    learn: "律所和商务谈判，语速快、用词正式，适合挑战。", focus: "谈判、说服、正式商务表达" },
+  { id: "silicon-valley", title: "Silicon Valley", cn: "硅谷", yr: "2014–2019", lv: 3, c: ["#4D6A5A", "#2B2F28"], tags: ["科技", "创业"],
+    learn: "科技创业圈的黑色幽默，技术和融资词汇多。脏话比较多。", focus: "创业、融资、产品发布" },
+];
+const LV = { 1: "入门", 2: "进阶", 3: "挑战" };
+let showFilter = "all";
+function renderShows() {
+  const tags = ["all", "1", "2", "3", "职场", "电商"];
+  const lab = { all: "全部", 1: "入门", 2: "进阶", 3: "挑战", 职场: "职场向", 电商: "电商/商业" };
+  $("#showFilters").innerHTML = tags.map(t => `<button class="chip" data-f="${t}" aria-pressed="${showFilter === t}">${lab[t]}</button>`).join("");
+  const list = SHOWS.filter(s => showFilter === "all" || String(s.lv) === showFilter ||
+    s.tags.includes(showFilter) || (showFilter === "电商" && (s.tags.includes("零售") || s.tags.includes("商业") || s.tags.includes("营销"))));
+  $("#shows").innerHTML = list.map(s => `
+    <article class="card show ${S.show === s.id ? "picked" : ""}">
+      <div class="poster has-img" style="${posterBg(s)}">${coverOf(s.id) ? "" : `<svg class="art" viewBox="0 0 300 230" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${COVER_ART[s.id] || ""}</svg>`}<div class="shade"></div>
+        <div class="yr">${s.yr}</div>
+        <div><div class="ttl">${esc(s.title)}</div><div style="font-weight:700;font-size:13px">${esc(s.cn)}</div></div>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="pill lv${s.lv}">${LV[s.lv]}</span>${s.tags.map(t => `<span class="pill">${t}</span>`).join("")}</div>
+        <p class="learn">${esc(s.learn)}</p>
+        <p class="note"><b>重点学：</b>${esc(s.focus)}</p>
+        <div class="acts">
+          <button class="btn sm ${S.show === s.id ? "red" : ""}" data-pick="${s.id}">${S.show === s.id ? "本月主剧" : "设为本月主剧"}</button>
+          <a class="linkbtn" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${encodeURIComponent(s.title + " best scenes")}">YouTube 片段</a>
+          <a class="linkbtn" target="_blank" rel="noopener" href="https://search.douban.com/movie/subject_search?search_text=${encodeURIComponent(s.cn)}">豆瓣</a>
+          <label class="linkbtn upl"><span>${coverOf(s.id) ? "换封面" : "上传封面"}</span><input type="file" accept="image/*" data-cover="${s.id}" hidden></label>
+          ${coverOf(s.id) ? `<button class="linkbtn" data-uncover="${s.id}" style="border:0;background:none">移除封面</button>` : ""}
+        </div>
+      </div>
+    </article>`).join("");
+}
+$("#showFilters").addEventListener("click", e => { const f = e.target.closest("[data-f]")?.dataset.f; if (f) { showFilter = f; renderShows(); } });
+const LSC = "pte-covers-v1";
+let localCovers = {};
+try { localCovers = JSON.parse(localStorage.getItem(LSC) || "{}"); } catch {}
+const coverOf = id => S.covers?.[id] || localCovers[id] || "";
+/* original retro-poster illustrations for each show (drawn for this page, no studio artwork) */
+const sky = (id, a, b) => `<defs><linearGradient id="g-${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="300" height="230" fill="url(#g-${id})"/>`;
+const steam = (x, y) => [0, 12, 24].map(d => `<path d="M${x + d} ${y} q-6 -10 0 -20 q6 -10 0 -20" fill="none" stroke="#FFF3E2" stroke-width="3" stroke-linecap="round" opacity=".6"/>`).join("");
+const towerWindows = (x, y, w, h) => { let s = ""; for (let r = y + 8; r < y + h - 6; r += 11) for (let c = x + 5; c < x + w - 6; c += 9) if ((r * 7 + c * 3) % 5) s += `<rect x="${c}" y="${r}" width="4" height="5" fill="#F7C98B" opacity="${((r + c) % 3) ? .85 : .35}"/>`; return s; };
+const COVER_ART = {
+  "friends": sky("friends", "#F2B66C", "#8A4322") +
+    `<rect x="168" y="16" width="116" height="100" rx="4" fill="#3A1F14"/><rect x="175" y="23" width="102" height="86" fill="#FBD49A"/>
+     <path d="M175 109 V78 h14 V60 h12 v20 h10 V50 h16 v34 h12 V68 h14 v14 h10 V62 h14 v47 Z" fill="#7A3B22"/>
+     <path d="M226 23 V109 M175 66 H277" stroke="#3A1F14" stroke-width="5"/>
+     <rect y="205" width="300" height="25" fill="#4A2616"/>
+     <rect x="22" y="128" width="186" height="52" rx="20" fill="#B9521C"/><rect x="12" y="160" width="206" height="34" rx="12" fill="#D8692B"/>
+     <rect x="2" y="146" width="32" height="56" rx="13" fill="#C65C22"/><rect x="196" y="146" width="32" height="56" rx="13" fill="#C65C22"/>
+     <rect x="20" y="200" width="8" height="8" fill="#2B150D"/><rect x="200" y="200" width="8" height="8" fill="#2B150D"/>
+     <rect x="232" y="152" width="44" height="50" rx="8" fill="#F6EAD9"/><ellipse cx="254" cy="153" rx="22" ry="5" fill="#6B3F22"/>
+     <path d="M276 164 q16 0 16 13 q0 13 -16 13" fill="none" stroke="#F6EAD9" stroke-width="6"/>` + steam(244, 140),
+  "young-sheldon": sky("ys", "#F8CF8E", "#B4552E") +
+    `<circle cx="232" cy="62" r="34" fill="#FFE6B8" opacity=".9"/>
+     <g transform="translate(78 64)" fill="none" stroke="#FFF6E8" stroke-width="3"><ellipse rx="44" ry="15"/><ellipse rx="44" ry="15" transform="rotate(60)"/><ellipse rx="44" ry="15" transform="rotate(-60)"/></g><circle cx="78" cy="64" r="7" fill="#FFF6E8"/>
+     <rect y="176" width="300" height="54" fill="#6B3A1E"/>
+     <path d="M30 176 V138 L70 108 L110 138 V176 Z" fill="#3A2318"/><rect x="60" y="150" width="18" height="26" fill="#F7C98B"/><rect x="86" y="142" width="14" height="12" fill="#F7C98B"/>
+     <path d="M210 176 L218 118 M254 176 L246 118 M214 150 H250 M216 135 L248 160 M248 135 L216 160" stroke="#3A2318" stroke-width="3"/>
+     <rect x="204" y="92" width="56" height="30" rx="6" fill="#3A2318"/><path d="M200 94 L232 74 L264 94 Z" fill="#3A2318"/>
+     <path d="M120 176 V160 M135 176 V160 M150 176 V160 M165 176 V160 M116 166 H170" stroke="#3A2318" stroke-width="3"/>`,
+  "modern-family": sky("mf", "#F4C9A6", "#B0614E") +
+    `<rect y="182" width="300" height="48" fill="#6E8B5E"/>
+     <path d="M18 182 V124 L60 92 L102 124 V182 Z" fill="#F6EAD9"/><path d="M12 128 L60 88 L108 128" fill="none" stroke="#8A3B2A" stroke-width="9" stroke-linejoin="round"/>
+     <path d="M110 182 V108 L156 70 L202 108 V182 Z" fill="#E9B872"/><path d="M104 112 L156 66 L208 112" fill="none" stroke="#5A3422" stroke-width="9" stroke-linejoin="round"/>
+     <path d="M210 182 V138 L246 112 L282 138 V182 Z" fill="#D9907E"/><path d="M204 142 L246 108 L288 142" fill="none" stroke="#7A3B4B" stroke-width="9" stroke-linejoin="round"/>
+     <g fill="#FFE2B0"><rect x="36" y="138" width="16" height="14"/><rect x="68" y="138" width="16" height="14"/><rect x="132" y="120" width="18" height="16"/><rect x="162" y="120" width="18" height="16"/><rect x="146" y="150" width="20" height="32" fill="#7A4A2A"/><rect x="236" y="150" width="20" height="16"/></g>
+     <circle cx="244" cy="24" r="6" fill="#E8394B"/><text x="256" y="29" fill="#FFF6E8" font-family="monospace" font-size="13" font-weight="700">REC</text>
+     <path d="M8 44 V8 H44 M256 8 H292 V44 M292 186 V222 H256 M44 222 H8 V186" fill="none" stroke="#FFF6E8" stroke-width="3" opacity=".85"/>`,
+  "emily": sky("em", "#F6C3A9", "#8A4356") +
+    `<circle cx="140" cy="100" r="66" fill="#FFDDB6" opacity=".55"/>
+     <path d="M140 18 L146 72 L162 124 L184 204 L166 204 Q140 158 114 204 L96 204 L118 124 L134 72 Z" fill="#3A1F2A"/>
+     <rect x="128" y="70" width="24" height="6" fill="#3A1F2A"/><rect x="112" y="120" width="56" height="7" fill="#3A1F2A"/>
+     <rect y="200" width="300" height="30" fill="#3A1F2A"/>
+     <path d="M0 200 V176 h22 v-10 h18 v10 h20 v24 Z M230 200 V170 h18 v-12 h22 v12 h30 v30 Z" fill="#5A2A38"/>
+     <rect x="214" y="96" width="58" height="100" rx="10" fill="#FFF6E8" stroke="#3A1F2A" stroke-width="3"/>
+     <path d="M243 152 c-14 -10 -20 -18 -12 -26 c5 -5 11 -2 12 3 c1 -5 7 -8 12 -3 c8 8 2 16 -12 26 Z" fill="#E8394B"/>
+     <rect x="226" y="166" width="34" height="5" rx="2" fill="#D9907E"/><rect x="226" y="176" width="22" height="5" rx="2" fill="#D9907E"/>`,
+  "superstore": sky("ss", "#F3C47C", "#9C4A2A") +
+    `<g fill="#5A3422" opacity=".35"><rect x="0" y="60" width="300" height="6"/><rect x="0" y="100" width="300" height="6"/><rect x="0" y="140" width="300" height="6"/></g>
+     <g opacity=".45"><rect x="10" y="40" width="18" height="20" fill="#E8394B"/><rect x="34" y="44" width="14" height="16" fill="#FFF6E8"/><rect x="54" y="38" width="20" height="22" fill="#6E8B5E"/><rect x="230" y="80" width="18" height="20" fill="#3D5A8A"/><rect x="254" y="84" width="22" height="16" fill="#FFF6E8"/><rect x="20" y="118" width="22" height="22" fill="#E1A05A"/></g>
+     <path d="M200 0 V42 M250 0 V42" stroke="#3A2318" stroke-width="2"/><rect x="176" y="40" width="100" height="42" rx="6" fill="#E8394B"/>
+     <text x="226" y="70" text-anchor="middle" fill="#FFF6E8" font-family="Impact, 'Arial Black', sans-serif" font-size="26" letter-spacing="2">SALE</text>
+     <rect y="206" width="300" height="24" fill="#5A3824"/>
+     <rect x="70" y="112" width="26" height="30" fill="#6E8B5E"/><rect x="100" y="104" width="20" height="38" fill="#FFF6E8"/><rect x="124" y="116" width="34" height="26" fill="#E1A05A"/><rect x="162" y="110" width="22" height="32" fill="#3D5A8A"/>
+     <path d="M52 128 H206 L190 182 H70 Z" fill="rgba(255,246,232,.18)" stroke="#FFF6E8" stroke-width="5" stroke-linejoin="round"/>
+     <path d="M52 128 L40 104 H22 M96 128 L104 182 M140 128 V182 M184 128 L170 182 M60 155 H198" stroke="#FFF6E8" stroke-width="4" stroke-linecap="round"/>
+     <circle cx="84" cy="198" r="10" fill="#3A2318" stroke="#FFF6E8" stroke-width="4"/><circle cx="176" cy="198" r="10" fill="#3A2318" stroke="#FFF6E8" stroke-width="4"/>`,
+  "office": sky("of", "#DCC7A2", "#6B5A44") +
+    `<rect x="150" y="12" width="140" height="112" fill="#8FB0C8" opacity=".55"/>
+     ${Array.from({ length: 10 }, (_, i) => `<rect x="150" y="${14 + i * 11}" width="140" height="7" fill="#F3E2C8" opacity=".8"/>`).join("")}
+     <path d="M220 12 V124" stroke="#5A4A36" stroke-width="2"/>
+     <rect y="166" width="300" height="16" fill="#5A3824"/><rect y="182" width="300" height="48" fill="#3F2618"/>
+     <rect x="26" y="146" width="76" height="20" fill="#FFFBF4" stroke="#CDB497"/><rect x="30" y="134" width="72" height="14" fill="#FFFBF4" stroke="#CDB497" transform="rotate(-4 66 140)"/><rect x="28" y="122" width="74" height="14" fill="#FFFBF4" stroke="#CDB497" transform="rotate(3 66 128)"/>
+     <rect x="116" y="152" width="78" height="14" rx="5" fill="#8A2E22"/><path d="M120 152 Q120 132 150 132 H190 Q196 132 196 140 V148 H124 Z" fill="#B4472F"/><rect x="186" y="140" width="10" height="12" fill="#5A1E16"/>
+     <rect x="214" y="122" width="42" height="44" rx="6" fill="#F6EAD9"/><path d="M256 132 q14 0 14 11 q0 11 -14 11" fill="none" stroke="#F6EAD9" stroke-width="6"/>
+     <rect x="222" y="136" width="26" height="12" rx="2" fill="#E1A05A"/>`,
+  "b99": sky("b99", "#3E4A66", "#141A26") +
+    `${[[30, 20], [80, 40], [130, 14], [260, 30], [200, 18], [280, 60], [20, 70]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.6" fill="#FFF3E2"/>`).join("")}<circle cx="246" cy="44" r="16" fill="#F7E3C0" opacity=".9"/>
+     <rect y="176" width="300" height="54" fill="#1A2233"/>
+     ${[0, 1, 2, 3, 4].map(i => `<rect x="${30 + i * 52}" y="${190 + (i % 2) * 14}" width="${26 + (i % 3) * 8}" height="2" fill="#F7C98B" opacity=".35"/>`).join("")}
+     <path d="M0 168 H300 V176 H0 Z" fill="#0E121C"/>
+     <path d="M80 60 L0 160 M80 60 L40 168 M80 60 L120 168 M80 60 L150 140 M220 60 L300 160 M220 60 L260 168 M220 60 L180 168 M220 60 L150 140" stroke="#0E121C" stroke-width="1.6"/>
+     <rect x="68" y="56" width="24" height="120" fill="#0E121C"/><rect x="208" y="56" width="24" height="120" fill="#0E121C"/>
+     <path d="M72 100 v-12 a4 4 0 0 1 8 0 v12 Z M80 100 v-12 a4 4 0 0 1 8 0 v12 Z M212 100 v-12 a4 4 0 0 1 8 0 v12 Z M220 100 v-12 a4 4 0 0 1 8 0 v12 Z" fill="#2A3550"/>
+     <circle cx="150" cy="118" r="38" fill="#C98A3E" stroke="#FFE2B0" stroke-width="4"/>
+     <path d="M150 88 L158 108 L180 110 L163 124 L168 146 L150 134 L132 146 L137 124 L120 110 L142 108 Z" fill="#8A5A26" stroke="#FFE2B0" stroke-width="2"/>`,
+  "good-place": sky("gp", "#CFE6C8", "#5E8F7A") +
+    `<circle cx="150" cy="96" r="70" fill="#FFF3D0" opacity=".55"/>
+     <g fill="#FFFBF4" opacity=".92"><circle cx="40" cy="60" r="18"/><circle cx="62" cy="52" r="22"/><circle cx="86" cy="62" r="16"/><rect x="40" y="60" width="50" height="18" rx="9"/><circle cx="226" cy="40" r="16"/><circle cx="248" cy="34" r="20"/><circle cx="270" cy="44" r="14"/><rect x="226" y="40" width="46" height="16" rx="8"/></g>
+     <path d="M126 168 L174 168 L230 230 L70 230 Z" fill="#FFF3D0" opacity=".45"/>
+     <rect y="168" width="300" height="62" fill="#7FB08A"/><ellipse cx="150" cy="170" rx="120" ry="10" fill="#9CC5A1"/>
+     <rect x="120" y="70" width="60" height="100" rx="4" fill="#5A3824"/><rect x="128" y="78" width="44" height="92" fill="#FFF0C8"/>
+     <path d="M128 78 L112 70 V176 L128 170 Z" fill="#7FA36E"/><circle cx="117" cy="124" r="3" fill="#E1A05A"/>`,
+  "ted-lasso": sky("tl", "#A3C083", "#3F5A33") +
+    `${[0, 1, 2, 3, 4, 5].map(i => `<rect x="${i * 50}" y="0" width="25" height="230" fill="#FFFFFF" opacity=".06"/>`).join("")}
+     <rect x="40" y="36" width="220" height="112" fill="none" stroke="#FFFBF4" stroke-width="6"/>
+     ${Array.from({ length: 10 }, (_, i) => `<path d="M${62 + i * 20} 39 V148" stroke="#FFFBF4" stroke-width="1" opacity=".4"/>`).join("")}${Array.from({ length: 5 }, (_, i) => `<path d="M43 ${58 + i * 20} H257" stroke="#FFFBF4" stroke-width="1" opacity=".4"/>`).join("")}
+     <path d="M0 196 H300" stroke="#FFFBF4" stroke-width="3" opacity=".6"/>
+     <circle cx="104" cy="184" r="28" fill="#FFFBF4" stroke="#2B2F28" stroke-width="2"/>
+     <path d="M104 172 L115 180 L111 193 L97 193 L93 180 Z" fill="#2B2F28"/><path d="M104 172 V158 M115 180 L129 175 M111 193 L119 206 M97 193 L89 206 M93 180 L79 175" stroke="#2B2F28" stroke-width="2"/>
+     <ellipse cx="226" cy="204" rx="34" ry="7" fill="#F6EAD9"/><path d="M204 176 H248 Q246 202 226 202 Q206 202 204 176 Z" fill="#FFFBF4"/><path d="M248 182 q12 0 12 8 q0 8 -12 8" fill="none" stroke="#FFFBF4" stroke-width="5"/>
+     <ellipse cx="226" cy="177" rx="22" ry="4" fill="#B47A4A"/>` + steam(214, 168),
+  "shark-tank": sky("st", "#2E5B7C", "#0D1C2A") +
+    `<path d="M40 0 L80 0 L130 140 L110 140 Z M170 0 L200 0 L230 140 L205 140 Z" fill="#FFE2B0" opacity=".08"/>
+     ${[[52, 58], [86, 34], [118, 66], [236, 40], [262, 76]].map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${13 - (i % 2) * 2}" fill="#E1A05A" stroke="#FFE2B0" stroke-width="2.5"/><text x="${x}" y="${y + 5}" text-anchor="middle" fill="#7A4A1A" font-family="Georgia, serif" font-weight="700" font-size="14">$</text>`).join("")}
+     <path d="M0 146 Q25 136 50 146 T100 146 T150 146 T200 146 T250 146 T300 146 V230 H0 Z" fill="#163650"/>
+     <path d="M0 170 Q25 162 50 170 T100 170 T150 170 T200 170 T250 170 T300 170" fill="none" stroke="#9CC5E0" stroke-width="2" opacity=".35"/>
+     <path d="M136 148 Q160 86 204 62 Q188 108 198 148 Z" fill="#081420"/>
+     <path d="M118 152 Q160 140 214 152" fill="none" stroke="#CFE6F5" stroke-width="3" opacity=".7"/>`,
+  "suits": sky("su", "#4C516C", "#15171F") +
+    `<rect x="0" y="80" width="54" height="150" fill="#0F1118"/>${towerWindows(0, 80, 54, 150)}
+     <rect x="60" y="40" width="46" height="190" fill="#12141C"/>${towerWindows(60, 40, 46, 190)}
+     <rect x="196" y="56" width="50" height="174" fill="#12141C"/>${towerWindows(196, 56, 50, 174)}
+     <rect x="250" y="100" width="50" height="130" fill="#0F1118"/>${towerWindows(250, 100, 50, 130)}
+     <path d="M112 230 V150 L150 130 L188 150 V230 Z" fill="#F6EAD9"/>
+     <path d="M112 150 L150 172 L130 186 Z M188 150 L150 172 L170 186 Z" fill="#E6D5BC"/>
+     <path d="M140 160 H160 L156 176 H144 Z" fill="#8A2E22"/><path d="M144 176 H156 L166 226 L150 238 L134 226 Z" fill="#B4472F"/>
+     <path d="M140 190 L162 182 M138 204 L164 194 M136 218 L166 206" stroke="#E1A05A" stroke-width="3" opacity=".8"/>`,
+  "silicon-valley": sky("sv", "#F5A75C", "#5A2E1E") +
+    `<circle cx="150" cy="118" r="56" fill="#FFD48E"/>
+     <rect y="150" width="300" height="80" fill="#3A1F14"/>
+     <path d="M0 96 Q60 140 60 96 M60 46 Q150 150 240 46 M240 96 Q240 140 300 96" fill="none" stroke="#A8432A" stroke-width="3"/>
+     <rect x="52" y="40" width="14" height="112" fill="#A8432A"/><rect x="234" y="40" width="14" height="112" fill="#A8432A"/>
+     <rect x="0" y="142" width="300" height="8" fill="#A8432A"/>
+     ${Array.from({ length: 13 }, (_, i) => `<path d="M${72 + i * 13} ${100 - Math.round(40 * Math.sin(Math.PI * (i + 1) / 14))} V142" stroke="#A8432A" stroke-width="1"/>`).join("")}
+     <rect x="92" y="160" width="116" height="60" rx="5" fill="#241610" stroke="#F6EAD9" stroke-width="3"/>
+     <rect x="102" y="170" width="40" height="4" rx="2" fill="#E1A05A"/><rect x="110" y="180" width="60" height="4" rx="2" fill="#9CC5A1"/><rect x="110" y="190" width="44" height="4" rx="2" fill="#D9907E"/><rect x="102" y="200" width="30" height="4" rx="2" fill="#E1A05A"/>
+     <path d="M80 222 H220 L210 230 H90 Z" fill="#D9C2A2"/>`,
+};
+function posterBg(s) {
+  const u = coverOf(s.id);
+  return u ? `background:url('${u}') center/cover no-repeat,#3A2318` : `background:linear-gradient(135deg,${s.c[0]},${s.c[1]})`;
+}
+function shrink(file, max = 640) {
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      c.toBlob(b => b ? res(b) : rej(new Error("encode")), "image/jpeg", 0.85);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error("decode")); };
+    img.src = url;
+  });
+}
+const blobToDataURL = b => new Promise(r => { const f = new FileReader(); f.onload = () => r(f.result); f.readAsDataURL(b); });
+$("#shows").addEventListener("change", async e => {
+  const id = e.target.dataset?.cover, file = e.target.files?.[0]; if (!id || !file) return;
+  const lbl = $("span", e.target.closest("label")); lbl.textContent = "上传中…";
+  try {
+    const blob = await shrink(file);
+    const assets = window.claude?.use ? await claude.use("assets") : null;
+    if (assets) {
+      const r = await assets.upload(blob);
+      S.covers = { ...(S.covers || {}), [id]: r.url }; delete localCovers[id]; save();
+    } else {
+      localCovers[id] = await blobToDataURL(blob);
+    }
+    try { localStorage.setItem(LSC, JSON.stringify(localCovers)); } catch {}
+    renderShows();
+  } catch { lbl.textContent = "上传失败，换张图试试"; }
+});
+$("#shows").addEventListener("click", e => {
+  const un = e.target.closest("[data-uncover]")?.dataset.uncover;
+  if (un) {
+    if (S.covers) delete S.covers[un]; delete localCovers[un];
+    try { localStorage.setItem(LSC, JSON.stringify(localCovers)); } catch {}
+    save(); renderShows(); return;
+  }
+  const id = e.target.closest("[data-pick]")?.dataset.pick; if (!id) return;
+  S.show = S.show === id ? null : id; save(); renderShows(); renderToday();
+});
+
+/* ============ CH 03 WORDS (spaced repetition) ============ */
+const INTERVALS = [1, 2, 4, 7, 15, 30, 60];
+const dueCards = () => S.cards.filter(c => c.due <= dkey());
+const addedToday = () => S.cards.filter(c => c.added === dkey() && !c.sample).length;
+function addCard({ word, mean, ex, src }) {
+  if (!word) return "先填单词或短语。";
+  if (addedToday() >= 15) return "今天已经加了 15 张，留到明天吧，贪多记不住。";
+  if (S.cards.some(c => !c.sample && c.word.toLowerCase() === word.toLowerCase())) return "这张卡已经有了。";
+  S.cards.unshift({ id: uid(), word, mean, ex, src, lvl: 0, due: dkey(), added: dkey() });
+  save(); renderWords(); renderToday();
+  return "";
+}
+let flipped = false, curCard = null;
+function renderFlash() {
+  const due = dueCards();
+  curCard = due[0] || null;
+  const f = $("#flash"), rate = $("#rate");
+  if (!curCard) {
+    f.innerHTML = `<div><div class="w">ALL CLEAR</div><p class="ex" style="margin-top:8px">今天到期的卡片都复习完了。去看剧收新词，或者用左边的台词拆解机。</p></div>`;
+    rate.hidden = true;
+    const rec = S.days[dkey()];
+    if (S.cards.length && rec && !rec.steps[5]) { rec.steps[5] = true; save(); renderToday(); }
+    return;
+  }
+  f.innerHTML = `<div style="display:grid;gap:10px;justify-items:center">
+    <div class="src">${esc(curCard.src || "")}${curCard.sample ? " · 示例卡" : ""}</div>
+    <div class="w">${esc(curCard.word)}</div>
+    <div class="ex">${esc(curCard.ex || "")}</div>
+    ${flipped ? `<div class="mean">${esc(curCard.mean || "（没填中文意思）")}</div>` : `<button class="btn" id="flipBtn">看答案</button>`}
+    <button class="speak" style="justify-self:center;color:#7A2E1C" id="cardSpeak">朗读</button></div>`;
+  rate.hidden = !flipped;
+  $("#flipBtn")?.addEventListener("click", () => { flipped = true; renderFlash(); });
+  $("#cardSpeak").onclick = () => speak(curCard.ex || curCard.word);
+}
+$("#rate").addEventListener("click", e => {
+  const r = e.target.closest("[data-r]")?.dataset.r; if (r == null || !curCard) return;
+  const c = curCard;
+  if (r === "0") { c.lvl = 0; c.due = addDays(dkey(), 1); }
+  else if (r === "1") { c.due = addDays(dkey(), Math.max(1, Math.ceil(INTERVALS[c.lvl] / 2))); }
+  else { c.due = addDays(dkey(), INTERVALS[Math.min(c.lvl, INTERVALS.length - 1)]); c.lvl = Math.min(c.lvl + 1, INTERVALS.length - 1); }
+  flipped = false; save(); renderWords(); renderToday();
+});
+function renderWords() {
+  const due = dueCards();
+  $("#cDue").textContent = "待复习 " + due.length;
+  $("#cAll").textContent = "共 " + S.cards.length + " 张";
+  $("#cNew").textContent = `今日新增 ${addedToday()}/15`;
+  $("#clearEx").hidden = !S.cards.some(c => c.sample);
+  $("#wlist").innerHTML = S.cards.length ? S.cards.map(c => `
+    <div class="witem">
+      <div><div class="w">${esc(c.word)}${c.sample ? '<span class="tag-ex">示例</span>' : ""} <span class="x">${esc(c.mean)}</span></div>
+      <div class="x">${esc(c.ex)}</div></div>
+      <div style="display:grid;gap:4px;justify-items:end"><span class="due">${c.due <= dkey() ? "今天" : c.due.slice(5)}</span>
+      <button class="btn sm ghost" data-del="${c.id}">删除</button></div>
+    </div>`).join("") : `<p class="muted">还没有卡片。看剧时遇到的词，连原句一起加进来。</p>`;
+  renderFlash();
+}
+$("#wlist").addEventListener("click", e => {
+  const id = e.target.closest("[data-del]")?.dataset.del; if (!id) return;
+  S.cards = S.cards.filter(c => c.id !== id); save(); renderWords(); renderToday();
+});
+$("#clearEx").onclick = () => { S.cards = S.cards.filter(c => !c.sample); save(); renderWords(); renderToday(); };
+$("#wAdd").onclick = () => {
+  const msg = addCard({ word: $("#wWord").value.trim(), mean: $("#wMean").value.trim(), ex: $("#wEx").value.trim(), src: $("#wSrc").value.trim() });
+  $("#wMsg").textContent = msg || "已加入";
+  if (!msg) ["#wWord", "#wMean", "#wEx"].forEach(s => $(s).value = "");
+};
+$("#lineSpeak").onclick = () => speak($("#lineIn").value.trim());
+$("#lineBtn").onclick = async () => {
+  const line = $("#lineIn").value.trim(), out = $("#lineOut"), btn = $("#lineBtn");
+  if (!line) { out.innerHTML = `<p class="err">先粘贴一句台词。</p>`; return; }
+  btn.disabled = true; out.innerHTML = `<p class="muted">AI 正在拆解…</p>`;
+  try {
+    const r = await askJSON(
+`Explain this line of American English dialogue to a Chinese adult learner.
+Line: """${line.slice(0, 1200)}"""
+Reply with ONLY a JSON object:
+{"zh": natural Simplified Chinese translation,
+ "vibe": one sentence in Simplified Chinese on tone, who would say it and when,
+ "phrases": 1-4 items, the idioms/slang/useful chunks in the line [{"phrase": as used, "zh": meaning in Simplified Chinese, "example": a NEW short everyday example sentence}],
+ "sound": one tip in Simplified Chinese on how it is actually pronounced (linking, reductions like gonna/wanna)}`, { modelTier: "quick" });
+    const src = $("#lineSrc").value.trim();
+    out.innerHTML = `
+      <div><div class="eyebrow">意思</div><p style="font-size:16px;font-weight:700;margin-top:2px">${esc(r.zh)}</p></div>
+      <p>${esc(r.vibe)}</p>
+      ${(r.phrases || []).map((p, i) => `<div class="phr"><div><b>${esc(p.phrase)}</b> · ${esc(p.zh)}<div class="x">${esc(p.example)}</div></div><button class="btn sm" data-addp="${i}">加入词卡</button></div>`).join("")}
+      <p class="note"><b>发音：</b>${esc(r.sound)}</p>`;
+    out.onclick = e => {
+      const i = e.target.closest("[data-addp]")?.dataset.addp; if (i == null) return;
+      const p = r.phrases[+i];
+      const msg = addCard({ word: p.phrase, mean: p.zh, ex: line, src: src || "台词拆解" });
+      e.target.textContent = msg ? msg.slice(0, 8) : "已加入"; e.target.disabled = true;
+    };
+  } catch (e) { e?.code === "unavailable_here" ? noAI(out) : out.innerHTML = `<p class="err">${aiErr(e)}</p>`; }
+  finally { btn.disabled = false; }
+};
+
+/* ============ CH 04 TALK ============ */
+const SCENES = [
+  { id: "coffee", t: "咖啡店点单", d: "在纽约咖啡店点一杯定制咖啡", role: "a friendly but busy barista at a New York coffee shop", you: "a customer ordering" },
+  { id: "roommate", t: "室友吐槽", d: "和美国室友聊昨晚的剧和周末计划", role: "the learner's laid-back American roommate who loves TV shows", you: "the roommate" },
+  { id: "pitch", t: "Shark Tank 路演", d: "向投资人推销你的电商品牌", role: "a sharp but fair investor on a Shark Tank-style pitch show, asking about sales, margins and valuation", you: "a founder pitching a DTC e-commerce brand" },
+  { id: "client", t: "海外客户电话", d: "给美国商家讲清楚建站产品的功能", role: "a US small-business owner who sells candles online and is considering a new e-commerce website platform", you: "a customer success manager explaining features" },
+  { id: "office", t: "茶水间闲聊", d: "周一早上和同事 small talk", role: "a chatty American coworker in the office kitchen on a Monday morning", you: "a coworker" },
+  { id: "diner", t: "美式餐厅", d: "在路边 diner 点早餐，提要求", role: "an old-school American diner waitress, warm and quick", you: "a customer" },
+];
+let scene = null, turns = [], talkCtl = null;
+function renderScenes() {
+  $("#scenes").innerHTML = SCENES.map(s => `<button class="scene" data-s="${s.id}" aria-pressed="${scene?.id === s.id}"><b>${s.t}</b><span>${s.d}</span></button>`).join("");
+}
+function rulesFor(s) {
+  return `Role-play for English practice. You play ${s.role}. The learner plays ${s.you}. The learner is a Chinese adult improving spoken American English.
+Rules: stay in character; reply in natural, casual American English, 1-3 short sentences; ask a question back to keep the scene going; use one useful idiom when it fits.
+If the learner writes Chinese, show how to say it in English inside "fixes" and continue the scene.
+Reply with ONLY a JSON object:
+{"reply": your in-character line,
+ "fixes": 0-2 items about the learner's LAST message only [{"you": what they wrote, "better": a more natural way to say it, "why": very short reason in Simplified Chinese}] (empty array if it was already natural or this is the opening),
+ "hint": one short Simplified Chinese hint about what the learner could say next}`;
+}
+function addMsg(who, text, extra = "") {
+  const div = document.createElement("div");
+  div.className = "msg " + who;
+  div.innerHTML = `<div class="who">${who === "ai" ? "SCENE PARTNER" : "YOU"}</div><div class="bub">${esc(text)}</div>${extra}`;
+  $("#chat").append(div); $("#chat").scrollTop = $("#chat").scrollHeight;
+  return div;
+}
+async function talkTurn(userText, display = true) {
+  if (!scene) return;
+  if (display) addMsg("me", userText);
+  turns.push({ role: "user", content: userText });
+  const thinking = addMsg("ai", "…");
+  $("#talkSend").disabled = true; $("#talkStop").hidden = false;
+  talkCtl = new AbortController();
+  try {
+    const r = await askJSON([{ role: "user", content: rulesFor(scene) }, ...turns.slice(-16)], { modelTier: "quick", cache: false, signal: talkCtl.signal });
+    turns.push({ role: "assistant", content: String(r.reply || "") });
+    const fixes = (r.fixes || []).map(f => `<div><s>${esc(f.you)}</s> → <b>${esc(f.better)}</b> <span class="muted">${esc(f.why)}</span></div>`).join("");
+    thinking.remove();
+    const m = addMsg("ai", r.reply,
+      `<button class="speak">朗读这句</button>${fixes || r.hint ? `<div class="coach">${fixes}${r.hint ? `<div class="muted">下一句可以说：${esc(r.hint)}</div>` : ""}</div>` : ""}`);
+    $(".speak", m).onclick = () => speak(r.reply);
+  } catch (e) {
+    thinking.remove(); turns.pop();
+    if (e?.code !== "cancelled") addMsg("ai", e?.code === "unavailable_here" ? "这里用不了 AI 对练，请在 claude.ai 里打开这个网页。" : aiErr(e));
+  } finally { $("#talkSend").disabled = false; $("#talkStop").hidden = true; }
+}
+function startScene(s) {
+  talkCtl?.abort();
+  scene = s; turns = []; $("#chat").innerHTML = "";
+  $("#sceneTitle").textContent = "正在演：" + s.t;
+  $("#talkIn").placeholder = "输入你的台词（英文为主，卡住了可以打中文）";
+  renderScenes();
+  talkTurn("(Start the scene now with your first line to me.)", false);
+}
+$("#scenes").addEventListener("click", e => { const id = e.target.closest("[data-s]")?.dataset.s; if (id) startScene(SCENES.find(s => s.id === id)); });
+$("#talkSend").onclick = () => { const t = $("#talkIn").value.trim(); if (!t || !scene) return; $("#talkIn").value = ""; talkTurn(t); };
+$("#talkIn").addEventListener("keydown", e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) $("#talkSend").click(); });
+$("#talkStop").onclick = () => talkCtl?.abort();
+$("#talkReset").onclick = () => { if (scene) startScene(scene); };
+function renderTalkIdle() {
+  $("#chat").innerHTML = `<p class="muted" style="align-self:center;text-align:center">上面选一个场景，AI 会先开口。</p>`;
+}
+
+/* ============ CH 05 FUN ============ */
+const CHALLENGES = [
+  ["用 3 句话介绍你最喜欢的一部剧", "说清楚：剧名、讲什么、你为什么喜欢"],
+  ["点一杯超复杂的咖啡", "至少提 3 个要求：大小、奶、糖、温度…"],
+  ["1 分钟说说今天的工作", "用上 first / then / after that 串起来"],
+  ["向美国客户介绍一个产品功能", "假装对方完全不懂，讲清它能帮他赚什么钱"],
+  ["模仿一句你记得的美剧台词语气", "同一句话用开心、生气、无奈三种语气各说一遍"],
+  ["吐槽一件小事", "用上 “It drives me crazy when…”"],
+  ["给朋友推荐一家餐厅", "用上 must-try 和 a little pricey but worth it"],
+  ["讲一个你搞砸过的事", "用上 drop the ball 或 my bad"],
+  ["30 秒电梯演讲", "介绍你的公司是做什么的，最后要一个下次沟通的时间"],
+  ["描述你理想的周末", "全部用 would / I'd love to 句式"],
+  ["说服朋友一起去旅行", "给出 3 个理由，用上 trust me"],
+  ["当 1 分钟天气主播", "播报你所在城市明天的天气，要有主播腔"],
+];
+let chIdx = -1, surfing = false;
+$("#surf").onclick = () => {
+  if (surfing) return; surfing = true;
+  const scr = $("#screen"); scr.classList.add("static");
+  $("#chBig").textContent = ""; $("#chSmall").textContent = "";
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  setTimeout(() => {
+    let n; do { n = Math.floor(Math.random() * CHALLENGES.length); } while (n === chIdx && CHALLENGES.length > 1);
+    chIdx = n; scr.classList.remove("static");
+    $("#chn").textContent = "CH " + pad(10 + n);
+    $("#chBig").textContent = CHALLENGES[n][0];
+    $("#chSmall").textContent = CHALLENGES[n][1] + " · 计时 2 分钟，录音回听";
+    surfing = false;
+  }, reduce ? 0 : 650);
+};
+$("#chSpeak").onclick = () => { if (chIdx >= 0) speak(CHALLENGES[chIdx][1]); };
+
+const SLANG = [
+  { q: "spill the tea", a: "八卦一下，说说内幕", w: ["把茶洒了", "请客喝茶", "说实话"], ex: "Okay, spill the tea. What happened at the party?" },
+  { q: "no cap", a: "不骗你，说真的", w: ["没戴帽子", "没有上限", "别开玩笑"], ex: "That was the best burger I've ever had, no cap." },
+  { q: "I'm down", a: "我愿意，算我一个", w: ["我很沮丧", "我躺下了", "我输了"], ex: "Movie night? I'm down." },
+  { q: "bail", a: "临时放鸽子、开溜", w: ["保释", "舀水", "付账"], ex: "Sorry, I have to bail tonight. Something came up." },
+  { q: "my bad", a: "我的错", w: ["我很坏", "我生病了", "我不行了"], ex: "Oh, my bad, I thought this seat was free." },
+  { q: "ghost someone", a: "突然不回消息，人间蒸发", w: ["吓唬某人", "冒充某人", "怀念某人"], ex: "We went on two dates and then he ghosted me." },
+  { q: "low-key", a: "有点儿、暗暗地", w: ["低调的钥匙", "声音很小", "很便宜"], ex: "I low-key want to binge the whole season tonight." },
+  { q: "salty", a: "不爽、酸溜溜", w: ["很咸", "很能干", "很老练"], ex: "He's still salty about losing the game." },
+  { q: "rain check", a: "改天吧（婉拒并约下次）", w: ["查天气", "雨天退票", "检查屋顶"], ex: "Can I take a rain check on lunch? I'm swamped today." },
+  { q: "ballpark figure", a: "大概的数字", w: ["球场票价", "准确报价", "体育比分"], ex: "Can you give me a ballpark figure for the shipping cost?" },
+  { q: "circle back", a: "回头再聊这件事", w: ["绕圈子", "原路返回", "画个圈"], ex: "Let's circle back on pricing next week." },
+  { q: "piece of cake", a: "小菜一碟", w: ["一块蛋糕", "分一杯羹", "甜头"], ex: "Setting up the store was a piece of cake." },
+  { q: "hit the sack", a: "去睡觉", w: ["打沙袋", "被开除", "去购物"], ex: "I'm beat. I'm gonna hit the sack." },
+  { q: "on the fence", a: "犹豫不决", w: ["在篱笆上", "被困住", "很安全"], ex: "I'm still on the fence about which plan to buy." },
+  { q: "binge-watch", a: "一口气刷完剧", w: ["边吃边看", "偷看", "看重播"], ex: "We binge-watched the whole season in one weekend." },
+  { q: "That's on me", a: "这事怪我／这顿我请", w: ["我在上面", "我穿着呢", "我负责开车"], ex: "Forget the bill — that's on me." },
+  { q: "slay", a: "太厉害了、绝了", w: ["杀死", "滑雪", "慢慢来"], ex: "Your presentation today? You slayed." },
+  { q: "go the extra mile", a: "多做一步、额外用心", w: ["多跑一英里", "绕远路", "加班到很晚"], ex: "Great sellers go the extra mile with handwritten thank-you notes." },
+];
+let slRound = [], slI = 0, slScore = 0;
+function slStart() {
+  const pool = SLANG.concat(S.extraSlang || []);
+  slRound = shuffle(pool).slice(0, 8); slI = 0; slScore = 0; slShow();
+}
+function slShow() {
+  $("#slScore").textContent = `${slScore} / ${slI}`;
+  $("#slBest").textContent = "最佳 " + (S.quizBest || 0);
+  $("#slBar").style.width = (slI / slRound.length * 100) + "%";
+  const body = $("#slBody");
+  if (slI >= slRound.length) {
+    if (slScore > (S.quizBest || 0)) { S.quizBest = slScore; save(); }
+    body.innerHTML = `<div class="qprompt">本轮 ${slScore} / ${slRound.length}</div>
+      <p class="muted">${slScore >= 7 ? "很地道！可以去 CH 04 用上这些词。" : slScore >= 4 ? "不错，错的那几个加进词卡吧。" : "这些都是美剧高频词，多刷两轮就熟了。"}</p>
+      <div class="row"><button class="btn" id="slAgain">再来一轮</button></div>`;
+    $("#slAgain").onclick = slStart; $("#slBest").textContent = "最佳 " + S.quizBest;
+    return;
+  }
+  const it = slRound[slI], opts = shuffle([it.a, ...it.w.slice(0, 3)]);
+  body.innerHTML = `<div class="qprompt">“${esc(it.q)}” 是什么意思？</div>
+    <div class="opts">${opts.map(o => `<button class="opt" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div><div id="slExp"></div>`;
+  $(".opts", body).onclick = e => {
+    const b = e.target.closest(".opt"); if (!b) return;
+    const ok = b.dataset.o === it.a; if (ok) slScore++;
+    $$(".opt", body).forEach(x => { x.disabled = true; if (x.dataset.o === it.a) x.classList.add("right"); });
+    if (!ok) b.classList.add("wrong");
+    $("#slExp").innerHTML = `<div class="explain"><b>${esc(it.q)}</b>：${esc(it.a)}<br><span class="muted">${esc(it.ex)}</span></div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="slNext">下一题</button><button class="btn sm ghost" id="slSay">朗读例句</button><button class="btn sm ghost" id="slAdd">加入词卡</button></div>`;
+    $("#slNext").onclick = () => { slI++; slShow(); };
+    $("#slSay").onclick = () => speak(it.ex);
+    $("#slAdd").onclick = ev => { const m = addCard({ word: it.q, mean: it.a, ex: it.ex, src: "俚语快问快答" }); ev.target.textContent = m ? "加不了" : "已加入"; ev.target.disabled = true; };
+    $("#slScore").textContent = `${slScore} / ${slI + 1}`;
+  };
+}
+
+const SCENES_FILL = [
+  { set: "公寓客厅，周五晚上", a: "You look exhausted. Rough week?", b: "The worst. I ___ last night finishing the report.", ans: "pulled an all-nighter", w: ["made an all-nighter", "stayed an all-night"], why: "pull an all-nighter 是固定搭配：熬通宵。" },
+  { set: "咖啡店排队", a: "What can I get started for you?", b: "___ a large iced latte with oat milk?", ans: "Can I get", w: ["I want to buy", "Please give me"], why: "点单最自然的开头是 Can I get / I'll have。" },
+  { set: "办公室，周一早上", a: "How was your weekend?", b: "Pretty chill. I just ___ and binged a new show.", ans: "stayed in", w: ["stayed at inside", "kept home"], why: "stay in = 宅在家里不出门。" },
+  { set: "朋友聚餐结账", a: "Let's split the bill.", b: "No way, it's my birthday treat. ___.", ans: "It's on me", w: ["It's my pay", "I pay it all"], why: "It's on me = 我请客，美剧里出现率极高。" },
+  { set: "电商团队开会", a: "Sales dropped 20% last week.", b: "Okay, let's not ___. We'll check the ad data first.", ans: "jump to conclusions", w: ["jump the conclusion", "run to results"], why: "jump to conclusions = 急着下结论。" },
+  { set: "约会后发消息", a: "So... did you have fun tonight?", b: "Honestly? I had a blast. We should ___ sometime.", ans: "do this again", w: ["make this again", "repeat this one more"], why: "We should do this again 是想再约的标准说法。" },
+  { set: "合租室友", a: "Who ate my leftover pizza?", b: "Guilty. ___, I'll buy you a new one.", ans: "My bad", w: ["My wrong", "Sorry my fault me"], why: "My bad 轻松认错，口语常用。" },
+  { set: "客户电话", a: "Can you send me the pricing?", b: "Sure, I'll ___ it to you right after this call.", ans: "shoot", w: ["fire", "throw"], why: "shoot someone an email/it 是“发过去”的口语说法。" },
+];
+let scI = 0, scScore = 0, scOrder = [];
+function scStart() { scOrder = shuffle(SCENES_FILL); scI = 0; scScore = 0; scShow(); }
+function scShow() {
+  $("#scScore").textContent = `${scScore} / ${scI}`;
+  const body = $("#scBody");
+  if (scI >= scOrder.length) {
+    body.innerHTML = `<div class="qprompt">全部演完：${scScore} / ${scOrder.length}</div><div class="row"><button class="btn" id="scAgain">重新开演</button></div>`;
+    $("#scAgain").onclick = scStart; return;
+  }
+  const it = scOrder[scI], opts = shuffle([it.ans, ...it.w]);
+  body.innerHTML = `<div class="eyebrow">场景 · ${esc(it.set)}</div>
+    <div class="qline"><b>A:</b> ${esc(it.a)}<br><b>B:</b> ${esc(it.b).replace("___", "<b style='color:var(--red)'>_____</b>")}</div>
+    <div class="opts">${opts.map(o => `<button class="opt" data-o="${esc(o)}">${esc(o)}</button>`).join("")}</div><div id="scExp"></div>`;
+  $(".opts", body).onclick = e => {
+    const b = e.target.closest(".opt"); if (!b) return;
+    const ok = b.dataset.o === it.ans; if (ok) scScore++;
+    $$(".opt", body).forEach(x => { x.disabled = true; if (x.dataset.o === it.ans) x.classList.add("right"); });
+    if (!ok) b.classList.add("wrong");
+    const full = it.b.replace("___", it.ans);
+    $("#scExp").innerHTML = `<div class="explain">${esc(it.why)}</div>
+      <div class="row" style="margin-top:10px"><button class="btn" id="scNext">下一场</button><button class="btn sm ghost" id="scSay">朗读对话</button></div>`;
+    $("#scNext").onclick = () => { scI++; scShow(); };
+    $("#scSay").onclick = () => speak(it.a + " ... " + full);
+    $("#scScore").textContent = `${scScore} / ${scI + 1}`;
+  };
+}
+
+$("#genBtn").onclick = async () => {
+  const out = $("#genOut"), btn = $("#genBtn"), topic = $("#genTopic").value;
+  btn.disabled = true; out.innerHTML = `<p class="muted">AI 正在出题…</p>`;
+  try {
+    const have = SLANG.concat(S.extraSlang || []).map(s => s.q).join(", ");
+    const r = await askJSON(
+`Create 5 quiz items teaching common American English slang or idioms about: ${topic}. Audience: Chinese adult learners.
+Do not use any of these: ${have}.
+Reply with ONLY a JSON array of 5 objects:
+[{"q": the slang/idiom, "a": its correct meaning in Simplified Chinese (short), "w": three plausible but WRONG meanings in Simplified Chinese (array of 3 strings, e.g. literal misreadings), "ex": one natural everyday example sentence in English}]`, { modelTier: "quick", cache: false });
+    const items = (Array.isArray(r) ? r : []).filter(x => x && x.q && x.a && Array.isArray(x.w) && x.w.length >= 3)
+      .map(x => ({ q: String(x.q), a: String(x.a), w: x.w.slice(0, 3).map(String), ex: String(x.ex || "") }));
+    if (!items.length) throw { code: "invalid_json" };
+    S.extraSlang = (S.extraSlang || []).concat(items).slice(-60); save();
+    out.innerHTML = `<p>加好了 ${items.length} 道新题：${items.map(i => `<span class="pill" style="margin:2px">${esc(i.q)}</span>`).join("")}</p>
+      <div class="row"><button class="btn sm" id="genPlay">马上刷这一轮</button></div>`;
+    $("#genPlay").onclick = () => { slRound = shuffle(items); slI = 0; slScore = 0; slShow(); $("#slangCard").scrollIntoView({ behavior: "smooth" }); };
+  } catch (e) { e?.code === "unavailable_here" ? noAI(out) : out.innerHTML = `<p class="err">${aiErr(e)}</p>`; }
+  finally { btn.disabled = false; }
+};
+
+/* ============ ambience ============ */
+const REDUCE = matchMedia("(prefers-reduced-motion: reduce)").matches;
+(function greet() {
+  const h = new Date().getHours();
+  $("#greet").textContent =
+    h >= 5 && h < 11 ? "Good morning! 来杯英语配早餐？" :
+    h >= 11 && h < 17 ? "Afternoon pick-me-up? 下午也来一段吧" :
+    h >= 17 && h < 23 ? "Good evening. The usual? 今晚也来一集" :
+    "Burning the midnight oil? 夜深了，做最低版本就好";
+})();
+
+(function bulbs() {
+  const el = $("#bulbs"), N = 15, P = t => (1 - t) * (1 - t) * 4 + 2 * (1 - t) * t * 30 + t * t * 4;
+  el.innerHTML = `<svg viewBox="0 0 100 34" preserveAspectRatio="none"><path d="M0 4 Q50 30 100 4" fill="none" stroke="#1E120B" stroke-width="0.35" vector-effect="non-scaling-stroke" style="stroke-width:2px"/></svg>` +
+    Array.from({ length: N }, (_, i) => {
+      const t = (i + 0.5) / N;
+      return `<span class="bulb" style="left:${t * 100}%;top:${(P(t) / 34 * 50 - 1).toFixed(1)}px;--d:${(-Math.random() * 9).toFixed(2)}s"></span>`;
+    }).join("");
+})();
+
+(function bokeh() {
+  const cv = $("#bokeh"), ctx = cv.getContext("2d");
+  if (!ctx) return;
+  let W, H, dots = [];
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  function size() {
+    W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function seed() {
+    dots = Array.from({ length: Math.round(Math.min(34, W / 34)) }, () => ({
+      x: Math.random() * W, y: Math.random() * H, r: 18 + Math.random() * 64,
+      a: 0.04 + Math.random() * 0.1, vy: 0.05 + Math.random() * 0.18, vx: (Math.random() - 0.5) * 0.1,
+      hue: 26 + Math.random() * 18, ph: Math.random() * 6.28,
+    }));
+  }
+  function draw(time) {
+    ctx.clearRect(0, 0, W, H);
+    for (const d of dots) {
+      if (!REDUCE) { d.y -= d.vy; d.x += d.vx; if (d.y < -d.r) { d.y = H + d.r; d.x = Math.random() * W; } }
+      const a = d.a * (0.75 + 0.25 * Math.sin((time || 0) / 1800 + d.ph));
+      const g = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r);
+      g.addColorStop(0, `hsla(${d.hue},100%,68%,${a})`);
+      g.addColorStop(0.7, `hsla(${d.hue},100%,60%,${a * 0.5})`);
+      g.addColorStop(1, `hsla(${d.hue},100%,55%,0)`);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, 6.283); ctx.fill();
+    }
+    if (!REDUCE) requestAnimationFrame(draw);
+  }
+  size(); seed(); requestAnimationFrame(draw);
+  addEventListener("resize", () => { size(); seed(); if (REDUCE) draw(0); });
+})();
+
+/* café jukebox: freely licensed recordings published beside the page (loudness-matched), plus generated noise.
+   Every pick shuffles, and the rain/café beds hop to another recording each time one ends. */
+const shuffleArr = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const AMB = {
+  cafe: { t: "咖啡店人声", srcs: ["a/cafe.mp4", "a/restaurant.mp4"] },
+  rain: { t: "窗边雨声", srcs: ["a/rain-window.mp4", "a/rain-veranda.mp4", "a/rain-1.mp4", "a/rain-heavy.mp4", "a/rain-light.mp4"], rain: true },
+  white: { t: "白噪音", noise: "white" },
+  brown: { t: "棕噪音（更柔）", noise: "brown" },
+};
+const KM = "Kevin MacLeod";
+const TRACKS = {
+  lounge: [["Apero Hour", KM, "apero-hour"], ["Jazz Brunch", KM, "jazz-brunch"], ["Backbay Lounge", KM, "backbay-lounge"], ["Cool Vibes", KM, "cool-vibes"], ["Backed Vibes", KM, "backed-vibes"], ["Kool Kats", KM, "kool-kats"], ["I Knew a Guy", KM, "i-knew-a-guy"]],
+  bossa: [["Bossa Antigua", KM, "bossa-antigua"], ["Casa Bossa Nova", KM, "casa-bossa-nova"], ["BossaBossa", KM, "bossabossa"]],
+  piano: [["Evening Fall", KM, "evening-fall"], ["In Your Arms", KM, "in-your-arms"], ["Study and Relax", KM, "study-and-relax"]],
+  vintage: [["Krooked Blues (1923)", "King Oliver's Creole Jazz Band", "krooked-blues"], ["Riverboat Shuffle (1924)", "Bix Beiderbecke & The Wolverines", "riverboat-shuffle"]],
+};
+const PLAYLISTS = {
+  radio: { t: "随机电台", keys: ["lounge", "bossa", "piano", "vintage"] },
+  lounge: { t: "爵士 Lounge", keys: ["lounge"] },
+  bossa: { t: "Bossa Nova", keys: ["bossa"] },
+  piano: { t: "夜晚钢琴", keys: ["piano"] },
+  vintage: { t: "老唱片 1920s", keys: ["vintage"] },
+};
+const AUDIO_CREDITS = [
+  ["Cafe ambiance", "Marble Toast", "CC0", "Cafe_ambiance.ogg"],
+  ["Restaurant ambience", "stephan", "公共领域", "Restaurant_ambience.ogg"],
+  ["Rain against the window", "cori", "公共领域", "Rain_against_the_window.ogg"],
+  ["Rain on a veranda / Rain (1)", "ezwa", "公共领域", "Rain_on_a_veranda_and_t.ogg"],
+  ["Heavy rain in Glenshaw, PA", "Sage Ross", "CC BY-SA 3.0", "Heavy_rain_in_Glenshaw,_PA.ogg"],
+  ["Sound of light rainfall", "Mijesty", "CC BY-SA 4.0", "Sound_of_light_rainfall.ogg"],
+  ["Apero Hour · Jazz Brunch · Backbay Lounge · Cool Vibes · Backed Vibes · Kool Kats · I Knew a Guy · Bossa Antigua · Casa Bossa Nova · BossaBossa · Evening Fall · In Your Arms", "Kevin MacLeod (incompetech.com)", "CC BY 3.0", "Apero_Hour_(ISRC_USUAN1700070).mp3"],
+  ["Study and Relax", "Kevin MacLeod (incompetech.com)", "CC BY 4.0", "Study_And_Relax_by_Kevin_MacLeod.ogg"],
+  ["Krooked Blues (1923)", "King Oliver's Creole Jazz Band", "公共领域", "King_Oliver's_Creole_Jazz_Band--_\"Krooked_Blues\"_(1923).ogg"],
+  ["Riverboat Shuffle (1924)", "Bix Beiderbecke & Wolverine Orchestra", "公共领域", "Riverboat_Shuffle_-_Bix_Beiderbecke_&_Wolverine_Orchestra_(1924).ogg"],
+];
+const Juke = (() => {
+  const ambEl = new Audio(), musEl = new Audio();
+  ambEl.preload = "none"; musEl.preload = "none";
+  let amb = "off", mus = "off", queue = [], qi = 0, ambQueue = [], ai = 0, ac = null, noiseSrc = null, noiseGain = null;
+  const ambVol = () => $("#ambVol").value / 100, musVol = () => $("#musVol").value / 100;
+  function stopNoise() { try { noiseSrc?.stop(); } catch {} noiseSrc = null; }
+  function startNoise(kind) {
+    ac ??= new (window.AudioContext || window.webkitAudioContext)();
+    ac.resume();
+    const len = ac.sampleRate * 6, b = ac.createBuffer(2, len, ac.sampleRate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = b.getChannelData(ch); let last = 0;
+      for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; if (kind === "brown") { last = (last + 0.02 * w) / 1.02; d[i] = last * 3.5; } else d[i] = w; }
+    }
+    noiseSrc = ac.createBufferSource(); noiseSrc.buffer = b; noiseSrc.loop = true;
+    const f = ac.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = kind === "brown" ? 1200 : 6500;
+    noiseGain = ac.createGain(); noiseGain.kind = kind; noiseGain.gain.value = ambVol() * (kind === "brown" ? 0.6 : 0.18);
+    noiseSrc.connect(f).connect(noiseGain).connect(ac.destination); noiseSrc.start();
+  }
+  function playAmbNext() {
+    const a = AMB[amb]; if (!a?.srcs) return;
+    if (ai >= ambQueue.length) { ambQueue = shuffleArr(a.srcs); ai = 0; }
+    ambEl.src = ambQueue[ai++]; ambEl.volume = ambVol(); ambEl.play().catch(() => {});
+  }
+  ambEl.addEventListener("ended", playAmbNext);
+  function setAmb(k) {
+    amb = amb === k ? "off" : k;
+    ambEl.pause(); stopNoise();
+    const a = AMB[amb];
+    if (a?.srcs) { ambQueue = shuffleArr(a.srcs); ai = 0; playAmbNext(); }
+    else if (a?.noise) { try { startNoise(a.noise); } catch { amb = "off"; } }
+    $("#rainLayer").classList.toggle("on", !!a?.rain);
+    render();
+  }
+  function playTrack() {
+    if (mus === "off") { musEl.pause(); $("#nowPlaying").textContent = "还没放音乐"; render(); return; }
+    if (qi >= queue.length) { queue = shuffleArr(queue); qi = 0; }
+    const [t, a, f] = queue[qi];
+    musEl.src = `a/${f}.mp4`; musEl.volume = musVol();
+    $("#nowPlaying").textContent = `${t} · ${a}`;
+    musEl.play().catch(() => { $("#nowPlaying").textContent = "播放失败，点“下一首”再试"; });
+    render();
+  }
+  musEl.addEventListener("ended", () => { qi++; playTrack(); });
+  musEl.addEventListener("error", () => { if (mus !== "off") $("#nowPlaying").textContent = "这首没加载出来，点“下一首”"; });
+  function setMus(k) {
+    mus = mus === k ? "off" : k;
+    if (mus !== "off") { queue = shuffleArr(PLAYLISTS[mus].keys.flatMap(x => TRACKS[x])); qi = 0; }
+    playTrack();
+  }
+  function render() {
+    $("#ambChips").innerHTML = Object.entries(AMB).map(([k, a]) => `<button class="jchip" data-amb="${k}" aria-pressed="${amb === k}">${a.t}</button>`).join("");
+    $("#musChips").innerHTML = Object.entries(PLAYLISTS).map(([k, p]) => `<button class="jchip" data-mus="${k}" aria-pressed="${mus === k}">${p.t}</button>`).join("");
+    $("#musNext").disabled = mus === "off";
+    $("#soundBtn").setAttribute("aria-pressed", amb !== "off" || mus !== "off");
+  }
+  $("#ambChips").addEventListener("click", e => { const k = e.target.closest("[data-amb]")?.dataset.amb; if (k) setAmb(k); });
+  $("#musChips").addEventListener("click", e => { const k = e.target.closest("[data-mus]")?.dataset.mus; if (k) setMus(k); });
+  $("#musNext").onclick = () => { if (mus !== "off") { qi++; playTrack(); } };
+  $("#ambVol").addEventListener("input", () => {
+    ambEl.volume = ambVol();
+    if (noiseGain) noiseGain.gain.value = ambVol() * (noiseGain.kind === "brown" ? 0.6 : 0.18);
+  });
+  $("#musVol").addEventListener("input", () => { musEl.volume = musVol(); });
+  $("#audioCredits").innerHTML = AUDIO_CREDITS.map(([t, a, l, f]) =>
+    `<li>${esc(t)} · ${esc(a)} · ${l} · <a target="_blank" rel="noopener" href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent(f)}">来源</a></li>`).join("") +
+    `<li>白噪音、棕噪音由网页实时生成</li>`;
+  render();
+  return { render };
+})();
+
+/* rain sliding down the café window, shown while a rain bed plays */
+(function rainLayer() {
+  const el = $("#rainLayer"); let s = "";
+  for (let i = 0; i < 70; i++) s += `<i style="left:${(Math.random() * 100).toFixed(1)}%;height:${(40 + Math.random() * 70) | 0}px;animation-duration:${(0.55 + Math.random() * 0.7).toFixed(2)}s;animation-delay:${(-Math.random() * 2).toFixed(2)}s;opacity:${(0.25 + Math.random() * 0.5).toFixed(2)}"></i>`;
+  for (let i = 0; i < 34; i++) { const r = (4 + Math.random() * 9) | 0; s += `<b style="left:${(Math.random() * 100).toFixed(1)}%;top:${(Math.random() * 70).toFixed(1)}%;width:${r}px;height:${(r * 1.25) | 0}px;animation-duration:${(5 + Math.random() * 9).toFixed(1)}s;animation-delay:${(-Math.random() * 12).toFixed(1)}s"></b>`; }
+  el.innerHTML = s;
+})();
+
+/* the room itself: a real café photo that follows the time of day, with a button to change seats */
+const SEATS = [
+  { id: "morning", t: "窗边晨光" }, { id: "day", t: "热闹午后" }, { id: "evening", t: "砖墙吊灯" },
+  { id: "late", t: "深夜窗边" }, { id: "night", t: "灯泡森林" },
+];
+let seat = (() => { const h = new Date().getHours(); return h >= 5 && h < 11 ? 0 : h < 17 && h >= 11 ? 1 : h >= 17 && h < 22 ? 2 : (Math.random() < .5 ? 3 : 4); })();
+function sitAt(i) {
+  seat = (i + SEATS.length) % SEATS.length;
+  const src = `bg/${SEATS[seat].id}.jpg`, img = new Image();
+  img.onload = () => { $("#bgPhoto").style.backgroundImage = `url('${src}')`; };
+  img.src = src;
+  $("#seatBtn").textContent = "换个座位 · " + SEATS[seat].t;
+}
+$("#seatBtn").onclick = () => sitAt(seat + 1);
+sitAt(seat);
+
+function toggleJuke(open) {
+  const j = $("#juke"); j.hidden = open === undefined ? !j.hidden : !open;
+  $("#soundBtn").setAttribute("aria-expanded", !j.hidden);
+}
+$("#soundBtn").onclick = () => toggleJuke();
+$("#jukeClose").onclick = () => toggleJuke(false);
+document.addEventListener("keydown", e => { if (e.key === "Escape") toggleJuke(false); });
+
+/* ============ boot ============ */
+function renderAll() { renderToday(); renderShows(); renderWords(); }
+renderAll(); renderScenes(); renderTalkIdle(); slStart(); scStart();
+if (!tts) $$("#lineSpeak,#chSpeak").forEach(b => b.hidden = true);
+let startView = (location.hash || "").slice(1);
+if (!VIEWS.includes(startView)) { try { startView = sessionStorage.getItem("pte-view") || "today"; } catch { startView = "today"; } }
+go(startView);
+</script>
