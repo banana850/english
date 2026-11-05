@@ -377,6 +377,138 @@ body{background-image:none}
   *{animation:none!important;transition:none!important}
   .steam i{opacity:.5}
 }
+
+/* ---------- CH 06: the café counter you can play with ---------- */
+.ch{position:relative}
+.ch .newtag{position:absolute;top:-1px;right:2px;font-style:normal;font-size:9.5px;font-weight:900;letter-spacing:.5px;background:var(--red);color:#FFF1E6;border-radius:999px;padding:0 6px;line-height:15px;box-shadow:0 0 8px rgba(255,107,107,.6)}
+.scene-card{padding:0;overflow:hidden;background:#1A0F0A;border-color:#5A3824}
+.cscene{position:relative;line-height:0}
+.cscene svg{display:block;width:100%;height:auto;-webkit-tap-highlight-color:transparent}
+.cscene .hot{cursor:pointer;transition:filter .2s}
+.cscene .hot:hover,.cscene .hot:focus-visible{filter:drop-shadow(0 0 9px rgba(255,196,120,.95));outline:none}
+.cscene .hint{fill:none;stroke:#FFD08A;stroke-width:2.5;pointer-events:none;transform-box:fill-box;transform-origin:center;animation:hintp 2.4s ease-out infinite}
+@keyframes hintp{0%{opacity:.95;transform:scale(.35)}75%,100%{opacity:0;transform:scale(1.7)}}
+.cscene .wrain{display:none}
+.cscene.raining .wrain{display:block}
+.cscene .wr{animation:wfall .5s linear infinite}
+@keyframes wfall{from{transform:translate(12px,-230px)}to{transform:translate(0,0)}}
+.cscene .tw{animation:twk 5s steps(1) infinite}
+@keyframes twk{0%,64%{opacity:1}65%,100%{opacity:.15}}
+.cscene .wneon{font-family:var(--script);font-size:42px;fill:#FFC2B3;animation:hum 7s infinite}
+.cscene .cone{transition:opacity .6s}
+.cscene.dim .cone{opacity:0}
+.cscene .dimmer{opacity:0;transition:opacity .6s;pointer-events:none}
+.cscene.dim .dimmer{opacity:.45}
+.cscene.dim .bulbg{fill:#6B5A44}
+.cscene .rglow{fill:#5A4030;transition:fill .3s}
+.cscene.music .rglow{fill:#FFB65C}
+.cscene .notes{opacity:0}
+.cscene.music .notes{opacity:1}
+.cscene.music .notes text{animation:note 2.4s ease-out infinite}
+.cscene .notes text:nth-child(2){animation-delay:.8s}
+.cscene .notes text:nth-child(3){animation-delay:1.6s}
+@keyframes note{0%{transform:translate(0,0);opacity:0}20%{opacity:1}100%{transform:translate(18px,-46px);opacity:0}}
+.cscene .msteam path{opacity:0;animation:msteam 3.2s ease-in-out infinite}
+.cscene .msteam path:nth-child(2){animation-delay:1.5s}
+@keyframes msteam{0%{opacity:0;transform:translateY(6px)}40%{opacity:.65}100%{opacity:0;transform:translateY(-24px)}}
+.cscene .zz{font:700 22px var(--hand);fill:#F3E2C8;animation:zz 3s ease-out infinite}
+@keyframes zz{0%{opacity:0;transform:translate(0,0)}30%{opacity:.9}100%{opacity:0;transform:translate(16px,-30px)}}
+.cscene .cat .eo{display:none}
+.cscene .cat.awake .eo{display:inline}
+.cscene .cat.awake .ec,.cscene .cat.awake .zz{display:none}
+.cscene .cat .chead{transform-box:fill-box;transform-origin:60% 95%;transition:transform .3s}
+.cscene .cat.awake .chead{transform:rotate(-9deg)}
+.cscene .cat .tail{transform-box:fill-box;transform-origin:0% 100%;animation:tail 3.6s ease-in-out infinite}
+.cscene .cat.awake .tail{animation-duration:.9s}
+@keyframes tail{0%,100%{transform:rotate(0)}50%{transform:rotate(-14deg)}}
+.cscene .puff{opacity:0;transform-box:fill-box;transform-origin:50% 100%}
+.cscene .puff.go{animation:puff 1.4s ease-out}
+@keyframes puff{0%{opacity:.95;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-60px) scale(1.7)}}
+.cscene .pour{opacity:0}
+.cscene .pour.go{animation:pourf 1.3s linear}
+@keyframes pourf{0%,100%{opacity:0}8%,85%{opacity:1}}
+.cscene .float{font:800 26px var(--display);fill:#FFE2B8;animation:flt 1.5s ease-out forwards;pointer-events:none}
+@keyframes flt{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-44px)}}
+.cscene .bt1{font:800 11px var(--body);letter-spacing:2px;fill:#E9B872}
+.cscene .bt2{font:700 21px var(--hand);fill:#F2EBDD}
+.cscene .bt3{font:600 13px var(--body);fill:#CFE0D2}
+.cscene .jt{font:900 11px var(--body);fill:#3A2318;letter-spacing:1px}
+.sayline{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;padding:14px 18px 16px;background:linear-gradient(180deg,#2A1810,#1E120B);color:var(--cream);border-top:1px solid #5A3824;min-height:96px}
+.sayline .who{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:23px;background:#3E2618;box-shadow:inset 0 0 0 2px #7A5236}
+.sayline .whol{font-size:11.5px;font-weight:800;letter-spacing:1px;color:#E9B872}
+.sayline .en{font-family:var(--display);font-weight:700;font-size:17px;line-height:1.35}
+.sayline .zh{font-size:13.5px;color:#D9BE9C;margin-top:2px}
+.sayline .row{margin-top:8px}
+.btn.dk{background:rgba(243,226,200,.12);color:var(--cream);box-shadow:inset 0 0 0 1px rgba(243,226,200,.3)}
+.btn.dk:hover{background:rgba(243,226,200,.2)}
+
+/* barista game */
+.bstage{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:18px;align-items:center}
+@media (max-width:640px){.bstage{grid-template-columns:minmax(0,1fr) 112px;gap:10px}}
+.bcust{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start}
+.bava{width:62px;height:62px;border-radius:50%;background:#F3D9B5;display:grid;place-items:center;font-size:34px;position:relative;box-shadow:inset 0 0 0 3px var(--yellow)}
+.bava i{position:absolute;right:-6px;bottom:-4px;font-style:normal;font-size:22px}
+@media (max-width:640px){.bcust{grid-template-columns:minmax(0,1fr)}.bava{width:50px;height:50px;font-size:27px}}
+.bname{font-weight:800}
+.bsay{margin-top:6px;background:#FFF7EC;border-radius:4px 16px 16px 16px;padding:10px 14px;box-shadow:inset 0 0 0 1.5px #E2CBB0;font-family:var(--display);font-size:16px;line-height:1.45;transition:color .3s,text-shadow .3s}
+.bsay.hide{color:transparent;text-shadow:0 0 9px rgba(58,35,24,.6);user-select:none;-webkit-user-select:none}
+.bcupbox{display:grid;justify-items:center;gap:4px}
+.bcupbox svg{width:100%;max-width:170px;height:auto;display:block}
+.bsteam path{animation:msteam 3s ease-in-out infinite;opacity:0}
+.bsteam path:nth-child(2){animation-delay:1.4s}
+.bticket{font-family:var(--hand);font-size:19px;font-weight:700;color:var(--red);text-align:center;line-height:1.15;min-height:1.2em}
+.bbuild{display:grid;gap:10px;padding:14px;border-radius:14px;background:rgba(239,221,198,.55);box-shadow:inset 0 0 0 1px #E2CBB0}
+.bgrp{display:grid;grid-template-columns:84px minmax(0,1fr);gap:10px;align-items:center}
+.bgrp>span{font-size:12.5px;font-weight:800;color:var(--navy)}
+@media (max-width:560px){.bgrp{grid-template-columns:minmax(0,1fr);gap:5px}}
+.bchips{display:flex;flex-wrap:wrap;gap:6px}
+.bchip{border:0;border-radius:999px;padding:5px 12px;font-size:13.5px;font-weight:700;background:#FFF7EC;box-shadow:inset 0 0 0 1.5px #E2CBB0;color:var(--ink);transition:transform .1s}
+.bchip:active:not(:disabled){transform:scale(.94)}
+.bchip[aria-pressed="true"]{background:var(--ink);color:var(--cream);box-shadow:0 0 0 2px rgba(225,160,90,.45)}
+.bchip:disabled{opacity:.45;cursor:default}
+.bchip[aria-pressed="true"]:disabled{opacity:.8}
+.bres{display:grid;gap:10px;padding:14px;border-radius:14px;background:#FFF7EC;box-shadow:inset 0 0 0 1.5px #E2CBB0}
+.bline{font-family:var(--display);font-size:16px}
+.btab{display:grid;gap:4px}
+.btab>div{display:grid;grid-template-columns:72px minmax(0,1fr) minmax(0,1.1fr);gap:8px;font-size:13.5px;padding:5px 8px;border-radius:8px;align-items:baseline}
+.btab>div.ok{background:#E8EFD9}
+.btab>div.bad{background:#F6DCD2}
+.btab .cue{color:var(--muted);font-style:italic;font-size:12.5px}
+@media (max-width:560px){.btab>div{grid-template-columns:60px minmax(0,1fr)}.btab .cue{grid-column:2}}
+.bopen{display:grid;place-items:center;padding:22px 0}
+
+/* loyalty stamp card */
+.lc{background:#FBF3E6;border-radius:14px;padding:16px;border:2px dashed #CDAE8A;position:relative;overflow:hidden}
+.lc h3{font-family:var(--script);font-size:31px;font-weight:400;color:var(--red);text-align:center;line-height:1.1}
+.lc .lsub{text-align:center;font-size:12.5px;color:var(--muted)}
+.slots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:12px}
+.slot{aspect-ratio:1;border-radius:50%;border:2px dashed #D3B48F;display:grid;place-items:center;font:800 12px var(--body);color:#C9A985}
+.slot.on{border-color:transparent}
+.slot svg{width:100%;height:100%;transform:rotate(var(--rot,0deg))}
+.slot.new svg{animation:stampin .45s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes stampin{from{transform:scale(2.4) rotate(var(--rot,0deg));opacity:0}to{transform:scale(1) rotate(var(--rot,0deg));opacity:1}}
+.lfree{position:absolute;inset:0;display:grid;place-items:center;background:rgba(251,243,230,.88)}
+.lfree b{font:800 30px var(--display);color:var(--red);border:4px solid var(--red);border-radius:12px;padding:6px 16px;transform:rotate(-10deg);animation:stampin .5s cubic-bezier(.2,1.6,.4,1) both;letter-spacing:1px}
+.ltodo{display:grid;gap:6px;margin:0;padding:0}
+.ltodo li{list-style:none;display:flex;justify-content:space-between;gap:10px;font-size:13.5px;padding:6px 10px;border-radius:10px;background:#FFF7EC;box-shadow:inset 0 0 0 1px #EAD7BC}
+.ltodo li.got{background:#E8EFD9;color:var(--good);font-weight:700}
+
+/* overheard lines from the next table */
+.heard{display:grid;gap:8px;margin:0;padding:0}
+.heard li{list-style:none;padding:10px 12px;border-radius:12px;background:#FFF7EC;box-shadow:inset 0 0 0 1px #E8D3B4;display:grid;gap:3px}
+.heard .en{font-family:var(--display);font-weight:700}
+.heard .zh{font-size:13px;color:var(--muted)}
+.heard .row{margin-top:4px}
+.overheard{position:fixed;z-index:7;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px);max-width:min(430px,calc(100vw - 32px));background:rgba(42,24,16,.95);color:var(--cream);border:1px solid #7A5236;border-radius:18px 18px 18px 4px;box-shadow:0 14px 34px rgba(0,0,0,.5);transform:translateY(150%);opacity:0;transition:transform .5s cubic-bezier(.2,1.25,.4,1),opacity .3s}
+.overheard.in{transform:none;opacity:1}
+.oh-main{display:flex;gap:10px;align-items:baseline;border:0;background:none;padding:11px 15px;text-align:left;width:100%;color:inherit}
+.oh-who{font-size:11px;font-weight:800;letter-spacing:1px;color:#E9B872;white-space:nowrap}
+.oh-en{font-family:var(--display);font-weight:600;font-size:15px;line-height:1.35}
+.oh-more{padding:0 15px 13px;font-size:13.5px;color:#D9BE9C;display:grid;gap:8px}
+.oh-more b{color:#FFE2B8}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 14px);transform:translate(-50%,-160%);z-index:20;background:#2A1810;color:var(--cream);border:1px solid #7A5236;border-radius:999px;padding:9px 18px;font-weight:700;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.45);transition:transform .4s cubic-bezier(.2,1.25,.4,1);max-width:calc(100vw - 32px);text-align:center}
+.toast.in{transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){.cscene .wrain .wr{transform:none}}
 </style>
 
 <header class="mast">
@@ -410,6 +542,10 @@ body{background-image:none}
     <div class="jchips" id="musChips"></div>
     <label class="jvol">音量<input type="range" id="musVol" min="0" max="100" value="50"></label>
   </div>
+  <div class="jrow">
+    <div class="jl">店里的小动静</div>
+    <div class="jchips"><button class="jchip" id="sfxChip" aria-pressed="true">点击音效</button><button class="jchip" id="ohChip" aria-pressed="true">邻桌聊天</button></div>
+  </div>
   <div class="np"><div><div class="jl">正在播放</div><div id="nowPlaying">还没放音乐</div></div><button class="jx" id="musNext">下一首</button></div>
   <details class="jcred"><summary>音源与授权</summary><ul id="audioCredits"></ul></details>
 </aside>
@@ -421,6 +557,7 @@ body{background-image:none}
     <button class="ch" role="tab" data-v="words" style="--c:#7CE0D6"><b>CH 03</b><span>台词词卡</span></button>
     <button class="ch" role="tab" data-v="talk" style="--c:#9CC2FF"><b>CH 04</b><span>AI 对练</span></button>
     <button class="ch" role="tab" data-v="fun" style="--c:var(--orange)"><b>CH 05</b><span>娱乐频道</span></button>
+    <button class="ch" role="tab" data-v="bar" style="--c:#F2C38B"><b>CH 06</b><span>咖啡吧台</span><em class="newtag" id="barNew" hidden>NEW</em></button>
   </div>
 </nav>
 
@@ -629,6 +766,36 @@ body{background-image:none}
   </div>
 </section>
 
+<!-- ================= CH 06 BAR ================= -->
+<section class="view" id="v-bar" hidden>
+  <div class="card scene-card">
+    <div class="cscene" id="scene"></div>
+    <div class="sayline" id="sayline" aria-live="polite"></div>
+  </div>
+
+  <div class="card barista" id="baristaCard" style="display:grid;gap:14px">
+    <div class="row" style="justify-content:space-between">
+      <h2>Order Up! 听单做咖啡</h2>
+      <div class="row" style="gap:6px"><span class="pill" id="bRound">还没开门</span><span class="pill" id="bTips">小费 $0</span><span class="pill" id="bBest">最佳 $0</span></div>
+    </div>
+    <p class="note">客人用英语点单，你听完把这杯咖啡做出来。一轮 5 位客人，越往后点得越复杂。听不清可以放慢再听，实在不行再看文字，但这单小费减半。</p>
+    <div id="bBody" style="display:grid;gap:14px"></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card loyal" id="loyalCard" style="display:grid;gap:12px;align-content:start">
+      <h2>常客集章卡</h2>
+      <div class="lc" id="lcard"></div>
+      <ul class="ltodo" id="ltodo"></ul>
+    </div>
+    <div class="card" id="heardCard" style="display:grid;gap:12px;align-content:start">
+      <div class="row" style="justify-content:space-between"><h2>邻桌在聊</h2><button class="btn sm ghost" id="ohNow">偷听一句</button></div>
+      <p class="note">坐在店里时，邻桌偶尔会飘来一句地道口语，出现在屏幕左下角，点开能看翻译。听到过的都记在这里。</p>
+      <ul class="heard" id="heardList"></ul>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <script>
@@ -646,13 +813,15 @@ const uid = () => Math.random().toString(36).slice(2, 10);
 
 /* ============ text to speech ============ */
 const tts = "speechSynthesis" in window ? window.speechSynthesis : null;
-function speak(text) {
+const NOVELTY = /Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Fred|Kathy|Princess/i;
+function speak(text, rate = 0.92, pitch = 1, vi = -1) {
   if (!tts || !text) return;
   try {
     tts.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = "en-US"; u.rate = 0.92;
-    const v = tts.getVoices().find(v => v.lang === "en-US");
+    u.lang = "en-US"; u.rate = rate; u.pitch = pitch;
+    const vs = tts.getVoices().filter(v => v.lang === "en-US" && !NOVELTY.test(v.name));
+    const v = vi >= 0 && vs.length ? vs[vi % vs.length] : vs[0];
     if (v) u.voice = v;
     tts.speak(u);
   } catch {}
@@ -738,7 +907,7 @@ async function askJSON(prompt, opts = {}) {
 function noAI(el) { el.innerHTML = `<p class="err">这里用不了 AI 功能。请在 claude.ai 里打开这个网页。</p>`; }
 
 /* ============ navigation ============ */
-const VIEWS = ["today", "shows", "words", "talk", "fun"];
+const VIEWS = ["today", "shows", "words", "talk", "fun", "bar"];
 function go(v) {
   if (!VIEWS.includes(v)) v = "today";
   VIEWS.forEach(x => { $("#v-" + x).hidden = x !== v; });
@@ -746,6 +915,8 @@ function go(v) {
   try { history.replaceState(null, "", "#" + v); } catch {}
   try { sessionStorage.setItem("pte-view", v); } catch {}
   if (v === "words") renderFlash();
+  if (v === "bar" && !S.seenBar) { S.seenBar = true; save(); }
+  $("#barNew").hidden = !!S.seenBar;
   window.scrollTo({ top: 0 });
 }
 $$(".ch").forEach(b => b.addEventListener("click", () => go(b.dataset.v)));
@@ -788,6 +959,7 @@ function renderToday() {
   $("#stStreak").textContent = streak();
   $("#stDone").textContent = Object.keys(S.days).filter(k => dayStatus(k) === "ok").length;
   $("#stDue").textContent = dueCards().length;
+  if (dayStatus(dkey()) === "ok") stamp("menu");
   $("#stShow").textContent = S.show ? SHOWS.find(s => s.id === S.show)?.title ?? "未选择" : "未选择";
 
   const ms = $("#milestone");
@@ -1304,6 +1476,7 @@ function slShow() {
       <p class="muted">${slScore >= 7 ? "很地道！可以去 CH 04 用上这些词。" : slScore >= 4 ? "不错，错的那几个加进词卡吧。" : "这些都是美剧高频词，多刷两轮就熟了。"}</p>
       <div class="row"><button class="btn" id="slAgain">再来一轮</button></div>`;
     $("#slAgain").onclick = slStart; $("#slBest").textContent = "最佳 " + S.quizBest;
+    stamp("slang");
     return;
   }
   const it = slRound[slI], opts = shuffle([it.a, ...it.w.slice(0, 3)]);
@@ -1340,7 +1513,7 @@ function scShow() {
   const body = $("#scBody");
   if (scI >= scOrder.length) {
     body.innerHTML = `<div class="qprompt">全部演完：${scScore} / ${scOrder.length}</div><div class="row"><button class="btn" id="scAgain">重新开演</button></div>`;
-    $("#scAgain").onclick = scStart; return;
+    $("#scAgain").onclick = scStart; stamp("scene"); return;
   }
   const it = scOrder[scI], opts = shuffle([it.ans, ...it.w]);
   body.innerHTML = `<div class="eyebrow">场景 · ${esc(it.set)}</div>
@@ -1524,6 +1697,7 @@ const Juke = (() => {
     $("#musChips").innerHTML = Object.entries(PLAYLISTS).map(([k, p]) => `<button class="jchip" data-mus="${k}" aria-pressed="${mus === k}">${p.t}</button>`).join("");
     $("#musNext").disabled = mus === "off";
     $("#soundBtn").setAttribute("aria-pressed", amb !== "off" || mus !== "off");
+    document.dispatchEvent(new Event("juke"));
   }
   $("#ambChips").addEventListener("click", e => { const k = e.target.closest("[data-amb]")?.dataset.amb; if (k) setAmb(k); });
   $("#musChips").addEventListener("click", e => { const k = e.target.closest("[data-mus]")?.dataset.mus; if (k) setMus(k); });
@@ -1537,7 +1711,7 @@ const Juke = (() => {
     `<li>${esc(t)} · ${esc(a)} · ${l} · <a target="_blank" rel="noopener" href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent(f)}">来源</a></li>`).join("") +
     `<li>白噪音、棕噪音由网页实时生成</li>`;
   render();
-  return { render };
+  return { render, setAmb, setMus, state: () => ({ amb, mus }) };
 })();
 
 /* rain sliding down the café window, shown while a rain bed plays */
@@ -1572,8 +1746,720 @@ $("#soundBtn").onclick = () => toggleJuke();
 $("#jukeClose").onclick = () => toggleJuke(false);
 document.addEventListener("keydown", e => { if (e.key === "Escape") toggleJuke(false); });
 
+
+/* ============ CH 06 BAR: a café counter you can poke at ============ */
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const joinAnd = a => a.length < 3 ? a.join(" and ") : a.slice(0, -1).join(", ") + ", and " + a[a.length - 1];
+
+/* tiny synthesized sound effects, so nothing extra has to be downloaded */
+let sfxCtx = null;
+function sfxAc() {
+  sfxCtx ??= new (window.AudioContext || window.webkitAudioContext)();
+  if (sfxCtx.state === "suspended") sfxCtx.resume();
+  return sfxCtx;
+}
+function tone(f, t0, dur, vol = 0.12, type = "sine", f2) {
+  const c = sfxAc(), T = c.currentTime + t0, o = c.createOscillator(), g = c.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, T);
+  if (f2) o.frequency.exponentialRampToValueAtTime(f2, T + dur);
+  g.gain.setValueAtTime(0.0001, T); g.gain.exponentialRampToValueAtTime(vol, T + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, T + dur);
+  o.connect(g).connect(c.destination); o.start(T); o.stop(T + dur + 0.05);
+}
+function hush(dur, { type = "bandpass", f = 3000, f2, q = 1, vol = 0.12, t0 = 0, am = 0 } = {}) {
+  const c = sfxAc(), T = c.currentTime + t0, n = Math.floor(c.sampleRate * dur), b = c.createBuffer(1, n, c.sampleRate), d = b.getChannelData(0);
+  for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+  const s = c.createBufferSource(), fl = c.createBiquadFilter(), g = c.createGain();
+  s.buffer = b; fl.type = type; fl.Q.value = q; fl.frequency.setValueAtTime(f, T);
+  if (f2) fl.frequency.exponentialRampToValueAtTime(f2, T + dur);
+  g.gain.setValueAtTime(0.0001, T); g.gain.exponentialRampToValueAtTime(vol, T + 0.06); g.gain.setValueAtTime(vol, T + dur * 0.6); g.gain.exponentialRampToValueAtTime(0.0001, T + dur);
+  s.connect(fl).connect(g);
+  if (am) {
+    const wob = c.createGain(), lfo = c.createOscillator(), depth = c.createGain();
+    wob.gain.value = 0.5; depth.gain.value = 0.5; lfo.frequency.value = am;
+    lfo.connect(depth).connect(wob.gain); g.connect(wob).connect(c.destination); lfo.start(T); lfo.stop(T + dur);
+  } else g.connect(c.destination);
+  s.start(T); s.stop(T + dur);
+}
+const FX = {
+  clink() { tone(2600, 0, .35, .07); tone(3900, .005, .25, .045); },
+  ding() { tone(1760, 0, .9, .09); tone(2640, 0, .6, .045); },
+  thud() { tone(170, 0, .25, .16, "sine", 85); },
+  pop() { tone(520, 0, .1, .08, "sine", 900); },
+  blip() { tone(880, 0, .05, .03, "square"); },
+  hiss() { hush(1.3, { f: 3600, q: .8, vol: .08 }); },
+  pour() { hush(1.3, { f: 900, f2: 450, q: 2, vol: .12 }); },
+  sip() { hush(.3, { f: 700, f2: 1400, q: 3, vol: .1 }); },
+  purr() { hush(1.8, { type: "lowpass", f: 240, vol: .4, am: 23 }); },
+  stamp() { tone(110, 0, .22, .3, "sine", 55); hush(.07, { f: 2200, vol: .1 }); },
+  coins() { for (let i = 0; i < 4; i++) tone(3000 + Math.random() * 1800, i * .07 + Math.random() * .03, .18, .045); },
+};
+function sfx(name) { if (S.sfx === false) return; try { FX[name](); } catch {} }
+
+/* little sounds on the controls that were already on the page */
+document.addEventListener("click", e => {
+  if (e.target.closest(".ch")) sfx("blip");
+  const o = e.target.closest(".opt");
+  if (o) setTimeout(() => sfx(o.classList.contains("right") ? "ding" : o.classList.contains("wrong") ? "thud" : "pop"), 0);
+}, true);
+$("#steps").addEventListener("change", e => { if (e.target.checked) sfx("clink"); });
+
+function toast(msg) {
+  let t = $(".toast");
+  if (!t) { t = document.createElement("div"); t.className = "toast"; t.setAttribute("role", "status"); document.body.append(t); }
+  t.textContent = msg; requestAnimationFrame(() => t.classList.add("in"));
+  clearTimeout(toast.timer); toast.timer = setTimeout(() => t.classList.remove("in"), 3200);
+}
+
+/* ---------- the loyalty card: one stamp per activity per day, ten for a free refill ---------- */
+const STAMP_TYPES = {
+  visit: "来吧台坐坐，点点店里的东西",
+  barista: "听单做咖啡：一轮里至少 3 单全对",
+  slang: "刷完一轮俚语快问快答",
+  scene: "演完一轮情景剧填空",
+  menu: "完成今日菜单",
+};
+const stampState = () => (S.stamps ??= { n: 0, free: 0, days: {} });
+function stamp(type) {
+  const st = stampState(), k = dkey(), got = (st.days[k] ??= []);
+  if (got.includes(type)) return;
+  got.push(type); st.n++;
+  Object.keys(st.days).forEach(d => { if (diffDays(d, k) > 14) delete st.days[d]; });
+  const full = st.n >= 10;
+  if (full) { st.n -= 10; st.free++; }
+  save(); sfx(full ? "coins" : "stamp");
+  renderStamps(full ? "full" : "new");
+  toast(full ? "☕ 集满 10 个章！免费续杯一杯，记在常客卡上了" : `☕ 集到一个章：${STAMP_TYPES[type]}`);
+}
+const STAMP_SVG = `<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="none" stroke="#B4472F" stroke-width="2.4" stroke-dasharray="30 2 14 2" opacity=".85"/><path d="M12 17h13v6a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5zM25 19h2a2.6 2.6 0 0 1 0 5.2h-2" fill="none" stroke="#B4472F" stroke-width="2.2" stroke-linejoin="round"/><path d="M15.5 10q2 2 0 4.5M20.5 9q2 2 0 4.5" stroke="#B4472F" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`;
+function renderStamps(mode) {
+  const st = stampState(), today = st.days[dkey()] || [];
+  $("#lcard").innerHTML = `<h3>Prime Time Café</h3><div class="lsub">常客卡 · 集满 10 个章换一杯免费续杯 · 已兑换 ${st.free} 杯</div>
+    <div class="slots">${Array.from({ length: 10 }, (_, i) => i < st.n
+      ? `<div class="slot on ${mode === "new" && i === st.n - 1 ? "new" : ""}" style="--rot:${((i * 37) % 30) - 15}deg">${STAMP_SVG}</div>`
+      : `<div class="slot">${i === 9 ? "FREE" : i + 1}</div>`).join("")}</div>
+    ${mode === "full" ? `<div class="lfree"><b>FREE REFILL</b></div>` : ""}`;
+  if (mode === "full") setTimeout(() => $(".lfree")?.remove(), 2600);
+  $("#ltodo").innerHTML = Object.entries(STAMP_TYPES).map(([k, t]) =>
+    `<li class="${today.includes(k) ? "got" : ""}"><span>${t}</span><span>${today.includes(k) ? "今天已集" : "可集 1 个"}</span></li>`).join("");
+  jarCoins();
+}
+
+/* ---------- the scene ---------- */
+const SPECIALS = [
+  { en: "the usual", zh: "老样子", ex: "The usual? — You know it." },
+  { en: "spill the beans", zh: "说漏嘴；透露秘密", ex: "Come on, spill the beans. Who's the new guy?" },
+  { en: "not my cup of tea", zh: "不是我的菜", ex: "Horror movies are just not my cup of tea." },
+  { en: "wake up and smell the coffee", zh: "醒醒吧，面对现实", ex: "He's not coming back. Wake up and smell the coffee." },
+  { en: "grab a coffee", zh: "一起喝杯咖啡聊聊", ex: "Wanna grab a coffee after work?" },
+  { en: "on the house", zh: "店家请客，免费", ex: "Your refill is on the house." },
+  { en: "the daily grind", zh: "日复一日的辛苦工作", ex: "Back to the daily grind on Monday." },
+  { en: "full of beans", zh: "精力充沛", ex: "The kids are full of beans this morning." },
+  { en: "my treat", zh: "我请客", ex: "Put your wallet away. It's my treat." },
+  { en: "for here or to go?", zh: "堂食还是外带？", ex: "For here or to go? — To go, please." },
+  { en: "hit the spot", zh: "（吃喝的东西）正合心意", ex: "That latte really hit the spot." },
+  { en: "a coffee run", zh: "出去买一趟咖啡", ex: "I'm doing a coffee run. Want anything?" },
+  { en: "call it a day", zh: "今天就到这儿", ex: "We've done enough. Let's call it a day." },
+  { en: "kill time", zh: "打发时间", ex: "I'm just killing time before my flight." },
+  { en: "sweet tooth", zh: "爱吃甜食", ex: "Extra caramel? Someone has a sweet tooth." },
+  { en: "a hot take", zh: "很有争议的观点", ex: "Hot take: iced coffee is better in winter." },
+  { en: "take it easy", zh: "放轻松；慢慢来", ex: "Take it easy. You've earned a break." },
+  { en: "to die for", zh: "好吃（好喝）到不行", ex: "Their cinnamon rolls are to die for." },
+  { en: "running late", zh: "要迟到了", ex: "Sorry, I'm running late. Can you order for me?" },
+  { en: "a regular", zh: "常客", ex: "She's a regular. She knows everyone here." },
+];
+const CAT_LINES = [
+  ["Meow. (Translation: five more minutes.)", "喵。（翻译：再睡五分钟。）"],
+  ["Mrrp. I'm not lazy, I'm in energy-saving mode.", "咕。我不是懒，我在省电模式。"],
+  ["Purrr… This is my spot. You may sit nearby.", "呼噜……这是我的位子，你可以坐旁边。"],
+  ["Mew? Is that oat milk? I'm intrigued.", "喵？那是燕麦奶吗？有点意思。"],
+  ["(Ignores you completely. Very on brand.)", "（完全无视你。非常符合人设。）"],
+  ["Pet me again and I'll consider being friends.", "再摸一下，我就考虑跟你做朋友。"],
+  ["(Stretches.) Okay, I'm up. Kind of.", "（伸懒腰）好，我醒了。算是吧。"],
+  ["Do you even speak cat? Didn't think so.", "你会说猫语吗？我就知道不会。"],
+];
+const FORTUNES = [
+  ["Small steps every day beat big plans someday.", "每天的小步，胜过“总有一天”的宏图。"],
+  ["You don't have to be perfect, just consistent.", "不用完美，只要坚持。"],
+  ["Mistakes mean you're actually speaking.", "犯错说明你真的开口了。"],
+  ["One episode at a time.", "一集一集来。"],
+  ["Your accent is fine. Keep talking.", "你的口音没问题，继续说。"],
+  ["Today's confusion is tomorrow's fluency.", "今天的懵，是明天的流利。"],
+  ["Ten minutes today beats two hours someday.", "今天十分钟，胜过哪天两小时。"],
+  ["Listen like a fan, speak like a character.", "像粉丝一样听，像角色一样说。"],
+];
+const special = () => SPECIALS[Math.floor(parseKey(dkey()) / 864e5) % SPECIALS.length];
+
+function sceneSVG() {
+  let city = "", x = 70;
+  while (x < 370) {
+    const w = 28 + Math.random() * 36, h = 60 + Math.random() * 120, top = 280 - h;
+    city += `<rect x="${x | 0}" y="${top | 0}" width="${w | 0}" height="${h | 0}" fill="${Math.random() < .5 ? "#141A2A" : "#1B2133"}"/>`;
+    for (let wy = top + 8; wy < 270; wy += 13) for (let wx = x + 5; wx < x + w - 7; wx += 10)
+      if (Math.random() < .3) city += `<rect x="${wx | 0}" y="${wy | 0}" width="5" height="7" fill="#FFCB6B" opacity="${(.5 + Math.random() * .5).toFixed(2)}"${Math.random() < .15 ? ` class="tw" style="animation-delay:${(-Math.random() * 5).toFixed(1)}s"` : ""}/>`;
+    x += w + 3;
+  }
+  let rain = "";
+  for (let i = 0; i < 48; i++) { const rx = 60 + Math.random() * 330, ry = -230 + Math.random() * 510; rain += `<line x1="${rx | 0}" y1="${ry | 0}" x2="${(rx - 4) | 0}" y2="${(ry + 18) | 0}"/>`; }
+  const hints = [["win", 220, 64], ["lamp", 475, 124], ["board", 645, 80], ["radio", 832, 112], ["machine", 858, 240], ["cat", 196, 300], ["mug", 475, 286], ["jar", 628, 282]]
+    .filter(([k]) => !(S.tried || []).includes(k)).map(([k, cx, cy]) => `<circle class="hint" data-h="${k}" cx="${cx}" cy="${cy}" r="18"/>`).join("");
+  return `<svg viewBox="0 0 1000 520" role="group" aria-label="咖啡馆吧台：窗户、吊灯、黑板、收音机、咖啡机、店猫、咖啡杯和小费罐都可以点">
+<defs>
+  <linearGradient id="scWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#40231A"/><stop offset="1" stop-color="#2A160E"/></linearGradient>
+  <pattern id="scBrick" width="90" height="44" patternUnits="userSpaceOnUse"><path d="M0 1H90M0 23H90M45 1V23M1 23V44M89 23V44" stroke="#1C0F09" stroke-width="2.5" fill="none" opacity=".6"/></pattern>
+  <linearGradient id="scNight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#151C30"/><stop offset="1" stop-color="#3B3150"/></linearGradient>
+  <radialGradient id="scCone" cx=".5" cy="0" r="1"><stop offset="0" stop-color="#FFD594" stop-opacity=".5"/><stop offset=".55" stop-color="#FFB65C" stop-opacity=".12"/><stop offset="1" stop-color="#FFB65C" stop-opacity="0"/></radialGradient>
+  <linearGradient id="scWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6E4228"/><stop offset="1" stop-color="#3A2216"/></linearGradient>
+  <linearGradient id="scChrome" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8F969C"/><stop offset=".35" stop-color="#E4E8EA"/><stop offset=".7" stop-color="#A9AFB4"/><stop offset="1" stop-color="#7C8288"/></linearGradient>
+  <filter id="scGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <clipPath id="scWinClip"><rect x="70" y="50" width="300" height="230" rx="4"/></clipPath>
+</defs>
+<rect width="1000" height="520" fill="url(#scWall)"/>
+<rect width="1000" height="365" fill="url(#scBrick)"/>
+
+<g id="hWin" class="hot" data-h="win" tabindex="0" role="button" aria-label="窗户：开关雨声">
+  <rect x="56" y="36" width="328" height="258" rx="8" fill="#2A170F"/>
+  <g clip-path="url(#scWinClip)">
+    <rect x="70" y="50" width="300" height="230" fill="url(#scNight)"/>
+    <circle cx="318" cy="92" r="18" fill="#F6E7C1" opacity=".9"/>
+    ${city}
+    <g class="wrain" stroke="#CFE3F5" stroke-opacity=".55" stroke-width="1.6"><g class="wr">${rain}</g></g>
+    <text x="220" y="262" text-anchor="middle" class="wneon" filter="url(#scGlow)">Coffee</text>
+  </g>
+  <path d="M220 50V280M70 165H370" stroke="#2A170F" stroke-width="7"/>
+  <rect x="46" y="288" width="348" height="12" rx="4" fill="#5A3622"/>
+</g>
+
+<path class="cone" d="M445 112L505 112L650 365L300 365Z" fill="url(#scCone)" pointer-events="none"/>
+<g id="hLamp" class="hot" data-h="lamp" tabindex="0" role="button" aria-label="吊灯：调暗或调亮">
+  <rect x="440" y="0" width="70" height="125" fill="transparent"/>
+  <line x1="475" y1="0" x2="475" y2="72" stroke="#120904" stroke-width="3"/>
+  <path d="M440 112L510 112L494 72L456 72Z" fill="#2F4B3B"/>
+  <path d="M440 112H510" stroke="#C9A24A" stroke-width="3"/>
+  <ellipse class="bulbg" cx="475" cy="114" rx="13" ry="6" fill="#FFE6B0"/>
+</g>
+
+<g id="hBoard" class="hot" data-h="board" tabindex="0" role="button" aria-label="黑板：今日特调短语">
+  <rect x="560" y="64" width="170" height="160" rx="6" fill="#5A3824"/>
+  <rect x="570" y="74" width="150" height="140" fill="#26332B"/>
+  <text x="645" y="98" text-anchor="middle" class="bt1">TODAY'S SPECIAL</text>
+  <path d="M592 108H698" stroke="#F2EBDD" stroke-opacity=".35" stroke-dasharray="4 4"/>
+  <text x="645" y="0" text-anchor="middle" class="bt2" id="bdEn"></text>
+  <text x="645" y="200" text-anchor="middle" class="bt3" id="bdZh"></text>
+</g>
+
+<rect x="750" y="190" width="220" height="10" rx="3" fill="#5A3622"/>
+<g id="hRadio" class="hot" data-h="radio" tabindex="0" role="button" aria-label="收音机：开关音乐">
+  <path d="M792 118L776 94" stroke="#1C0F09" stroke-width="2.5"/>
+  <rect x="770" y="118" width="124" height="72" rx="16" fill="#9A4330"/>
+  <rect x="782" y="130" width="58" height="48" rx="9" fill="#3A2318"/>
+  <path d="M790 140H832M790 148H832M790 156H832M790 164H832M790 172H832" stroke="#6E4A36" stroke-width="3"/>
+  <circle cx="866" cy="146" r="13" fill="#F3E2C8"/><path d="M866 146L874 138" stroke="#3A2318" stroke-width="2.5"/>
+  <rect class="rglow" x="852" y="166" width="30" height="8" rx="3"/>
+  <g class="notes" fill="#FFD08A" font-size="24"><text x="880" y="110">♪</text><text x="846" y="104">♫</text><text x="900" y="122">♪</text></g>
+</g>
+<g aria-hidden="true"><path d="M915 190h40l-5-30h-30z" fill="#B4472F"/><path d="M935 160q-24-30-6-52M935 160q18-34 4-58M935 160q30-16 26-44M935 160q-34-6-36-34" stroke="#6E8B5E" stroke-width="7" fill="none" stroke-linecap="round"/></g>
+
+<rect x="0" y="362" width="1000" height="22" fill="#9A6A44"/>
+<rect x="0" y="362" width="1000" height="4" fill="#C08A5E"/>
+<rect x="0" y="384" width="1000" height="136" fill="url(#scWood)"/>
+<path d="M120 384V520M300 384V520M480 384V520M660 384V520M840 384V520" stroke="#2C190F" stroke-width="3" opacity=".6"/>
+
+<g id="hMachine" class="hot" data-h="machine" tabindex="0" role="button" aria-label="咖啡机：开始听单做咖啡">
+  <rect x="770" y="246" width="176" height="120" rx="12" fill="url(#scChrome)"/>
+  <rect x="770" y="246" width="176" height="24" rx="10" fill="#6F757B"/>
+  <rect x="826" y="256" width="64" height="11" rx="2" fill="#C9A24A"/>
+  <text x="858" y="265" text-anchor="middle" font-size="8" font-weight="900" fill="#3A2318" font-family="Nunito,sans-serif">ORDER UP</text>
+  <circle cx="858" cy="292" r="13" fill="#F6F1E8" stroke="#555" stroke-width="2"/><path d="M858 292l6-6" stroke="#B4472F" stroke-width="2"/>
+  <rect x="790" y="310" width="34" height="14" rx="3" fill="#3B3F44"/><rect x="892" y="310" width="34" height="14" rx="3" fill="#3B3F44"/>
+  <path d="M800 324v8M814 324v8M902 324v8M916 324v8" stroke="#3B3F44" stroke-width="4"/>
+  <rect x="796" y="340" width="22" height="22" rx="3" fill="#F6EEE2"/>
+  <g class="puff" fill="#fff"><circle cx="905" cy="236" r="12"/><circle cx="920" cy="226" r="9"/><circle cx="892" cy="224" r="8"/></g>
+</g>
+
+<g id="hCat" class="hot cat" data-h="cat" tabindex="0" role="button" aria-label="店猫：摸摸它">
+  <ellipse cx="195" cy="366" rx="84" ry="7" fill="#000" opacity=".28"/>
+  <path class="tail" d="M268 360q34-4 26-38" stroke="#D98A3D" stroke-width="13" fill="none" stroke-linecap="round"/>
+  <path d="M118 366q0-64 78-64q78 0 78 64z" fill="#E39C50"/>
+  <path d="M178 308q7 15 0 28M206 305q7 15 0 28M236 312q6 13 0 24" stroke="#B96B2B" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <g class="chead">
+    <path d="M104 318l-4-30 24 14zM144 304l14-22 8 28z" fill="#E39C50"/>
+    <path d="M107 312l-2-15 11 8zM148 300l7-11 4 14z" fill="#F2B2A0"/>
+    <circle cx="132" cy="334" r="31" fill="#E39C50"/>
+    <path d="M112 321q7 4 6 11M150 319q-4 6 0 12" stroke="#B96B2B" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <g class="ec" stroke="#3A2318" stroke-width="2.6" fill="none" stroke-linecap="round"><path d="M116 336q6 5 12 0"/><path d="M137 336q6 5 12 0"/></g>
+    <g class="eo" fill="#3A2318"><ellipse cx="122" cy="335" rx="4" ry="5.5"/><ellipse cx="143" cy="335" rx="4" ry="5.5"/><circle cx="123.4" cy="333" r="1.4" fill="#fff"/><circle cx="144.4" cy="333" r="1.4" fill="#fff"/></g>
+    <path d="M128.5 345l4 3.5l4-3.5z" fill="#C46B5A"/>
+    <path d="M132.5 349q-3 5-8 3M132.5 349q3 5 8 3" stroke="#3A2318" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <path d="M104 344l-18-3M104 349l-17 3M161 344l18-3M161 349l17 3" stroke="#F3E2C8" stroke-width="1.4" opacity=".8"/>
+  </g>
+  <text class="zz" x="168" y="296">z</text>
+</g>
+
+<g id="hMug" class="hot" data-h="mug" tabindex="0" role="button" aria-label="咖啡杯：喝一口">
+  <ellipse cx="475" cy="368" rx="56" ry="8" fill="#000" opacity=".25"/>
+  <ellipse cx="475" cy="364" rx="54" ry="9" fill="#EFE2CF"/>
+  <path d="M512 314q28 0 28 20t-28 20" fill="none" stroke="#F7F0E6" stroke-width="9"/>
+  <path d="M438 300h74v50q0 14-14 14h-46q-14 0-14-14z" fill="#F7F0E6"/>
+  <path d="M438 326h74" stroke="#B4472F" stroke-width="6"/>
+  <ellipse cx="475" cy="300" rx="37" ry="7.5" fill="#E2D2BA"/>
+  <ellipse id="mugCoffee" cx="475" cy="301" rx="33" ry="5.5" fill="#6A3A22"/>
+  <path class="pour" d="M475 226V300" stroke="#6A3A22" stroke-width="7" stroke-linecap="round"/>
+  <g class="msteam" stroke="#fff" stroke-opacity=".55" stroke-width="3" fill="none" stroke-linecap="round"><path d="M462 290q-7-12 0-24t0-24"/><path d="M486 288q7-12 0-24t0-24"/></g>
+</g>
+
+<g id="hJar" class="hot" data-h="jar" tabindex="0" role="button" aria-label="小费罐：看看常客卡">
+  <ellipse cx="628" cy="368" rx="40" ry="6" fill="#000" opacity=".25"/>
+  <g id="jarCoins"></g>
+  <path d="M596 294h64v62q0 10-10 10h-44q-10 0-10-10z" fill="#CFE6E8" fill-opacity=".2" stroke="#E8F4F4" stroke-opacity=".7" stroke-width="2.5"/>
+  <rect x="592" y="288" width="72" height="8" rx="4" fill="#E8F4F4" opacity=".5"/>
+  <g transform="rotate(-4 628 328)"><rect x="606" y="318" width="44" height="20" rx="2" fill="#F3E2C8"/><text x="628" y="332" text-anchor="middle" class="jt">TIPS</text></g>
+</g>
+
+<rect class="dimmer" width="1000" height="520" fill="#0B0603"/>
+<g class="hints">${hints}</g>
+<g id="scFloat"></g>
+</svg>`;
+}
+
+function jarCoins() {
+  const g = $("#jarCoins"); if (!g) return;
+  const st = stampState(), n = Math.min(24, st.free * 10 + st.n);
+  let s = "";
+  for (let i = 0; i < n; i++) s += `<ellipse cx="${606 + (i % 4) * 14 + (Math.floor(i / 4) % 2) * 6}" cy="${359 - Math.floor(i / 4) * 6}" rx="8" ry="3.4" fill="#E1B54A" stroke="#A8822C" stroke-width="1"/>`;
+  g.innerHTML = s;
+}
+function floatText(txt, x, y) {
+  const g = $("#scFloat"); if (!g) return;
+  const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  t.setAttribute("x", x); t.setAttribute("y", y); t.setAttribute("text-anchor", "middle"); t.setAttribute("class", "float"); t.textContent = txt;
+  g.append(t); setTimeout(() => t.remove(), 1600);
+}
+function say(icon, who, en, zh, opt = {}) {
+  const el = $("#sayline");
+  el.innerHTML = `<div class="who" aria-hidden="true">${icon}</div><div>
+    ${who ? `<div class="whol">${esc(who)}</div>` : ""}<div class="en">${esc(en)}</div>${zh ? `<div class="zh">${esc(zh)}</div>` : ""}
+    <div class="row">${tts && opt.say !== false ? `<button class="btn sm dk" data-act="speak">🔊 听一下</button>` : ""}${opt.card ? `<button class="btn sm dk" data-act="card">收进词卡</button>` : ""}</div></div>`;
+  $("[data-act=speak]", el)?.addEventListener("click", () => speak(opt.speak || en));
+  $("[data-act=card]", el)?.addEventListener("click", ev => { const m = addCard(opt.card); ev.target.textContent = m || "已加入词卡"; ev.target.disabled = true; });
+}
+function writeBoard() {
+  const sp = special(), words = sp.en.split(" "), lines = [];
+  for (const w of words) { const l = lines[lines.length - 1]; if (l && (l + " " + w).length <= 14) lines[lines.length - 1] = l + " " + w; else lines.push(w); }
+  const y0 = 150 - (lines.length - 1) * 12;
+  $("#bdEn").innerHTML = lines.map((l, i) => `<tspan x="645" y="${y0 + i * 24}">${esc(l)}</tspan>`).join("");
+  $("#bdZh").textContent = sp.zh.length > 11 ? sp.zh.slice(0, 10) + "…" : sp.zh;
+}
+let mugLevel = 3;
+function drawMug() {
+  const c = $("#mugCoffee"), L = [null, [24, 3.8, "#4A2616"], [29, 4.8, "#5A3020"], [33, 5.5, "#6A3A22"]][mugLevel];
+  c.style.display = L ? "" : "none";
+  if (L) { c.setAttribute("rx", L[0]); c.setAttribute("ry", L[1]); c.setAttribute("fill", L[2]); }
+  $(".msteam").style.display = mugLevel ? "" : "none";
+}
+function syncScene() {
+  const sc = $("#scene .hot") && $("#scene"); if (!sc) return;
+  const st = Juke.state();
+  sc.classList.toggle("raining", st.amb === "rain");
+  sc.classList.toggle("music", st.mus !== "off");
+}
+document.addEventListener("juke", syncScene);
+
+const HOT = {
+  win() {
+    const raining = Juke.state().amb === "rain";
+    Juke.setAmb("rain");
+    if (raining) say("🪟", "窗外", "Looks like the rain stopped.", "雨好像停了。");
+    else say("🌧️", "窗外", "It's pouring out there. Good thing we're inside.", "外面下大雨了，还好我们在店里。", { card: { word: "pouring", mean: "下倾盆大雨", ex: "It's pouring out there. Good thing we're inside.", src: "咖啡吧台" } });
+  },
+  lamp() {
+    const dim = $("#scene").classList.toggle("dim"); sfx("pop");
+    say("💡", "吊灯", dim ? "Lights down. Cozy mode on." : "Lights back up.", dim ? "灯调暗了，进入舒服模式。" : "灯又亮起来了。");
+  },
+  board() {
+    const sp = special(); speak(sp.en + ". " + sp.ex);
+    say("🧾", "今日特调短语 · 每天换一个", sp.en, `${sp.zh}　例句：${sp.ex}`, { speak: sp.en + ". " + sp.ex, card: { word: sp.en, mean: sp.zh, ex: sp.ex, src: "吧台黑板" } });
+  },
+  radio() {
+    const on = Juke.state().mus !== "off"; sfx("blip");
+    Juke.setMus(on ? Juke.state().mus : "radio");
+    if (on) say("📻", "收音机", "Radio off. Nice and quiet.", "收音机关了，安安静静。", { say: false });
+    else setTimeout(() => say("📻", "收音机 · 随机电台", "Now playing: " + $("#nowPlaying").textContent, "随机播放店里的爵士和 Bossa Nova，想换频道点右上角的“店内点唱机”。", { say: false }), 60);
+  },
+  machine() {
+    sfx("hiss");
+    const p = $("#scene .puff"); p.classList.remove("go"); void p.getBBox(); p.classList.add("go");
+    say("☕", "咖啡机", "Order up! There's a customer waiting.", "有客人来点单了，往下滑到“听单做咖啡”。", { say: false });
+    setTimeout(() => { $("#baristaCard").scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "start" }); if (Bar.i < 0 || Bar.i >= 5) bStart(); }, 700);
+  },
+  cat() {
+    const c = $("#hCat"); c.classList.add("awake"); sfx("purr"); floatText("♥", 150, 290);
+    clearTimeout(HOT.catT); HOT.catT = setTimeout(() => c.classList.remove("awake"), 2600);
+    const [en, zh] = pick(CAT_LINES); say("🐱", "店猫 Mocha", en, zh);
+  },
+  mug() {
+    if (mugLevel > 0) {
+      mugLevel--; sfx("sip"); drawMug();
+      say("☕", "你的拿铁", mugLevel ? `Mmm. ${mugLevel === 2 ? "Two-thirds" : "One-third"} left.` : "All gone. Tap again for a refill.", mugLevel ? `嗯～还剩 ${mugLevel}/3。` : "喝完了，再点一下续杯。");
+    } else {
+      sfx("pour"); const p = $("#scene .pour"); p.classList.remove("go"); void p.getBBox(); p.classList.add("go");
+      setTimeout(() => { mugLevel = 3; drawMug(); }, 900);
+      const [en, zh] = pick(FORTUNES); say("🥠", "续杯附赠一句", en, zh);
+    }
+  },
+  jar() {
+    sfx("coins"); const st = stampState(); floatText("+$1", 628, 280);
+    say("🫙", "小费罐", `${st.free * 10 + st.n} stamps so far. ${10 - st.n} more for a free refill!`, `一共集了 ${st.free * 10 + st.n} 个章，再集 ${10 - st.n} 个换一杯免费续杯。`, { say: false });
+    setTimeout(() => $("#loyalCard").scrollIntoView({ behavior: REDUCE ? "auto" : "smooth", block: "start" }), 600);
+  },
+};
+function poke(el) {
+  const k = el.dataset.h; if (!HOT[k]) return;
+  HOT[k]();
+  if (!(S.tried ||= []).includes(k)) { S.tried.push(k); save(); $(`#scene .hint[data-h="${k}"]`)?.remove(); }
+  stamp("visit");
+}
+function initScene() {
+  $("#scene").innerHTML = sceneSVG();
+  writeBoard(); drawMug(); jarCoins(); syncScene();
+  const svg = $("#scene svg");
+  svg.addEventListener("click", e => { const h = e.target.closest(".hot"); if (h) poke(h); });
+  svg.addEventListener("keydown", e => { const h = e.target.closest?.(".hot"); if (h && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); poke(h); } });
+  say("👋", "店员", "Welcome in! Grab a seat anywhere.", "欢迎光临！窗户、吊灯、黑板、收音机、咖啡机、店猫、杯子、小费罐都能点，发光的圈是还没点过的。", { say: true });
+}
+
+/* ---------- Order Up!: listen to an order, build the drink ---------- */
+const B_SIZES = ["small", "medium", "large"];
+const B_DRINKS = {
+  latte: { zh: "拿铁", milk: true, c: "#C89F72" },
+  cappuccino: { zh: "卡布奇诺", milk: true, c: "#B98B5E" },
+  "flat white": { zh: "馥芮白", milk: true, c: "#BC9064" },
+  mocha: { zh: "摩卡", milk: true, c: "#6B3B24" },
+  americano: { zh: "美式", milk: false, c: "#3B2116" },
+  "cold brew": { zh: "冷萃", milk: false, c: "#2E1A10", iced: true },
+};
+const B_MILKS = { def: "默认（没提）", oat: "oat 燕麦奶", almond: "almond 杏仁奶", skim: "skim 脱脂" };
+const B_EXTRAS = {
+  shot: { en: "extra shot", zh: "加一份浓缩", code: "+SHOT" },
+  vanilla: { en: "vanilla", zh: "香草糖浆", code: "VAN" },
+  caramel: { en: "caramel drizzle", zh: "焦糖淋酱", code: "CAR" },
+  whip: { en: "whipped cream", zh: "奶油顶", code: "WHIP" },
+  decaf: { en: "decaf", zh: "低因", code: "DECAF" },
+  light: { en: "light ice", zh: "少冰", code: "LT ICE" },
+};
+const B_PEOPLE = [["🧔", "Mike"], ["👩‍🦰", "Jen"], ["🧑‍💻", "Tyler"], ["👵", "Grandma Rose"], ["👨‍🍳", "Chef Tony"], ["👩‍🎤", "Zoe"], ["🧑‍🎓", "Sam"], ["👮", "Officer Dale"], ["🕵️", "Mr. Gray"], ["👩‍⚕️", "Dr. Kim"], ["🧑‍🎨", "Ava"], ["👷", "Big Lou"]];
+const B_OPEN = [["Hi! Can I get", "?"], ["Hey, could I grab", "?"], ["Morning! Can I have", "?"], ["Hi there, I'll do", "."], ["Yeah, lemme get", "."], ["Hey! I'd like", "."]];
+const B_HAPPY = ["Perfect, thank you!", "You're the best!", "Exactly what I wanted. Thanks!", "Wow, that was fast. Thank you!"];
+const B_GROUPS = [
+  ["size", "杯型", B_SIZES.map(v => [v, v])],
+  ["temp", "冷热", [["hot", "hot 热"], ["iced", "iced 冰"]]],
+  ["drink", "饮品", Object.entries(B_DRINKS).map(([k, d]) => [k, `${k} ${d.zh}`])],
+  ["milk", "奶", Object.entries(B_MILKS)],
+  ["extras", "加料（可多选）", Object.entries(B_EXTRAS).map(([k, x]) => [k, `${x.en} ${x.zh}`])],
+  ["place", "堂食/外带", [["here", "for here 堂食"], ["togo", "to go 外带"]]],
+];
+
+function makeOrder(level) {
+  const R = Math.random;
+  const drink = pick(level === 1 ? ["latte", "cappuccino", "americano", "flat white"] : Object.keys(B_DRINKS)), D = B_DRINKS[drink];
+  const o = { size: pick(B_SIZES), drink, temp: D.iced ? "iced" : level >= 2 && R() < .45 ? "iced" : "hot", milk: "def", extras: [], place: R() < .5 ? "here" : "togo", cue: { extras: {} } };
+  if (level >= 2 && R() < (level === 2 ? .55 : .75)) o.milk = pick(D.milk ? ["oat", "almond", "skim"] : ["oat", "almond"]);
+  if (level >= 2) {
+    const pool = ["shot", "vanilla", "decaf"].concat(D.milk ? ["caramel", "whip"] : []).filter(k => !(k === "decaf" && drink === "cold brew"));
+    if (o.temp === "iced") pool.push("light");
+    o.extras = shuffle(pool).slice(0, level === 2 ? (R() < .5 ? 1 : 0) : 1 + (R() < .5 ? 1 : 0));
+  }
+  const pre = [o.size], withs = [], after = [];
+  if (o.extras.includes("decaf")) {
+    if (R() < .5) { pre.push("decaf"); o.cue.extras.decaf = "decaf"; } else { after.push("Oh, and make it decaf."); o.cue.extras.decaf = "make it decaf"; }
+  }
+  if (o.temp === "iced" && drink !== "cold brew") { pre.push("iced"); o.cue.temp = "iced"; }
+  else o.cue.temp = drink === "cold brew" ? "cold brew 本身就是冰的" : "没说 iced 就是热的";
+  if (o.extras.includes("vanilla")) {
+    if (D.milk && R() < .5) { pre.push("vanilla"); o.cue.extras.vanilla = "vanilla"; }
+    else { const p = pick(["a pump of vanilla", "vanilla syrup"]); withs.push(p); o.cue.extras.vanilla = p; }
+  }
+  if (o.milk === "def") o.cue.milk = "没提奶就是默认";
+  else if (!D.milk) { const p = `a splash of ${o.milk} milk`; withs.unshift(p); o.cue.milk = p; }
+  else if (o.milk === "skim" && drink !== "flat white" && R() < .5) { pre.push("skinny"); o.cue.milk = "skinny = 脱脂奶"; }
+  else if (R() < .5) { pre.push(`${o.milk} milk`); o.cue.milk = `${o.milk} milk`; }
+  else { withs.unshift(`${o.milk} milk`); o.cue.milk = `with ${o.milk} milk`; }
+  pre.push(drink);
+  for (const k of o.extras) {
+    if (k === "shot") { const p = pick(["an extra shot", "an extra shot of espresso"]); withs.push(p); o.cue.extras.shot = p; }
+    if (k === "caramel") { withs.push("caramel drizzle"); o.cue.extras.caramel = "caramel drizzle"; }
+    if (k === "whip") { const p = pick(["whip", "whipped cream"]); withs.push(p); o.cue.extras.whip = p; }
+    if (k === "light") o.cue.extras.light = "light ice";
+  }
+  const [op, end] = pick(B_OPEN);
+  o.cue.place = o.place === "here" ? pick(["For here, please.", "That's for here.", "I'll have it here."]) : pick(["To go, please.", "That's to go.", "Can I get that to go?"]);
+  o.text = `${op} a ${pre.join(" ")}${withs.length ? " with " + joinAnd(withs) : ""}${o.extras.includes("light") ? ", light ice" : ""}${end} ${after.join(" ")} ${o.cue.place}`.replace(/\s+/g, " ").trim();
+  return o;
+}
+
+function cupSVG(c) {
+  const D = B_DRINKS[c.drink], s = { small: .78, medium: .9, large: 1 }[c.size] || .9, ex = new Set(c.extras), iced = c.temp === "iced", here = c.place === "here";
+  let body;
+  if (iced) {
+    let cubes = "";
+    for (let i = 0; i < (ex.has("light") ? 2 : 5); i++) {
+      const x = 42 + (i % 3) * 26 + (i > 2 ? 13 : 0), y = 70 + Math.floor(i / 3) * 26 + (i % 2) * 6;
+      cubes += `<rect x="${x}" y="${y}" width="22" height="20" rx="5" fill="#fff" opacity=".5" transform="rotate(${(i * 23) % 30 - 15} ${x + 11} ${y + 10})"/>`;
+    }
+    body = `${!here ? `<rect x="91" y="4" width="7" height="72" rx="3" fill="#B4472F" transform="rotate(12 95 40)"/>` : ""}
+      <path d="M24 46h112l-12 150h-88z" fill="#EAF4F6" opacity=".35" stroke="#CFE3E7" stroke-width="2"/>
+      ${D ? `<path d="M28 62h104l-10.7 132h-82.6z" fill="${D.c}" opacity=".95"/>${D.milk ? `<path d="M34.6 150h90.8l-3.5 44h-83.8z" fill="#F3E3CC" opacity=".85"/>` : ""}` : ""}
+      ${cubes}
+      ${ex.has("whip") ? `<path d="M34 50q-2-20 18-18q6-16 28-14q22-2 28 14q20-2 18 18z" fill="#FFFDF8"/>` : ""}
+      ${ex.has("caramel") ? `<path d="M42 40q10 8 19-2t19 2t19-2t17 4" fill="none" stroke="#C47A2C" stroke-width="3.5" stroke-linecap="round"/>` : ""}
+      ${!here ? `<rect x="20" y="40" width="120" height="9" rx="4" fill="#F4F0EA" opacity=".9"/>` : ""}`;
+  } else if (here) {
+    body = `<ellipse cx="80" cy="198" rx="64" ry="9" fill="#E9DCC8"/>
+      <path d="M130 136q24 0 24 20t-24 20" fill="none" stroke="#FBF6EE" stroke-width="9"/>
+      <path d="M30 120h100v42q0 34-34 34h-32q-34 0-34-34z" fill="#FBF6EE" stroke="#E2D2BA" stroke-width="2"/>
+      <ellipse cx="80" cy="120" rx="50" ry="10" fill="#E9DCC8"/>
+      ${D ? `<ellipse cx="80" cy="122" rx="45" ry="8" fill="${D.c}"/>${D.milk ? `<path d="M80 129c-11-5-15-11-9-14 4-2 7 1 9 3 2-2 5-5 9-3 6 3 2 9-9 14z" fill="#F6E9D6"/>` : ""}` : ""}
+      ${ex.has("whip") ? `<path d="M48 121q-1-16 14-14q4-14 18-12q14-2 18 12q15-2 14 14z" fill="#FFFDF8" stroke="#EDE3D3"/>` : ""}
+      ${ex.has("caramel") ? `<path d="M56 111q8 6 13-2t13 2t13-2" fill="none" stroke="#C47A2C" stroke-width="3.5" stroke-linecap="round"/>` : ""}`;
+  } else {
+    body = `<path d="M30 52h100l-11 144h-78z" fill="#E9D3B0"/>
+      <path d="M33 92h94l-3.4 46h-87.2z" fill="#8A5A3A"/>
+      <text x="80" y="120" text-anchor="middle" font-size="13" font-weight="900" fill="#F3E2C8" font-family="Nunito,sans-serif">PTE</text>
+      <rect x="24" y="38" width="112" height="16" rx="6" fill="#F4EEE6"/><rect x="40" y="30" width="80" height="10" rx="4" fill="#E8E0D4"/>`;
+  }
+  const top = iced ? 0 : here ? 104 : 26;
+  const steam = !iced && D ? `<g class="bsteam" stroke="#B9A48A" stroke-opacity=".6" stroke-width="3" fill="none" stroke-linecap="round"><path d="M66 ${top}q-6-10 0-20t0-20"/><path d="M92 ${top - 4}q6-10 0-20t0-20"/></g>` : "";
+  return `<svg viewBox="0 0 160 210" aria-hidden="true"><g transform="translate(80 205) scale(${s}) translate(-80 -205)">${body}${steam}</g></svg>`;
+}
+function ticket(c) {
+  const code = { latte: "LAT", cappuccino: "CAP", "flat white": "FW", mocha: "MOCHA", americano: "AMER", "cold brew": "CB" };
+  return [c.size ? c.size[0].toUpperCase() : "", c.temp === "iced" ? "ICED" : "", c.milk !== "def" ? c.milk.toUpperCase() : "", c.drink ? code[c.drink] : "",
+    ...c.extras.map(x => B_EXTRAS[x].code), c.place === "here" ? "HERE" : c.place === "togo" ? "TO GO" : ""].filter(Boolean).join(" · ") || "还没开始做";
+}
+function lab(f, v) {
+  if (v == null) return "没选";
+  if (f === "temp") return v === "iced" ? "冰" : "热";
+  if (f === "milk") return { def: "默认", oat: "燕麦奶", almond: "杏仁奶", skim: "脱脂奶" }[v];
+  if (f === "extras") return v.length ? v.map(x => B_EXTRAS[x].zh).join("、") : "不加";
+  if (f === "place") return v === "here" ? "堂食" : "外带";
+  if (f === "drink") return `${v} ${B_DRINKS[v].zh}`;
+  return v;
+}
+function spokenCue(f, o) {
+  return {
+    size: `a ${o.size}`, temp: o.temp, drink: `a ${o.drink}`,
+    milk: o.milk === "def" ? "regular milk" : `${o.milk} milk`,
+    extras: o.extras.length ? joinAnd(o.extras.map(x => B_EXTRAS[x].en)) : "nothing extra",
+    place: o.place === "here" ? "for here" : "to go",
+  }[f];
+}
+
+const Bar = { i: -1, order: null, cur: null, tips: 0, perfect: 0, shown: false, done: false, cust: null, pitch: 1, voice: 0 };
+const bFresh = () => ({ size: null, temp: "hot", drink: null, milk: "def", extras: [], place: null });
+function bStart() { Bar.i = -1; Bar.tips = 0; Bar.perfect = 0; bNext(); }
+function bNext() {
+  Bar.i++;
+  if (Bar.i >= 5) return bEnd();
+  Bar.order = makeOrder(Bar.i < 2 ? 1 : Bar.i < 4 ? 2 : 3);
+  Bar.cur = bFresh(); Bar.shown = !tts; Bar.done = false;
+  Bar.cust = pick(B_PEOPLE); Bar.pitch = 0.85 + Math.random() * 0.4; Bar.voice = Math.floor(Math.random() * 8);
+  bRender();
+  setTimeout(() => bSay(), 400);
+}
+const bSay = (rate = 0.95) => speak(Bar.order.text, rate, Bar.pitch, Bar.voice);
+function bPills() {
+  $("#bRound").textContent = Bar.i < 0 ? "还没开门" : Bar.i >= 5 ? "打烊" : `第 ${Bar.i + 1} / 5 位`;
+  $("#bTips").textContent = `小费 $${Bar.tips}`;
+  $("#bBest").textContent = `最佳 $${S.bar?.best || 0}`;
+}
+function bRender() {
+  bPills();
+  const body = $("#bBody");
+  if (Bar.i < 0) {
+    body.innerHTML = `<div class="bopen"><button class="btn red" id="bGo">开始营业 Open the shop</button></div>`;
+    $("#bGo").onclick = bStart; return;
+  }
+  const [ava, name] = Bar.cust;
+  body.innerHTML = `<div class="bstage">
+      <div class="bcust">
+        <div class="bava" aria-hidden="true">${ava}<i id="bMood">🙂</i></div>
+        <div>
+          <div class="bname">${esc(name)} <span class="note">· 在柜台前点单</span></div>
+          <div class="bsay ${Bar.shown ? "" : "hide"}" id="bSayTxt">${esc(Bar.order.text)}</div>
+          <div class="row" style="margin-top:8px">
+            ${tts ? `<button class="btn sm" id="bAgain">🔊 再听一遍</button><button class="btn sm ghost" id="bSlow">🐢 慢速</button>` : ""}
+            <button class="btn sm ghost" id="bShow" ${Bar.shown ? "hidden" : ""}>看文字（小费减半）</button>
+          </div>
+        </div>
+      </div>
+      <div class="bcupbox"><div id="bCup"></div><div class="bticket" id="bTicket"></div></div>
+    </div>
+    <div class="bbuild" id="bBuild"></div>
+    <div class="row"><button class="btn red" id="bServe">出餐 Serve!</button><button class="btn sm ghost" id="bRedo">重做这杯</button></div>
+    <div id="bRes"></div>`;
+  if (tts) { $("#bAgain").onclick = () => bSay(); $("#bSlow").onclick = () => bSay(0.68); }
+  $("#bShow").onclick = () => { Bar.shown = true; $("#bSayTxt").classList.remove("hide"); $("#bShow").hidden = true; };
+  $("#bRedo").onclick = () => { if (!Bar.done) { Bar.cur = bFresh(); bBuild(); } };
+  $("#bServe").onclick = bServe;
+  $("#bBuild").onclick = e => {
+    const b = e.target.closest(".bchip"); if (!b || b.disabled || Bar.done) return;
+    const { k, v } = b.dataset, c = Bar.cur;
+    if (k === "extras") c.extras = c.extras.includes(v) ? c.extras.filter(x => x !== v) : [...c.extras, v];
+    else c[k] = v;
+    if (c.drink === "cold brew") c.temp = "iced";
+    if (c.temp !== "iced") c.extras = c.extras.filter(x => x !== "light");
+    sfx("pop"); bBuild();
+  };
+  bBuild();
+}
+function bBuild() {
+  const c = Bar.cur;
+  $("#bBuild").innerHTML = B_GROUPS.map(([k, lbl, opts]) => `<div class="bgrp"><span>${lbl}</span><div class="bchips">${opts.map(([v, t]) => {
+    const on = k === "extras" ? c.extras.includes(v) : c[k] === v;
+    const off = Bar.done || (k === "temp" && v === "hot" && c.drink === "cold brew") || (k === "extras" && v === "light" && c.temp !== "iced");
+    return `<button class="bchip" data-k="${k}" data-v="${v}" aria-pressed="${on}"${off ? " disabled" : ""}>${esc(t)}</button>`;
+  }).join("")}</div></div>`).join("");
+  $("#bCup").innerHTML = cupSVG(c);
+  $("#bTicket").textContent = ticket(c);
+}
+function bServe() {
+  const c = Bar.cur, o = Bar.order;
+  if (Bar.done) return;
+  if (!c.size || !c.drink || !c.place) { $("#bRes").innerHTML = `<p class="err">杯型、饮品、堂食/外带这三项还没选完。</p>`; return; }
+  Bar.done = true;
+  const same = (a, b) => [...a].sort().join() === [...b].sort().join();
+  const rows = [
+    ["size", "杯型", o.cue.size || o.size], ["temp", "冷热", o.cue.temp], ["drink", "饮品", o.drink],
+    ["milk", "奶", o.cue.milk], ["extras", "加料", Object.values(o.cue.extras).join(" / ") || "没提加料"], ["place", "堂食/外带", o.cue.place],
+  ].map(([f, t, cue]) => ({ f, t, cue, ok: f === "extras" ? same(o.extras, c.extras) : o[f] === c[f] }));
+  const ok = rows.filter(r => r.ok).length, perfect = ok === rows.length;
+  let tip = ok + (perfect ? 3 : 0);
+  if (Bar.shown && tts) tip = Math.floor(tip / 2);
+  Bar.tips += tip; if (perfect) Bar.perfect++;
+  S.bar ??= { best: 0, served: 0 }; S.bar.served++; save();
+  const miss = rows.find(r => !r.ok);
+  const line = perfect ? pick(B_HAPPY) : ok >= 4 ? `Close! But I said ${spokenCue(miss.f, o)}.` : "Hmm… that's not quite what I ordered.";
+  $("#bMood").textContent = perfect ? "😍" : ok >= 4 ? "🙂" : "😤";
+  sfx(perfect ? "ding" : ok >= 4 ? "pop" : "thud");
+  speak(line, 0.95, Bar.pitch, Bar.voice);
+  $("#bSayTxt").classList.remove("hide"); $("#bShow").hidden = true;
+  bBuild(); bPills();
+  $("#bRes").innerHTML = `<div class="bres">
+      <div class="bline"><b>${esc(Bar.cust[1])}：</b>“${esc(line)}”</div>
+      <div class="btab">${rows.map(r => `<div class="${r.ok ? "ok" : "bad"}"><span>${r.t}</span><span>${r.ok ? "✓" : "✗"} ${esc(lab(r.f, c[r.f]))}${r.ok ? "" : `，应该是 ${esc(lab(r.f, o[r.f]))}`}</span><span class="cue">${esc(r.cue)}</span></div>`).join("")}</div>
+      <div class="row"><span class="pill">这单小费 $${tip}${Bar.shown && tts ? "（看了文字，减半）" : perfect ? "（全对多给 $3）" : ""}</span>
+        <button class="btn sm ghost" id="bCard">把原句收进词卡</button>
+        <button class="btn" id="bNextBtn">${Bar.i < 4 ? "下一位客人" : "打烊结算"}</button></div>
+    </div>`;
+  $("#bNextBtn").onclick = bNext;
+  $("#bCard").onclick = ev => { const m = addCard({ word: o.text.length > 60 ? o.text.slice(0, 57) + "…" : o.text, mean: "咖啡店点单：" + ticket(o), ex: o.text, src: "听单做咖啡" }); ev.target.textContent = m || "已加入词卡"; ev.target.disabled = true; };
+}
+function bEnd() {
+  S.bar ??= { best: 0, served: 0 };
+  const best = Bar.tips > (S.bar.best || 0);
+  if (best) S.bar.best = Bar.tips;
+  save(); bPills();
+  $("#bBody").innerHTML = `<div class="bopen" style="text-align:center;gap:8px">
+    <div class="qprompt">今天收了 $${Bar.tips} 小费${best ? " · 新纪录！" : ""}</div>
+    <p class="muted">5 单里全对 ${Bar.perfect} 单。${Bar.perfect >= 3 ? "" : "全对 3 单以上可以集一个章。"}</p>
+    <button class="btn red" id="bGo">再开一轮</button></div>`;
+  $("#bGo").onclick = bStart;
+  sfx("coins");
+  if (Bar.perfect >= 3) stamp("barista");
+}
+
+/* ---------- overheard: the next table says something natural now and then ---------- */
+const OVERHEARD = [
+  { en: "Honestly? That meeting could've been an email.", key: "could've been an email", kz: "（会开得没必要）发封邮件就够了", zh: "说真的，那个会发封邮件就够了。" },
+  { en: "I'm running on, like, four hours of sleep.", key: "running on", kz: "靠……撑着", zh: "我就睡了四个小时左右，硬撑着呢。" },
+  { en: "Can you save my seat? I'll be right back.", key: "save my seat", kz: "帮我占个座", zh: "能帮我占下座吗？我马上回来。" },
+  { en: "She totally nailed the interview.", key: "nail", kz: "完美搞定", zh: "她面试表现超好。" },
+  { en: "It's not a big deal, but it kind of bugs me.", key: "bug someone", kz: "让人心烦", zh: "不是什么大事，但有点让我心烦。" },
+  { en: "Long story short, we missed the flight.", key: "long story short", kz: "长话短说", zh: "长话短说，我们误机了。" },
+  { en: "Excuse me, is this seat taken?", key: "Is this seat taken?", kz: "这里有人坐吗？", zh: "打扰一下，这个位子有人吗？" },
+  { en: "I can't make it tonight. Rain check?", key: "rain check", kz: "改天再约", zh: "我今晚去不了，改天行吗？" },
+  { en: "It's a big decision. Let me sleep on it.", key: "sleep on it", kz: "考虑一晚再决定", zh: "这事挺大的，让我想一晚再说。" },
+  { en: "Forty bucks for that? That's a steal.", key: "a steal", kz: "太划算了", zh: "那个才四十块？简直白捡。" },
+  { en: "I'm swamped this week. Can we push it to Monday?", key: "swamped / push it", kz: "忙疯了 / 往后推", zh: "我这周忙疯了，能推到周一吗？" },
+  { en: "You're overthinking it. Just send the text.", key: "overthink", kz: "想太多", zh: "你想太多了，直接发消息吧。" },
+  { en: "Keep me posted, okay?", key: "keep me posted", kz: "随时告诉我进展", zh: "有进展告诉我，好吗？" },
+  { en: "Wow. I did not see that coming.", key: "see that coming", kz: "预料到", zh: "哇，这我完全没想到。" },
+  { en: "Ugh, it's on the tip of my tongue.", key: "on the tip of my tongue", kz: "话到嘴边（就是想不起来）", zh: "哎，就在嘴边，想不起来了。" },
+  { en: "Could you make it a little less sweet?", key: "less sweet", kz: "少甜一点", zh: "能做得不那么甜吗？" },
+  { en: "This place has such a cozy vibe.", key: "vibe", kz: "氛围、感觉", zh: "这家店氛围好舒服。" },
+  { en: "Hang on, let me check my calendar.", key: "hang on", kz: "等一下", zh: "等等，我看下日程。" },
+  { en: "No worries, take your time.", key: "no worries", kz: "没事，别着急", zh: "没关系，你慢慢来。" },
+  { en: "I got this round. You get the next one.", key: "I got this", kz: "这次我来（请）", zh: "这轮我请，下轮你来。" },
+  { en: "It's been a long day. I just need caffeine.", key: "a long day", kz: "很累的一天", zh: "今天太累了，我只想来点咖啡因。" },
+  { en: "Wanna binge the new season this weekend?", key: "binge", kz: "一口气刷完", zh: "这周末一起刷新一季吗？" },
+  { en: "He's been glued to his phone the whole time.", key: "glued to", kz: "粘在……上", zh: "他从头到尾都在看手机。" },
+  { en: "I'm kind of a regular here.", key: "a regular", kz: "常客", zh: "我算是这儿的常客。" },
+  { en: "Wait, are you serious right now?", key: "are you serious", kz: "你是认真的吗", zh: "等等，你是认真的吗？" },
+  { en: "No plans yet. Let's just play it by ear.", key: "play it by ear", kz: "见机行事", zh: "还没计划，到时候看情况吧。" },
+  { en: "That's a good point. I hadn't thought of that.", key: "that's a good point", kz: "说得有道理", zh: "有道理，我之前没想到。" },
+  { en: "I'm heading out. Catch you later!", key: "catch you later", kz: "回头见", zh: "我先走了，回头见！" },
+  { en: "Same here. I'm a total night owl.", key: "night owl", kz: "夜猫子", zh: "我也是，我是个十足的夜猫子。" },
+  { en: "My bad, I thought you said Tuesday.", key: "my bad", kz: "我的错", zh: "我的错，我以为你说的是周二。" },
+];
+const Overheard = (() => {
+  const el = document.createElement("div");
+  el.className = "overheard"; el.hidden = true; el.setAttribute("role", "status");
+  document.body.append(el);
+  let timer = null, hideT = null;
+  function schedule(ms) { clearTimeout(timer); timer = setTimeout(() => show(), ms ?? 60000 + Math.random() * 60000); }
+  function hide() { el.classList.remove("in"); setTimeout(() => { if (!el.classList.contains("in")) el.hidden = true; }, 500); }
+  function show(force) {
+    if (!force && (S.overheard === false || document.hidden)) return schedule();
+    const recent = (S.heard || []).slice(0, 12);
+    const pool = OVERHEARD.map((_, i) => i).filter(i => !recent.includes(i));
+    const i = pick(pool.length ? pool : OVERHEARD.map((_, j) => j)), L = OVERHEARD[i];
+    S.heard = [i, ...(S.heard || []).filter(x => x !== i)].slice(0, 30); save(); renderHeard();
+    el.innerHTML = `<button class="oh-main" aria-expanded="false"><span class="oh-who">邻桌 ·</span><span class="oh-en">${esc(L.en)}</span></button>
+      <div class="oh-more" hidden><div>${esc(L.zh)}<br><b>${esc(L.key)}</b>：${esc(L.kz)}</div>
+      <div class="row">${tts ? `<button class="btn sm dk" data-a="say">🔊 听一下</button>` : ""}<button class="btn sm dk" data-a="card">收进词卡</button><button class="btn sm dk" data-a="x">关掉</button></div></div>`;
+    el.hidden = false; requestAnimationFrame(() => el.classList.add("in"));
+    clearTimeout(hideT); hideT = setTimeout(hide, 14000);
+    $(".oh-main", el).onclick = () => { clearTimeout(hideT); $(".oh-more", el).hidden = false; $(".oh-main", el).setAttribute("aria-expanded", "true"); speak(L.en); };
+    $(".oh-more", el).onclick = e => {
+      const a = e.target.closest("[data-a]")?.dataset.a;
+      if (a === "say") speak(L.en);
+      if (a === "card") { const m = addCard({ word: L.key, mean: L.kz, ex: L.en, src: "邻桌在聊" }); e.target.textContent = m || "已加入"; e.target.disabled = true; }
+      if (a === "x") hide();
+    };
+    schedule();
+  }
+  schedule(30000);
+  return { show, hide };
+})();
+function renderHeard() {
+  const list = (S.heard || []).slice(0, 8).map(i => OVERHEARD[i]).filter(Boolean);
+  $("#heardList").innerHTML = list.length ? list.map((L, n) => `<li><div class="en">${esc(L.en)}</div><div class="zh">${esc(L.zh)}　<b>${esc(L.key)}</b>：${esc(L.kz)}</div>
+    <div class="row">${tts ? `<button class="btn sm ghost" data-say="${n}">🔊</button>` : ""}<button class="btn sm ghost" data-card="${n}">收进词卡</button></div></li>`).join("")
+    : `<li class="muted">还没听到。坐一会儿，或者点右上角“偷听一句”。</li>`;
+  $("#heardList").onclick = e => {
+    const s = e.target.closest("[data-say]"), c = e.target.closest("[data-card]");
+    if (s) speak(list[+s.dataset.say].en);
+    if (c) { const L = list[+c.dataset.card], m = addCard({ word: L.key, mean: L.kz, ex: L.en, src: "邻桌在聊" }); c.textContent = m || "已加入"; c.disabled = true; }
+  };
+}
+$("#ohNow").onclick = () => Overheard.show(true);
+
+/* two switches in the jukebox: click sounds and the next-table chatter */
+function renderToggles() {
+  $("#sfxChip").setAttribute("aria-pressed", S.sfx !== false);
+  $("#ohChip").setAttribute("aria-pressed", S.overheard !== false);
+}
+$("#sfxChip").onclick = () => { S.sfx = S.sfx === false; save(); renderToggles(); sfx("pop"); };
+$("#ohChip").onclick = () => { S.overheard = S.overheard === false; save(); renderToggles(); if (S.overheard === false) Overheard.hide(); };
+
+function renderBar() {
+  renderStamps(); renderHeard(); renderToggles(); syncScene();
+  if (Bar.i < 0) bRender(); else bPills();
+  if (dayStatus(dkey()) === "ok") stamp("menu");
+}
+initScene();
+
 /* ============ boot ============ */
-function renderAll() { renderToday(); renderShows(); renderWords(); }
+function renderAll() { renderToday(); renderShows(); renderWords(); renderBar(); }
 renderAll(); renderScenes(); renderTalkIdle(); slStart(); scStart();
 if (!tts) $$("#lineSpeak,#chSpeak").forEach(b => b.hidden = true);
 let startView = (location.hash || "").slice(1);
