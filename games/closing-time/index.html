@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#07080c">
+<title>Closing Time</title>
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=VT323&display=swap" media="print" onload="this.media='all'">
+<style>
+:root{--bg:#07080c;--ink:#ebe7dc;--dim:#8f8d86;--acc:#7cf29a;--red:#ff5d5d;--panel:#101218;--line:#262a33}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;overflow:hidden}
+button{font:inherit;color:inherit;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;user-select:none}
+#app{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center}
+body.land #app{flex-direction:row;justify-content:center;align-items:center;gap:10px}
+#stage{position:relative;flex:none;background:#000;overflow:hidden}
+#cv{display:block;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+#hud{position:absolute;left:0;right:0;top:0;pointer-events:none;display:flex;justify-content:space-between;align-items:flex-start;padding:6px 8px}
+#clock{font-family:VT323,ui-monospace,monospace;font-size:22px;color:var(--acc);background:rgba(0,0,0,.6);padding:0 8px;border-radius:4px;letter-spacing:1px;line-height:26px}
+.hbtns{display:flex;gap:6px;pointer-events:auto}
+.hb{background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.18);border-radius:6px;padding:2px 9px;font-size:13px;line-height:22px}
+.hb[hidden]{display:none}
+#panel{flex:1;width:100%;max-width:760px;display:flex;flex-direction:column;gap:8px;padding:8px 12px calc(10px + env(safe-area-inset-bottom));min-height:0}
+body.land #panel{width:330px;flex:none;max-width:none;height:100%;justify-content:flex-end;padding:10px 10px calc(10px + env(safe-area-inset-bottom)) 0}
+#sub{flex:1;min-height:96px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;position:relative;overflow:auto;cursor:pointer}
+#sub .who{font-size:12px;font-weight:700;letter-spacing:.5px;margin-bottom:2px}
+#sub .en{font-size:18px;line-height:1.45;min-height:26px}
+#sub.think .en{font-style:italic;color:#c9c6bd}
+#sub .zh{color:var(--dim);font-size:14px;margin-top:4px}
+#sub .tools{display:flex;gap:6px;align-items:center;margin-top:8px}
+.tb{background:#1a1d25;border:1px solid var(--line);border-radius:6px;padding:1px 9px;font-size:13px}
+.nx{margin-left:auto;color:var(--dim);font-size:12px;animation:bob 1s infinite}
+@keyframes bob{50%{transform:translateY(2px)}}
+.kw{color:#ffd77a;font-weight:600;border-bottom:1px dashed rgba(255,215,122,.5)}
+#sub .idle{color:var(--dim);font-size:14px}
+#sub .idle b{color:var(--ink);font-weight:600}
+#sub .prev{color:var(--dim);font-size:13px;margin-bottom:8px}
+.choices{display:grid;gap:7px}
+.ch{text-align:left;background:#191c24;border:1px solid #333847;border-radius:8px;padding:8px 11px;display:flex;flex-direction:column}
+.ch span{font-size:16px}
+.ch small{color:var(--dim);font-size:12.5px}
+.ch:active,.ch:hover{border-color:var(--acc)}
+#pad{display:grid;grid-template-columns:72px 72px 1fr;gap:8px;flex:none}
+#pad button{height:62px;border-radius:12px;background:#171a22;border:1px solid #2c303b;font-size:24px}
+#pad button.on{background:#232835}
+#bA{display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2}
+#bA b{font-size:17px}
+#bA small{font-size:11.5px;color:var(--dim)}
+#bA.has{border-color:var(--acc);box-shadow:0 0 0 1px rgba(124,242,154,.25) inset}
+#modal{position:fixed;inset:0;background:rgba(3,4,8,.82);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+#modal.show{display:flex}
+.mbox{background:#12141b;border:1px solid #2a2e3a;border-radius:14px;padding:18px;max-width:560px;width:100%;max-height:100%;overflow:auto;-webkit-user-select:text;user-select:text}
+.mbox h2{margin:0 0 6px;font-size:20px}
+.mbox p{margin:6px 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{background:#1f2430;border:1px solid #363c4c;border-radius:9px;padding:9px 15px;font-size:15px}
+.btn.pri{background:#1f6b45;border-color:#2c8f5d}
+.paper{background:#f2ecd9;color:#1b1b1b;border-radius:4px;padding:16px 18px;font-family:"Bradley Hand","Segoe Print","Comic Sans MS","Kaiti SC",cursive;font-size:16px;line-height:1.45;transform:rotate(-.6deg);box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.paper h3{margin:0 0 8px;font-size:19px;text-decoration:underline}
+.rule{margin:7px 0;cursor:pointer}
+.rule .z{display:none;color:#6b665a;font-family:system-ui,"PingFang SC",sans-serif;font-size:13px}
+.rule.on .z,.paper.allz .z{display:block}
+.rule.red{color:#a5121a;font-family:"Chalkduster","Marker Felt","Segoe Print",cursive;transform:rotate(.8deg) skewX(-5deg);letter-spacing:.3px}
+.paper.old{background:#ddd3b6;font-size:15px;transform:rotate(1deg)}
+.hint{color:var(--dim);font-size:12.5px;margin-top:10px}
+.tasks{list-style:none;padding:0;margin:8px 0}
+.tasks li{padding:6px 0;border-bottom:1px solid #22262f;display:flex;gap:9px}
+.tasks li.done{color:var(--dim);text-decoration:line-through}
+.tasks small{display:block;color:var(--dim);text-decoration:none}
+#camc{width:100%;image-rendering:pixelated;border:6px solid #1b1d22;border-radius:8px;background:#000;display:block}
+.bar{position:relative;height:34px;background:#1c2029;border-radius:8px;overflow:hidden;margin:14px 0}
+.bar .zone{position:absolute;top:0;bottom:0;left:42%;width:16%;background:rgba(124,242,154,.35)}
+.bar .mk{position:absolute;top:0;bottom:0;width:4px;background:#fff;left:0}
+.bills{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.bill{background:#3a5a3a;border:1px solid #6f9a6a;border-radius:6px;padding:8px 12px;font-family:VT323,monospace;font-size:22px}
+.title{font-family:VT323,monospace;font-size:64px;line-height:1;letter-spacing:3px;color:#e9e4d6;text-shadow:0 0 18px rgba(124,242,154,.25)}
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.gal div{background:#191c24;border:1px solid #2a2e3a;border-radius:8px;padding:8px 10px;font-size:13px}
+.gal div b{display:block;font-size:14px}
+.gal .lock{color:#555}
+.end p.e{font-size:17px;margin:10px 0 0}
+.end p.z{color:var(--dim);font-size:13.5px;margin:2px 0 0}
+.wl{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.wl span{background:#1d2129;border:1px solid #2c3140;border-radius:6px;padding:3px 8px;font-size:13px}
+.wl span i{font-style:normal;color:var(--dim);margin-left:4px}
+.tog{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #22262f}
+.sw{width:46px;height:26px;border-radius:13px;background:#333;border:0;position:relative}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#bbb;transition:.15s}
+.sw.on{background:#1f8a55}.sw.on::after{left:23px;background:#fff}
+.fade{animation:fin .5s}
+@keyframes fin{from{opacity:0}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage">
+    <canvas id="cv"></canvas>
+    <div id="hud">
+      <div id="clock">22:27</div>
+      <div class="hbtns">
+        <button class="hb" id="hTask" hidden>任务</button>
+        <button class="hb" id="hRule" hidden>守则</button>
+        <button class="hb" id="hSet">⚙</button>
+      </div>
+    </div>
+  </div>
+  <div id="panel">
+    <div id="sub"></div>
+    <div id="pad">
+      <button id="bL" aria-label="左">◀</button>
+      <button id="bR" aria-label="右">▶</button>
+      <button id="bA"><b>互动</b><small>Space</small></button>
+    </div>
+  </div>
+</div>
+<div id="modal"></div>
+<script>
+"use strict";
+let W=256;const H=160,FLOOR=134;
+const $=s=>document.querySelector(s);
+const cv=$("#cv"),ctx=cv.getContext("2d");cv.width=W;cv.height=H;
+const LS={get(k,d){try{const v=localStorage.getItem("ct_"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("ct_"+k,JSON.stringify(v))}catch(e){}}};
+const SET=Object.assign({sfx:true,voice:true,zh:false},LS.get("set",{}));
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+/* ================= audio ================= */
+let AC=null,master=null,noiseBuf=null;const amb={};
+function ac(){
+  if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();master=AC.createGain();master.gain.value=SET.sfx?.9:0;master.connect(AC.destination);initAmb()}catch(e){AC=null}}
+  if(AC&&AC.state==="suspended")AC.resume();return AC;
+}
+function nb(){if(!noiseBuf){noiseBuf=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}return noiseBuf}
+function initAmb(){
+  const s=AC.createBufferSource();s.buffer=nb();s.loop=true;const f=AC.createBiquadFilter();f.type="lowpass";f.frequency.value=1100;const g=AC.createGain();g.gain.value=0;s.connect(f).connect(g).connect(master);s.start();amb.rain=g;
+  const o=AC.createOscillator(),o2=AC.createOscillator();o.frequency.value=58;o2.type="triangle";o2.frequency.value=117;const hg=AC.createGain();hg.gain.value=0;o.connect(hg);o2.connect(hg);hg.connect(master);o.start();o2.start();amb.hum=hg;
+  const d1=AC.createOscillator(),d2=AC.createOscillator();d1.type=d2.type="sawtooth";d1.frequency.value=41;d2.frequency.value=41.6;const df=AC.createBiquadFilter();df.type="lowpass";df.frequency.value=170;const dg=AC.createGain();dg.gain.value=0;d1.connect(df);d2.connect(df);df.connect(dg).connect(master);d1.start();d2.start();amb.drone=dg;
+}
+function setAmb(n,v){if(AC&&amb[n])amb[n].gain.setTargetAtTime(v,AC.currentTime,.5)}
+function tone(f,d,type="sine",v=.2,t0=0,slide){const t=AC.currentTime+t0,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(slide,t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(master);o.start(t);o.stop(t+d+.05)}
+function noise(d,v=.2,freq=1000,type="lowpass",t0=0,q=1){const t=AC.currentTime+t0,s=AC.createBufferSource();s.buffer=nb();const f=AC.createBiquadFilter();f.type=type;f.frequency.value=freq;f.Q.value=q;const g=AC.createGain();g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(f).connect(g).connect(master);s.start(t,Math.random());s.stop(t+d+.05)}
+const SFX={
+  chime(){tone(1046,.5,"sine",.14);tone(784,.8,"sine",.14,.28)},
+  step(){noise(.05,.07,650)},stepOut(){noise(.06,.09,1500,"bandpass")},echo(){noise(.06,.075,420,"lowpass")},
+  knock(){[0,.2,.4].forEach(t=>{noise(.12,.55,230,"lowpass",t);tone(85,.12,"sine",.35,t)})},
+  ring(){[0,.5].forEach(t=>{tone(440,.42,"square",.045,t);tone(480,.42,"square",.045,t)})},
+  beep(){tone(1800,.08,"square",.05)},cash(){tone(1318,.12,"triangle",.12);tone(1760,.25,"triangle",.1,.08);noise(.15,.08,3000,"highpass")},
+  hiss(){noise(1.4,.13,2600,"highpass")},pour(){noise(1,.08,600,"bandpass",0,3)},
+  box(){noise(.15,.25,400);tone(110,.12,"triangle",.14)},door(){noise(.5,.12,500);tone(150,.4,"triangle",.06,0,90)},
+  click(){tone(2400,.03,"square",.04)},sting(){tone(98,1.8,"sawtooth",.1);tone(104,1.8,"sawtooth",.1);tone(1567,1.3,"sine",.035,0,1480)},
+  mop(){noise(.3,.12,900,"bandpass",0,2)},ok(){tone(880,.1,"sine",.1);tone(1320,.16,"sine",.1,.08)},bad(){tone(200,.22,"square",.05)},
+  sw(){tone(1200,.02,"square",.1);noise(.05,.2,2000)},tap(){noise(.05,.3,1600,"bandpass",0,4);noise(.05,.3,1600,"bandpass",.18,4)},
+  lock(){tone(600,.05,"square",.07);tone(300,.08,"square",.07,.07)},car(){noise(2.4,.13,450)},thud(){tone(70,.3,"sine",.4);noise(.12,.2,300)},
+  buzz(){noise(.25,.06,120,"lowpass")}
+};
+function sfx(n){if(!SET.sfx||!ac())return;try{SFX[n]()}catch(e){}}
+
+/* ================= speech ================= */
+const tts=window.speechSynthesis;
+const NOVELTY=/Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Kathy|Fred|Princess|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley/i;
+function speak(text,pitch=1,rate=.92,vi=0){
+  if(!tts)return;try{tts.cancel();const u=new SpeechSynthesisUtterance(text.replace(/[*_"“”]/g,""));u.lang="en-US";u.rate=rate;u.pitch=pitch;
+  const vs=tts.getVoices().filter(v=>/^en[-_]US/i.test(v.lang)&&!NOVELTY.test(v.name));if(vs.length)u.voice=vs[vi%vs.length];tts.speak(u)}catch(e){}
+}
+if(tts&&tts.onvoiceschanged!==undefined)tts.onvoiceschanged=()=>{};
+
+/* ================= pixel font & draw helpers ================= */
+const FONT={A:"010101111101101",B:"110101110101110",C:"011100100100011",D:"110101101101110",E:"111100110100111",F:"111100110100100",G:"011100101101011",H:"101101111101101",I:"111010010010111",J:"001001001101010",K:"101101110101101",L:"100100100100111",M:"101111111101101",N:"110101101101101",O:"010101101101010",P:"110101110100100",Q:"010101101110011",R:"110101110101101",S:"011100010001110",T:"111010010010010",U:"101101101101111",V:"101101101101010",W:"101101111111101",X:"101101010101101",Y:"101101010010010",Z:"111001010100111",
+"0":"111101101101111","1":"010110010010111","2":"110001010100111","3":"110001010001110","4":"101101111001001","5":"111100110001110","6":"011100111101111","7":"111001010010010","8":"111101111101111","9":"111101111001110",":":"000010000010000",".":"000000000000010","-":"000000111000000","/":"001001010100100","$":"011110010011110","!":"010010010000010","?":"110001010000010"," ":"000000000000000"};
+let g=ctx,CX=0;
+function R(x,y,w,h,c){g.fillStyle=c;g.fillRect(Math.round(x-CX),Math.round(y),w,h)}
+function T(s,x,y,c){s=String(s).toUpperCase();g.fillStyle=c;let px=Math.round(x-CX);for(const ch of s){const f=FONT[ch];if(f)for(let i=0;i<15;i++)if(f[i]==="1")g.fillRect(px+i%3,y+(i/3|0),1,1);px+=4}}
+function srand(s){return()=>{s=(s*16807)%2147483647;return(s-1)/2147483646}}
+function ell(x,y,rx,ry,c){g.fillStyle=c;g.beginPath();g.ellipse(Math.round(x-CX),y,rx,ry,0,0,7);g.fill()}
+
+/* ================= characters ================= */
+const LOOK={
+  mia:{skin:"#e8c3a0",hair:"#1d1517",top:"#e9e6de",vest:"#2f8a5a",pants:"#23262c",shoes:"#111",pony:1,tag:1},
+  tom:{skin:"#d9b08c",hair:"#2b2420",top:"#4a505c",tie:"#a33",pants:"#3a3f4a",shoes:"#111"},
+  lily:{skin:"#f0cfb0",hair:"#5a3a2a",top:"#8a5bbf",pants:"#3b4f7a",shoes:"#ddd",phones:1},
+  rain:{skin:"#0c0c0e",hair:"#0c0c0e",coat:"#e3be38",pants:"#2b2b2b",shoes:"#1a1a1a",hood:1},
+  grace:{skin:"#c99a78",hair:"#3a241a",top:"#5fa8a0",pants:"#5fa8a0",shoes:"#eee",bun:1,cardi:"#c9b9a0"},
+  thing:{skin:"#d3dad5",hair:"#d3dad5",top:"#e9e6de",vest:"#2f8a5a",pants:"#23262c",shoes:"#111",tall:1,faceless:1,tag:1}
+};
+function person(x,y,L,face=1,step=0,alpha=1){
+  x=Math.round(x);const ga=g.globalAlpha;g.globalAlpha=alpha;
+  const tall=L.tall?1:0,legH=8+tall*4,torH=10+tall*4,top=y-legH-torH-7;
+  const P=(dx,dy,w,h,c)=>R(face>0?x+dx:x-dx-w,dy,w,h,c);
+  const a=step%2?1:0;
+  P(-3+a,y-legH,2,legH,L.pants);P(1-a,y-legH,2,legH,L.pants);
+  P(-3+a,y-1,3,1,L.shoes);P(1-a,y-1,3,1,L.shoes);
+  const ty=y-legH-torH;
+  if(L.coat){P(-5,ty-1,10,torH+legH-2,L.coat);P(-5,ty+torH+legH-4,10,1,"#b8962a");}
+  else{P(-4,ty,8,torH,L.top);if(L.vest){P(-4,ty,3,torH,L.vest);P(1,ty,3,torH,L.vest)}if(L.tie)P(0,ty+1,1,5,L.tie);if(L.cardi){P(-4,ty,2,torH,L.cardi);P(2,ty,2,torH,L.cardi)}if(L.tag)P(1,ty+2,2,1,"#f4f1e6")}
+  const armL=L.tall?torH+5:8;P(2,ty+1+(step%2),2,armL,L.coat||L.vest||L.cardi||L.top);P(2,ty+armL+(step%2),2,1,L.skin);
+  const hy=top;
+  if(L.hood){P(-4,hy-2,8,9,L.coat);P(0,hy+1,3,5,"#0b0b0d");}
+  else{
+    const hx=L.tall?1:0;P(-3+hx,hy,6,7,L.skin);P(-3+hx,hy,6,2,L.hair);P(-3+hx,hy,2,5,L.hair);
+    if(L.pony)P(-5,hy+1,2,4,L.hair);if(L.bun)P(-5,hy,2,3,L.hair);if(L.phones){P(-3,hy-1,6,1,"#111");P(-1,hy+2,2,3,"#111")}
+    if(L.faceless){P(1+hx,hy+3,2,2,"#2a2f2c");P(-1+hx,hy+3,1,2,"#2a2f2c")}else P(1+hx,hy+3,1,1,"#1a1a1a");
+  }
+  g.globalAlpha=ga;
+}
+
+/* ================= words ================= */
+const WORDS={"night shift":"夜班","clock in":"打卡上班","clocked in":"已打卡","restock":"补货","shelf":"货架","register":"收银机","spicy":"辣的","keep the change":"零钱不用找了","exact change":"正好的零钱","regular":"常客","raincoat":"雨衣","rules":"规则","camera":"监控","knocking":"敲门","lock":"锁","mop":"拖（地）","trash":"垃圾","brew":"煮（咖啡）","black":"（咖啡）不加奶不加糖","on me":"我请客","dripping":"滴水","fridge":"冰柜","nervous":"紧张的","obvious":"明显的","back door":"后门","front door":"前门","no sugar":"无糖","alley":"小巷","underpass":"地下通道","main road":"大路","name tag":"名牌","medium":"中杯","slowly":"慢慢地","creepy":"吓人的","footsteps":"脚步声","handprint":"手印","fresh":"新鲜的","relieved":"松了口气","blink":"眨眼","shortcut":"近路","exhausted":"筋疲力尽","manager":"店长","midnight":"午夜"};
+const WKEYS=Object.keys(WORDS).sort((a,b)=>b.length-a.length);
+const WRE=new RegExp("\\b("+WKEYS.map(k=>k.replace(/ /g,"\\s")).join("|")+")\\b","gi");
+function markWords(en){const esc=en.replace(/&/g,"&amp;").replace(/</g,"&lt;");return esc.replace(WRE,m=>{const k=m.toLowerCase();if(G)G.words.add(k);return`<span class="kw" title="${WORDS[k]}">${m}</span>`})}
+
+/* ================= state ================= */
+let G=null;
+function newGame(){
+  G={scene:"street0",px:24,face:1,walkT:0,stepN:0,carry:null,busy:false,over:false,paused:true,q:[],timers:[],t:0,
+    clock:22*60+26,cap:22*60+29,ph:-1,phT:0,T:{clock:false,noodles:false,drinks:false,coffee:false,mop:false,trash:false,register:false,lights:false},
+    F:{},spawned:{},npcs:[],order:null,pot:0,puddle:3,backOpen:false,lightsOn:true,flick:{},outsideFig:null,knocking:false,ringing:false,
+    noodle:["rr00y0","0b000r","y00b00"].map(s=>s.split("")),fridge:["g0m0c0","0h00g0","m0y00c"].map(s=>s.split("")),
+    snack:null,words:new Set(),route:null,beats:{},shadowT:0,fade:1,fadeTo:0,lights:[],readRules:false,redRules:false,camView:"front",
+    echoLeft:0,echoT:0,lastStep:0,followed:false,companion:null};
+}
+const after=(s,fn)=>G.timers.push({t:G.t+s,fn});
+const queue=fn=>G.q.push(fn);
+const tasksDone=()=>["noodles","drinks","coffee","mop","trash"].filter(k=>G.T[k]).length;
+const hhmm=m=>{m=Math.floor(m)%1440;return String(m/60|0).padStart(2,"0")+":"+String(m%60).padStart(2,"0")};
+
+/* ================= dialogue UI ================= */
+const SUB=$("#sub");
+const WHO={mia:{n:"Mia",c:"#7cf29a",v:[1.1,.95,0]},think:{n:"Mia（心里）",c:"#8f8d86",v:[1.1,.95,0],quiet:1},tom:{n:"Tom",c:"#9fc3ff",v:[.9,.92,1]},lily:{n:"Lily",c:"#e7a8ff",v:[1.3,1.02,2]},rain:{n:"Man in Yellow",c:"#f2d14b",v:[.5,.8,3]},grace:{n:"Grace",c:"#8fe0d0",v:[1.05,.88,4]},unk:{n:"???",c:"#ff6b6b",v:[.3,.72,5]},park:{n:"Mr. Park?",c:"#ff9b6b",v:[.65,.85,6]},kevin:{n:"Man in Yellow",c:"#f2d14b",v:[.5,.8,3]},sys:{n:"",c:"#ebe7dc"}};
+let advanceFn=null,typing=false,typeTO=0;
+function say(who,en,zh,o={}){
+  return new Promise(res=>{
+    const w=WHO[who];G.last={who,en,zh};
+    SUB.className=(who==="think"?"think":"")+" fade";
+    SUB.innerHTML=`<div class="who" style="color:${w.c}">${w.n}</div><div class="en"></div><div class="zh"${SET.zh?"":" hidden"}>${zh}</div><div class="tools"><button class="tb" data-a="spk">🔊 听</button><button class="tb" data-a="zh">中文</button><span class="nx">点击继续 ▼</span></div>`;
+    const el=SUB.querySelector(".en"),html=markWords(en);let i=0;typing=true;
+    const fin=()=>{clearTimeout(typeTO);typing=false;el.innerHTML=html};
+    const tick=()=>{if(!typing)return;i+=2;el.textContent=en.slice(0,i);if(i>=en.length)fin();else typeTO=setTimeout(tick,26)};tick();
+    if(SET.voice&&!w.quiet&&!o.mute)speak(en,w.v[0],o.slow?.7:w.v[1],w.v[2]);
+    advanceFn=()=>{if(typing){fin();return}advanceFn=null;res()};
+  });
+}
+function choose(opts){
+  return new Promise(res=>{
+    SUB.className="fade";
+    const prev=G.last?`<div class="prev">${markWords(G.last.en)}</div>`:"";
+    SUB.innerHTML=prev+`<div class="choices">${opts.map((o,i)=>`<button class="ch" data-i="${i}"><span>${o[0]}</span><small>${o[1]}</small></button>`).join("")}</div>`;
+    G.choosing=v=>{G.choosing=null;sfx("click");res(v)};
+    SUB.querySelectorAll(".ch").forEach(b=>b.onclick=e=>{e.stopPropagation();G.choosing&&G.choosing(opts[+b.dataset.i][2])});
+    G.chOpts=opts;
+  });
+}
+SUB.addEventListener("click",e=>{
+  ac();const a=e.target.dataset&&e.target.dataset.a;
+  if(a==="spk"){e.stopPropagation();if(G.last){const w=WHO[G.last.who];speak(G.last.en,w.v[0],w.v[1]*.85,w.v[2])}return}
+  if(a==="zh"){e.stopPropagation();const z=SUB.querySelector(".zh");if(z)z.hidden=!z.hidden;return}
+  if(advanceFn)advanceFn();
+});
+function objective(){
+  if(!G)return"";
+  if(G.scene==="street0")return"<b>去上班</b>：往右走，进便利店。";
+  if(G.scene==="store"){
+    if(!G.readRules)return"<b>先读一读</b>柜台上店长留的纸条。";
+    if(!G.T.clock)return"<b>去打卡</b>：打卡机在最左边的仓库里。";
+    if(G.order)return"<b>"+G.order.hint+"</b>";
+    if(G.ph>=8)return"<b>收尾</b>：点算收银机、关灯，1:00 后从前门锁门离开。";
+    return"做任务清单上的事（右上角「任务」），或者四处看看。";
+  }
+  if(G.scene==="street1")return"<b>回家</b>：往右走，在路牌前选一条路。";
+  return"<b>回家</b>：一直往右走。";
+}
+function showIdle(){
+  if(!G||G.over)return;SUB.className="";
+  const kb=matchMedia("(pointer:fine)").matches?"<br><span style='font-size:12px'>键盘：← → 移动，空格互动</span>":"";
+  SUB.innerHTML=`<div class="idle">${objective()}${kb}</div>`;
+}
+async function run(fn){if(!G||G.busy||G.over||G.paused)return;G.busy=true;try{await fn()}catch(e){console.error(e)}if(G){G.busy=false;if(!G.over)showIdle()}}
+
+/* ================= modal ================= */
+const MOD=$("#modal");
+function modal(html,setup){return new Promise(res=>{MOD.className="show";MOD.innerHTML=`<div class="mbox fade">${html}</div>`;const close=v=>{MOD.className="";MOD.innerHTML="";G&&(G.modalOpen=false);res(v)};if(G)G.modalOpen=true;MOD.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>{sfx("click");close(b.dataset.close)});setup&&setup(MOD,close)})}
+
+/* ================= rules ================= */
+const RULES=[
+ ["Clock in by 10:30 p.m. Close at 1:00 a.m. Not earlier.","晚上 10:30 前打卡。凌晨 1:00 关店，不能提前。"],
+ ["Keep the coffee hot. All night.","让咖啡一直保持热的。整晚都要。"],
+ ["If the camera shows someone at the front door, but you can't see them with your own eyes, do NOT open the door.","如果监控里有人站在前门口，但你亲眼看不到他，千万不要开门。"],
+ ["Keep the back door closed. Close it right after you take out the trash.","后门要一直关着。倒完垃圾马上关上。"],
+ ["The man in the yellow raincoat is a regular. Be nice to him. He always pays.","穿黄雨衣的男人是常客。对他客气点。他从不赖账。"],
+ ["I never call the store at night. If the phone rings after midnight, let it ring.","我晚上从不往店里打电话。午夜以后电话响了，就让它响。"],
+ ["Lock the front door when you leave.","走的时候锁好前门。"]];
+const RED=[
+ ["It's hot in here. Open the back door for some fresh air.","店里太热了。打开后门透透气。"],
+ ["Customers come first. If someone knocks, let them in.","顾客第一。有人敲门，就让他进来。"],
+ ["Don't talk to the man in the yellow raincoat. Don't take his money.","别跟穿黄雨衣的男人说话。别收他的钱。"],
+ ["Don't lock the front door tonight. The morning staff lost their key.","今晚别锁前门。早班同事把钥匙弄丢了。"]];
+async function readRules(){
+  const first=!G.readRules;G.readRules=true;$("#hRule").hidden=false;
+  const red=G.redRules,newRed=red&&!G.F.sawRed;if(red)G.F.sawRed=true;
+  const li=(r,i,c)=>`<div class="rule ${c}"><div>${i}. ${r[0]}</div><div class="z">${r[1]}</div></div>`;
+  await modal(`<div class="paper" id="pp"><h3>NIGHT SHIFT RULES</h3>${RULES.map((r,i)=>li(r,i+1,"")).join("")}<div class="rule"><div>Thanks! Have a good night :) — Mr. Park</div><div class="z">谢谢！祝你今晚顺利 :) ——朴店长</div></div>${red?RED.map((r,i)=>li(r,i+8,"red")).join(""):""}</div><p class="hint">点一条规则可以看中文。</p><div class="row"><button class="btn" id="allz">全部显示中文</button><button class="btn pri" data-close>放下纸条</button></div>`,
+  m=>{m.querySelectorAll(".rule").forEach(r=>r.onclick=()=>r.classList.toggle("on"));m.querySelector("#allz").onclick=()=>m.querySelector("#pp").classList.toggle("allz")});
+  if(first&&G.scene==="store"){await say("think","Seven rules. A little weird... but okay.","七条规则。有点怪……不过行吧。");if(!G.T.clock)await say("think","First, I need to clock in. The time clock is in the back room.","先去打卡。打卡机在后面的仓库里。")}
+  if(newRed){sfx("sting");await say("think","Wait. These weren't here before. Rules eight to eleven... in red ink?","等等，这些之前没有。第八到第十一条……红笔写的？");await say("think","This isn't Mr. Park's handwriting.","这不是店长的字迹。")}
+}
+async function readOld(){
+  G.F.oldNote=true;sfx("click");
+  await modal(`<div class="paper old"><h3>To the next night person,</h3>
+  <div class="rule on"><div>The rules in black are Mr. Park's. Follow them.</div><div class="z">黑色的规则是朴店长写的，照着做。</div></div>
+  <div class="rule on"><div>The red ones... I don't know who writes them. They show up after midnight. Don't follow them.</div><div class="z">红色的……我不知道是谁写的。它们会在午夜以后出现。别照着做。</div></div>
+  <div class="rule on"><div>Be kind to the regulars. Some of them are watching out for you.</div><div class="z">对常客好一点。有些人在暗中照看你。</div></div>
+  <div class="rule on"><div>— Kevin (night shift)</div><div class="z">—— Kevin（夜班）</div></div>
+  <div class="rule on"><div>P.S. If you ever hear footsteps behind you on the way home, take the underpass. I'll be there.</div><div class="z">附：如果回家路上听见身后有脚步声，就走地下通道。我会在那里。</div></div></div>
+  <div class="row"><button class="btn pri" data-close>收好</button></div>`);
+  await say("think","Kevin... who is Kevin?","Kevin……Kevin 是谁？");
+}
+const TASKS=[["clock","Clock in","打卡上班"],["noodles","Restock the noodle shelf","补满杯面货架（箱子在仓库）"],["drinks","Restock the drinks fridge","补满饮料冰柜（箱子在仓库）"],["coffee","Brew a fresh pot of coffee","煮一壶新咖啡"],["mop","Mop the wet floor by the door","把门口的积水拖干（拖把在门边）"],["trash","Take out the trash","倒垃圾（垃圾桶在仓库）"],["register","Count the register (after 12:50)","点算收银机（12:50 以后）"],["lights","Lights off, lock up (1:00)","关灯，锁门（1:00）"]];
+function showTasks(){return modal(`<h2>今晚的任务 · Tonight's tasks</h2><ul class="tasks">${TASKS.map(t=>`<li class="${G.T[t[0]]?"done":""}"><span>${G.T[t[0]]?"☑":"☐"}</span><div>${t[1]}<small>${t[2]}</small></div></li>`).join("")}</ul><div class="row"><button class="btn pri" data-close>好</button></div>`)}
+
+/* ================= minigames ================= */
+function brewGame(){
+  return modal(`<h2>Brew coffee · 煮咖啡</h2><p>白条走到绿色区域时按下。</p><div class="bar"><div class="zone"></div><div class="mk" id="mk"></div></div><p id="bm" style="min-height:24px;color:var(--dim)"></p><div class="row"><button class="btn pri" id="stop" style="flex:1;font-size:18px">STOP · 按下</button></div>`,(m,close)=>{
+    let live=true;const t0=performance.now(),mk=m.querySelector("#mk");
+    const pos=()=>{const u=((performance.now()-t0)/1000*.95)%2;return u<1?u:2-u};
+    const loop=()=>{if(!live)return;mk.style.left=(pos()*100)+"%";requestAnimationFrame(loop)};requestAnimationFrame(loop);
+    m.querySelector("#stop").onclick=()=>{const p=pos();mk.style.left=(p*100)+"%";if(p>.41&&p<.59){live=false;sfx("hiss");m.querySelector("#bm").textContent="Perfect! 完美！";setTimeout(()=>close(1),700)}else{sfx("bad");m.querySelector("#bm").textContent=p<.41?"Too weak. Try again. 太淡了，再来。":"Too strong. Try again. 太浓了，再来。"}};
+  });
+}
+function nw(n){const o=["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"],t=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];if(n<20)return o[n];if(n<100)return t[n/10|0]+(n%10?"-"+o[n%10]:"");return o[n/100|0]+" hundred"+(n%100?" and "+nw(n%100):"")}
+function countGame(){
+  const r=()=>Math.random();const a=2+(r()*4|0),b=1+(r()*4|0),c=1+(r()*4|0),d=2+(r()*8|0),tot=20*a+10*b+5*c+d;
+  const opts=[tot,tot+10,tot-5].sort(()=>r()-.5);
+  return modal(`<h2>Count the register · 点算收银机</h2><p>How much money is in the register?</p><div class="bills"><span class="bill">$20 × ${a}</span><span class="bill">$10 × ${b}</span><span class="bill">$5 × ${c}</span><span class="bill">$1 × ${d}</span></div><div class="choices">${opts.map(v=>`<button class="ch" data-v="${v}"><span>${nw(v)} dollars</span></button>`).join("")}</div><p id="cm" style="color:var(--dim);min-height:22px"></p>`,(m,close)=>{
+    m.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{if(+b.dataset.v===tot){sfx("cash");m.querySelector("#cm").textContent=`Correct: ${nw(tot)} dollars ($${tot}).`;setTimeout(()=>close(1),900)}else{sfx("bad");b.disabled=true;b.style.opacity=.4;m.querySelector("#cm").textContent="Hmm, count again. 再数一遍。"}});
+  });
+}
+
+/* ================= CCTV ================= */
+const camC=document.createElement("canvas");camC.width=64;camC.height=40;const camG=camC.getContext("2d");
+function drawCam(view){
+  const sg=g,sx=CX;g=camG;CX=0;
+  if(view==="front"){
+    R(0,0,64,40,"#141a1e");R(0,30,64,10,"#22292d");R(0,29,64,1,"#30383d");R(44,5,16,26,"#3a4248");R(46,7,12,22,"#0d1317");
+    if(G.F.handprint){R(49,15,2,3,"#9fb0b0");R(53,13,2,3,"#9fb0b0")}
+    const tf=G.knocking||(G.ph>=5&&G.F.inside);
+    if(G.knocking)person(38,36,LOOK.thing,1,0);
+    if(G.outsideFig)person(G.outsideFig==="rain"?30:20,31,LOOK.rain,1,0);
+    for(let i=0;i<14;i++){const x=(i*13+G.t*9*(1+i%3))%64,y=(i*7+G.t*60)%30;R(x,y,1,2,"#5a6870")}
+    void tf;
+  }else{
+    R(0,0,64,40,"#121515");R(0,31,64,9,"#1f2323");
+    R(4,8,14,23,G.backOpen?"#020304":"#3d342b");if(G.backOpen){for(let i=0;i<6;i++)R(5+(i*5+G.t*8)%12,9+(i*11+G.t*40)%20,1,2,"#334")}
+    if(!G.T.noodles)R(28,22,10,9,"#7a5d3a");if(!G.T.drinks)R(40,22,10,9,"#7a5d3a");R(22,24,5,7,"#222a22");
+    if((G.F.midnightBack||G.F.inside)&&G.clock>=1440)person(52,32,LOOK.thing,-1,0);
+  }
+  const im=camG.getImageData(0,0,64,40),d=im.data;
+  for(let i=0;i<d.length;i+=4){const v=(d[i]*.3+d[i+1]*.59+d[i+2]*.11)*1.1+(Math.random()*26-13)-((i/256|0)%2?10:0);d[i]=v*.85;d[i+1]=v;d[i+2]=v*.9}
+  camG.putImageData(im,0,0);
+  T(view==="front"?"CAM1":"CAM2",2,2,"#d6ffe0");T(hhmm(G.clock),42,34,"#d6ffe0");if((G.t*2|0)%2)R(19,2,2,2,"#ff4040");
+  g=sg;CX=sx;
+}
+function camModal(){
+  return modal(`<h2>Security camera · 监控</h2><canvas id="camc" width="128" height="80"></canvas><div class="row"><button class="btn" data-v="front">CAM 1 前门</button><button class="btn" data-v="stock">CAM 2 仓库</button><button class="btn pri" data-close style="margin-left:auto">关闭</button></div>`,(m,close)=>{
+    const c=m.querySelector("#camc"),cg=c.getContext("2d");cg.imageSmoothingEnabled=false;
+    m.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{sfx("click");G.camView=b.dataset.v});
+    const loop=()=>{if(!m.contains(c))return;drawCam(G.camView);cg.drawImage(camC,0,0,128,80);requestAnimationFrame(loop)};loop();
+  });
+}
+
+/* ================= scene drawing ================= */
+function sky(){const gr=g.createLinearGradient(0,0,0,FLOOR);gr.addColorStop(0,"#04060c");gr.addColorStop(1,"#131b2b");g.fillStyle=gr;g.fillRect(0,0,W,FLOOR)}
+function skyline(seed,par=.4){const rnd=srand(seed);let x=-30;const off=CX*par;while(x<off+W+40){const bw=22+rnd()*30|0,bh=34+rnd()*58|0,sx=Math.round(x-off);g.fillStyle="#0a0e17";g.fillRect(sx,FLOOR-bh-8,bw,bh+8);for(let wy=FLOOR-bh-4;wy<FLOOR-14;wy+=7)for(let wx=sx+3;wx<sx+bw-3;wx+=6){const q=rnd();if(q<.22){g.fillStyle=q<.17?"#b8954e":"#6f8fb0";g.fillRect(wx,wy,2,3)}}x+=bw+2}}
+function street(w){R(CX,FLOOR,W,8,"#2a2d33");R(CX,FLOOR+8,W,2,"#3b3f47");R(CX,FLOOR+10,W,H-FLOOR-10,"#15171b");for(let x=Math.floor(CX/24)*24;x<CX+W;x+=24)R(x,FLOOR+18,12,1,"#5d5a40");for(let x=Math.floor(CX/16)*16;x<CX+W;x+=16)R(x,FLOOR,1,8,"#24272c")}
+function lamp(x,on=true){R(x,62,2,FLOOR-62,"#1b1d21");R(x-5,60,10,3,"#26292e");const fl=on&&!(G.flick[x]>0);if(fl)R(x-4,63,8,1,"#ffe9a8");G.lights.push({x,y:70,r:72,i:fl?.95:0})}
+function rain(x0,y0,w,h,n=60,col="rgba(170,190,220,.38)"){g.fillStyle=col;for(let i=0;i<n;i++){const x=x0+((i*53.7+G.t*22*(1+i%3))%w),y=y0+((i*97.3+G.t*170*(1+(i%4)*.15))%h);g.fillRect(Math.round(x),Math.round(y),1,4)}}
+function facade(x0,lit){
+  R(x0,28,152,FLOOR-28,"#23272e");R(x0,28,152,3,"#181b20");R(x0+8,36,136,12,lit?"#1d6b47":"#183326");T("CORNER STOP",x0+54,40,lit?"#eaf6ee":"#3d5547");
+  const gl=lit?"#9ec7bd":"#121a1f";R(x0+8,56,52,FLOOR-62,gl);R(x0+92,56,52,FLOOR-62,gl);
+  if(lit){for(const sx of[x0+12,x0+30,x0+96,x0+116]){R(sx,82,14,FLOOR-88,"#6c8c85");R(sx,90,14,1,"#48615b");R(sx,104,14,1,"#48615b")}G.lights.push({x:x0+34,y:96,r:70,i:.85},{x:x0+118,y:96,r:70,i:.85},{x:x0+76,y:110,r:60,i:.8})}
+  R(x0+64,60,24,FLOOR-60,"#15181c");R(x0+66,62,20,FLOOR-62,lit?"#b9dccf":"#0e1418");R(x0+75,62,1,FLOOR-62,"#15181c");
+  if(lit){R(x0+100,62,22,9,"#13161b");T("OPEN",x0+103,64,"#ff5577")}
+}
+function storeDraw(){
+  const on=G.lightsOn;
+  R(0,0,640,FLOOR,"#5b726e");R(0,0,100,FLOOR,"#3b4643");R(0,0,640,12,"#1a2022");R(100,FLOOR-14,540,14,"#46585a");
+  for(let x=0;x<640;x+=12)for(let r=0;r<2;r++)R(x,FLOOR+r*13,12,13,((x/12+r)%2)?"#7e8786":"#737c7b");
+  // lamps
+  const lamps=[[40,1],[150,0],[250,0],[350,0],[450,0],[560,0]];
+  for(const[x,warm]of lamps){const off=!on||G.flick[x]>0;R(x-14,12,28,3,off?"#3a4246":warm?"#ffe2a8":"#eaf6ff");if(!off)G.lights.push({x,y:16,r:warm?60:82,i:.92})}
+  // storeroom
+  R(2,26,36,3,"#2b322f");R(4,18,8,8,"#7a5d3a");R(14,20,10,6,"#6d5233");R(26,16,10,10,"#7a5d3a");
+  R(4,FLOOR-48,26,48,"#22282a");
+  if(G.backOpen){R(6,FLOOR-46,22,46,"#020305");rain(6,FLOOR-46,22,46,10,"rgba(120,140,170,.4)");if(G.clock<1440&&(G.t%5)<.25)null;else if(G.clock<1440){R(18,FLOOR-14,1,1,"#9f9");R(21,FLOOR-14,1,1,"#9f9")}}
+  else{R(6,FLOOR-46,22,46,"#4e4135");R(24,FLOOR-24,2,3,"#c9b37a");R(9,FLOOR-40,16,10,"#5a4b3e")}
+  R(8,FLOOR-56,18,6,"#1c3a22");T("EXIT",9,FLOOR-55,"#6dff8f");G.lights.push({x:17,y:FLOOR-53,r:16,i:.5});
+  if(!G.T.trash||G.carry&&G.carry.kind==="trash"){R(32,FLOOR-14,10,14,"#2d3a2f");if(!(G.carry&&G.carry.kind==="trash"))R(33,FLOOR-17,8,4,"#111")}else R(32,FLOOR-14,10,14,"#2d3a2f");
+  if(!G.T.noodles&&!(G.carry&&G.carry.kind==="boxN")){R(50,FLOOR-12,13,12,"#a57c4c");R(50,FLOOR-7,13,1,"#c9a77a");R(52,FLOOR-11,4,2,"#c33")}
+  if(!G.T.drinks&&!(G.carry&&G.carry.kind==="boxD")){R(66,FLOOR-12,13,12,"#a57c4c");R(66,FLOOR-7,13,1,"#c9a77a");R(68,FLOOR-11,4,2,"#36c")}
+  if(G.T.noodles&&G.T.drinks&&!G.F.oldNote)R(62,FLOOR-3,4,2,"#e8dfc4");
+  R(84,62,9,11,"#8a8f92");R(85,64,7,3,on?"#ff5252":"#552020");
+  R(98,12,4,FLOOR-12,"#2a3230");R(104,20,42,9,"#d9d4c3");T("STAFF ONLY",105,22,"#333");
+  // noodle shelf
+  shelf(108,56,G.noodle,{r:"#d23b2f",y:"#e0b33a",b:"#3b6fd0"},"cup");
+  R(110,62,50,9,"#f0e6c8");T("NOODLES",117,64,"#b33");
+  // snacks
+  if(!G.snack){const rn=srand(9);G.snack=[0,1,2].map(()=>Array.from({length:6},()=>["#e34","#fb3","#3a7","#36c","#c5c","#f80"][rn()*6|0]))}
+  shelf(170,54,G.snack,null,"bag");
+  // fridge
+  R(226,FLOOR-62,60,62,"#202b33");R(228,FLOOR-60,27,56,"#0f1a20");R(257,FLOOR-60,27,56,"#0f1a20");
+  const BC={g:"#7ccf7a",h:"#e0b04a",m:"#f2f2ea",c:"#4a2018",y:"#f0b8c8"};
+  for(let r=0;r<3;r++){const y=FLOOR-58+r*18;R(228,y+16,56,1,"#5b7c8a");G.fridge[r].forEach((b,i)=>{if(b!=="0"){const x=230+i*9+(i>2?2:0);R(x,y+6,5,10,BC[b]);R(x+1,y+4,3,2,"#ddd");if(b==="c")R(x,y+9,5,2,"#c22")}})}
+  g.fillStyle="rgba(150,210,255,.13)";g.fillRect(228-CX,FLOOR-60,27,56);g.fillRect(257-CX,FLOOR-60,27,56);
+  if(on)G.lights.push({x:256,y:FLOOR-32,r:46,i:.7});else G.lights.push({x:256,y:FLOOR-32,r:40,i:.55});
+  // coffee
+  R(296,FLOOR-24,40,24,"#5a4636");R(294,FLOOR-26,44,3,"#7a5d45");R(302,FLOOR-48,22,22,"#2a2a2e");R(305,FLOOR-45,16,4,"#141416");R(320,FLOOR-44,2,2,G.pot>0?"#ff4040":"#552222");
+  R(308,FLOOR-34,9,8,"rgba(200,220,230,.5)");if(G.pot>0)R(308,FLOOR-30,9,4,"#3b2414");R(328,FLOOR-40,7,14,"#bbb");R(329,FLOOR-38,5,3,"#d33");
+  R(298,62,34,10,"#f0e6c8");T("COFFEE",303,64,"#5a3a1a");
+  // counter
+  R(344,FLOOR-26,104,26,"#7a5a3e");R(342,FLOOR-28,108,3,"#a07a52");R(352,FLOOR-40,18,12,"#3a3d44");R(355,FLOOR-38,12,5,on?"#7cf29a":"#1b3a24");
+  R(380,FLOOR-30,9,2,"#f1ecd8");if(G.redRules)R(386,FLOOR-30,3,1,"#c22");
+  R(428,FLOOR-33,10,5,"#d8cfb4");R(429,FLOOR-35,8,2,"#bfb59a");if(G.ringing&&(G.t*6|0)%2)R(433,FLOOR-40,1,3,"#fff");
+  R(398,30,34,22,"#121416");drawCam("front");g.drawImage(camC,0,0,64,40,400-CX,32,30,18);G.lights.push({x:415,y:41,r:22,i:.45});
+  // mop & puddle
+  R(462,FLOOR-9,10,9,"#e2c13a");if(!(G.carry&&G.carry.kind==="mop")){R(468,FLOOR-36,1,28,"#9a7b52");R(466,FLOOR-10,5,3,"#ddd")}
+  if(G.puddle>0)ell(500,FLOOR+5,4+G.puddle*4,2,"rgba(160,200,230,.45)");
+  if(G.F.prints){for(let i=0;i<4;i++){R(548-i*9,FLOOR+3+(i%2)*3,3,1,"rgba(40,40,40,.55)")}}
+  R(523,FLOOR-42,4,6,"#ddd");R(524,FLOOR-41+(on?0:3),2,2,"#888");
+  // door & window
+  R(536,14,104,FLOOR-14,"#2d3437");
+  R(540,FLOOR-56,40,56,"#1b2024");R(584,FLOOR-56,52,42,"#1b2024");
+  outside(542,FLOOR-54,36,52);outside(586,FLOOR-54,48,38);
+  R(559,FLOOR-56,2,56,"#1b2024");
+  if(on){R(600,FLOOR-50,18,8,"#0c0d10");T("OPEN",601,FLOOR-49,"#ff5577")}
+  R(540,20,40,8,"#1d6b47");T("WELCOME",546,22,"#eaf6ee");
+}
+function outside(x,y,w,h){
+  R(x,y,w,h,"#0a111b");R(x,y+h-10,w,10,"#151b22");
+  g.save();g.beginPath();g.rect(Math.round(x-CX),y,w,h);g.clip();
+  R(x+w-8,y+6,1,h-16,"#222");R(x+w-11,y+5,6,1,"#ffe9a8");
+  if(G.outsideFig==="rain"&&x<560)person(x+18,y+h-3,LOOK.rain,-1,0,.9);
+  if(G.outsideFig==="rainWin"&&x>580)person(x+20,y+h+8,LOOK.rain,-1,0,.95);
+  rain(x,y,w,h,18);
+  g.restore();
+  g.fillStyle="rgba(150,190,210,.10)";g.fillRect(Math.round(x-CX),y,w,h);
+  if(G.F.handprint&&x<560){R(x+6,y+16,3,4,"rgba(220,230,230,.55)");R(x+11,y+13,3,4,"rgba(220,230,230,.55)");R(x+8,y+21,5,3,"rgba(220,230,230,.45)")}
+}
+function shelf(x0,w,stock,cols,kind){
+  R(x0,FLOOR-50,w,50,"#4b5560");R(x0+2,FLOOR-48,w-4,46,"#2c333a");
+  for(let r=0;r<3;r++){const y=FLOOR-48+r*15;R(x0,y+14,w,2,"#8b96a0");const n=stock[r].length,sw=(w-6)/n;
+    stock[r].forEach((it,i)=>{if(it==="0")return;const px=x0+3+i*sw;if(kind==="cup"){R(px+1,y+6,6,8,cols[it]);R(px+1,y+5,6,1,"#eee")}else{R(px,y+4,7,10,it);R(px+2,y+7,3,3,"rgba(255,255,255,.4)")}})}
+}
+function routeHome(x){R(x-30,30,80,FLOOR-30,"#2a2630");for(let wy=40;wy<FLOOR-34;wy+=12)for(let wx=x-24;wx<x+44;wx+=12)R(wx,wy,5,6,(wx*7+wy)%5<2?"#c9a75a":"#1a1820");R(x-6,FLOOR-28,14,28,"#4a3a2a");R(x-2,FLOOR-36,6,3,"#ffe9a8");G.lights.push({x:x+1,y:FLOOR-32,r:40,i:.8})}
+const SC={
+  street0:{w:440,dark:.6,draw(){sky();skyline(3);street();lamp(70);lamp(210);R(20,96,2,38,"#555");R(14,90,14,8,"#2b6cb0");T("BUS",15,92,"#fff");facade(280,true);rain(CX,0,W,H,70)}},
+  store:{w:640,dark:.5,draw:storeDraw},
+  street1:{w:420,dark:.66,draw(){sky();skyline(5);street();facade(-20,false);lamp(170);R(300,92,2,42,"#666");R(286,86,30,6,"#2b6cb0");R(290,93,22,5,"#2b6cb0");T("HOME",294,87,"#fff");lamp(390);rain(CX,0,W,H,70)}},
+  main:{w:580,dark:.64,draw(){sky();skyline(7);street();for(const x of[40,130,220,310,400,490])lamp(x);
+    R(232,92,44,2,"#777");R(234,94,1,40,"#777");R(274,94,1,40,"#777");R(240,118,26,3,"#555");R(262,96,8,20,"#d9e7ff");G.lights.push({x:266,y:106,r:30,i:.6});
+    routeHome(540);
+    if(G.car){R(G.car,FLOOR+11,26,6,"#3a3f4a");R(G.car+4,FLOOR+7,16,5,"#2d323b");R(G.car,FLOOR+12,2,2,"#ffe9a8");G.lights.push({x:G.car-10,y:FLOOR+13,r:44,i:.85})}
+    rain(CX,0,W,H,70)}},
+  under:{w:540,dark:.72,draw(){R(CX,0,W,H,"#0d0f10");R(CX,34,W,FLOOR-34,"#3b4542");for(let y=40;y<FLOOR;y+=8)R(CX,y,W,1,"#334");for(let x=Math.floor(CX/10)*10;x<CX+W;x+=10)R(x,34,1,FLOOR-34,"#344040");R(CX,92,W,3,"#6e3434");R(CX,FLOOR,W,H-FLOOR,"#262a2a");R(CX,30,W,4,"#1c1f20");
+    for(const x of[60,140,220,300,380,460]){const off=G.flick[x]>0;R(x-10,34,20,2,off?"#333":"#dff7ff");if(!off)G.lights.push({x,y:38,r:64,i:.9})}
+    T("KEEP WALKING",250,70,"#5d4f7a");T("DONT LOOK BACK",410,58,"#5d3a3a");
+    R(0,20,30,FLOOR-20,"#0a0f1a");R(500,20,40,FLOOR-20,"#0a0f1a");for(let i=0;i<6;i++)R(505+i*5,FLOOR-6-i*8,8,2,"#555");G.lights.push({x:520,y:60,r:40,i:.5})}},
+  alley:{w:480,dark:.72,draw(){sky();R(CX,18,W,FLOOR-18,"#3a2925");for(let y=22;y<FLOOR;y+=6)for(let x=Math.floor(CX/12)*12+((y/6)%2?6:0);x<CX+W;x+=12)R(x,y,1,5,"#2c1e1b");for(let y=22;y<FLOOR;y+=6)R(CX,y,W,1,"#2c1e1b");
+    R(CX,FLOOR,W,H-FLOOR,"#1b1a1a");for(const x of[150,165,180])R(x,40,1,60,"#222");R(146,60,40,2,"#222");R(146,80,40,2,"#222");
+    R(96,FLOOR-14,12,14,"#3d4a3a");R(318,FLOOR-14,12,14,"#3d4a3a");R(330,FLOOR-10,16,10,"#2f382f");
+    R(240,70,8,4,"#333");const on=!(G.flick[240]>0);if(on)G.lights.push({x:244,y:76,r:60,i:.9});R(241,74,6,1,on?"#ffd88a":"#333");
+    if((G.t%4)<3.6){R(118,FLOOR-8,1,1,"#9f9");R(121,FLOOR-8,1,1,"#9f9")}
+    R(440,FLOOR-30,16,30,"#4a3a2a");R(444,FLOOR-38,8,3,"#ffe9a8");G.lights.push({x:448,y:FLOOR-34,r:36,i:.75});rain(CX,0,W,H,50)}}
+};
+const LC=document.createElement("canvas");LC.width=W;LC.height=H;const lg=LC.getContext("2d");
+function lighting(alpha){
+  lg.globalCompositeOperation="source-over";lg.clearRect(0,0,W,H);lg.fillStyle=`rgba(3,5,12,${alpha})`;lg.fillRect(0,0,W,H);
+  lg.globalCompositeOperation="destination-out";
+  for(const L of G.lights){const x=L.x-CX;if(L.i<=0||x<-L.r||x>W+L.r)continue;const gr=lg.createRadialGradient(x,L.y,0,x,L.y,L.r);gr.addColorStop(0,`rgba(0,0,0,${L.i})`);gr.addColorStop(1,"rgba(0,0,0,0)");lg.fillStyle=gr;lg.beginPath();lg.arc(x,L.y,L.r,0,7);lg.fill()}
+  ctx.drawImage(LC,0,0);
+  const v=ctx.createRadialGradient(W/2,H/2,H*.35,W/2,H/2,H);v.addColorStop(0,"rgba(0,0,0,0)");v.addColorStop(1,"rgba(0,0,0,.55)");ctx.fillStyle=v;ctx.fillRect(0,0,W,H);
+}
+
+/* ================= interactions ================= */
+const pick=async(opts)=>{const v=await choose(opts.concat([["Never mind","算了",null]]));return v};
+const hands=async()=>{await say("think","My hands are full.","我手上拿着东西呢。")};
+const STORE_OBJ=[
+ {x:16,w:9,label(){if(G.carry&&G.carry.kind==="trash")return["倒垃圾","Take out the trash"];if(G.backOpen)return["关上后门","Close the back door"];if(G.F.goBack)return["给“店长”开门","Open the back door"];return["后门","Back door"]},
+  async act(){
+   if(G.carry&&G.carry.kind==="trash"){G.backOpen=true;sfx("door");setAmb("rain",.16);await wait(400);sfx("thud");G.carry=null;G.T.trash=true;
+     await say("think","Done. It's so dark out there.","倒好了。外面好黑。");if(G.clock<1440)await say("think","Two green eyes in the dark. ...Just a cat. Right?","黑暗里有两只绿眼睛。……只是只猫吧？");return}
+   if(G.backOpen){G.backOpen=false;sfx("door");setAmb("rain",.05);if(G.F.midnightBack&&G.F.warned)G.F.midnightBack=false;await say("think","Closed. Rule four.","关好了。第四条。");return}
+   if(G.F.goBack){await say("think","Mr. Park is outside. He forgot his keys.","店长在外面，他忘带钥匙了。");const c=await choose([["Open the back door","打开后门","o"],["Wait... Rule six.","等等……第六条。","w"]]);if(c==="o")return ending("back");G.F.goBack=false;await say("think","\"I never call the store at night.\" That's what he wrote.","“我晚上从不往店里打电话。”他是这么写的。");return}
+   const c=await choose([["Open it for a second","打开看一眼","o"],["Leave it closed","还是关着吧",0]]);
+   if(c==="o"){G.backOpen=true;sfx("door");setAmb("rain",.16);await say("think","Rain. A wet alley. Nobody there.","雨。湿漉漉的小巷。没有人。");await say("think","I should close it again.","我该把它关上。")}
+  }},
+ {x:37,w:5,label(){return(!G.T.trash&&!G.carry)?["拿垃圾袋","Pick up the trash bag"]:null},act(){G.carry={kind:"trash"};sfx("box")}},
+ {x:56,w:5,label(){if(G.carry&&G.carry.kind==="boxN")return["放回箱子","Put the box back"];return(!G.T.noodles&&!G.carry)?["搬杯面箱","Pick up the noodle box"]:null},act(){if(G.carry){G.carry=null}else G.carry={kind:"boxN"};sfx("box")}},
+ {x:72,w:5,label(){if(G.carry&&G.carry.kind==="boxD")return["放回箱子","Put the box back"];return(!G.T.drinks&&!G.carry)?["搬饮料箱","Pick up the drinks box"]:null},act(){if(G.carry){G.carry=null}else G.carry={kind:"boxD"};sfx("box")}},
+ {x:64,w:4,label(){return(G.T.noodles&&G.T.drinks&&!G.F.oldNote&&!G.carry)?["地上有张纸","A note on the floor"]:null},act:()=>readOld()},
+ {x:88,w:5,label(){return!G.T.clock?["打卡上班","Clock in"]:null},async act(){sfx("beep");G.T.clock=true;$("#hTask").hidden=false;await say("think",`Clocked in: ${hhmm(G.clock)}. My first night shift alone.`,`已打卡：${hhmm(G.clock)}。我第一次一个人上夜班。`);await showTasks();startPhase(1)}},
+ {x:136,w:26,label(){if(G.carry&&G.carry.kind==="boxN")return["补货","Restock"];if(G.order&&G.order.at==="noodle"&&!G.carry)return["拿杯面","Get noodles"];return["杯面货架","Noodle shelf"]},
+  async act(){
+   if(G.carry&&G.carry.kind==="boxN"){for(let r=0;r<3;r++)for(let i=0;i<6;i++){if(G.noodle[r][i]==="0"){G.noodle[r][i]="rryybb"[i];sfx("box");await wait(70)}}G.carry=null;G.T.noodles=true;sfx("ok");await say("think","The noodle shelf is full.","杯面货架补满了。");return}
+   if(G.order&&G.order.at==="noodle"&&!G.carry){const v=await pick([["Spicy Beef (red cup)","香辣牛肉（红杯）","spicy"],["Chicken (yellow cup)","鸡肉味（黄杯）","chicken"],["Seafood (blue cup)","海鲜味（蓝杯）","seafood"]]);if(v){G.carry={kind:"item",id:v};sfx("click")}return}
+   if(G.carry)return hands();
+   await say("think","Spicy beef, chicken, seafood. Two fifty each.","香辣牛肉、鸡肉、海鲜。每杯两块五。");
+  }},
+ {x:194,w:22,label(){return["零食货架","Snack shelf"]},async act(){await say("think",G.clock>=1440?"Chips. Candy. Cookies. The bags look... wrong in this light.":"Chips, candy, cookies. Everything a long night needs.",G.clock>=1440?"薯片、糖、饼干。在这种光线下，包装看起来有点……不对劲。":"薯片、糖、饼干。熬夜必备。")}},
+ {x:256,w:28,label(){if(G.carry&&G.carry.kind==="boxD")return["补货","Restock"];if(G.order&&G.order.at==="fridge"&&!G.carry)return["拿饮料","Get a drink"];return["饮料冰柜","Drinks fridge"]},
+  async act(){
+   if(G.carry&&G.carry.kind==="boxD"){const fill="gghmmy";for(let r=0;r<3;r++)for(let i=0;i<6;i++){if(G.fridge[r][i]==="0"){G.fridge[r][i]=fill[(i+r)%6];sfx("box");await wait(70)}}G.carry=null;G.T.drinks=true;sfx("ok");await say("think","The fridge is full again.","冰柜补满了。");return}
+   if(G.order&&G.order.at==="fridge"&&!G.carry){const v=await pick(G.order.opts);if(v){G.carry={kind:"item",id:v};sfx("click")}return}
+   if(G.carry)return hands();
+   await say("think","The fridge hums. It's the loudest thing in here.","冰柜嗡嗡作响，是店里最吵的东西。");
+  }},
+ {x:315,w:10,label(){if(G.order&&G.order.at==="coffee"&&!G.carry)return G.pot>0?["倒咖啡","Pour a coffee"]:["煮咖啡","Brew coffee"];if(!G.T.coffee)return["煮咖啡","Brew coffee"];return["咖啡机","Coffee machine"]},
+  async act(){
+   if(G.carry&&G.carry.kind!=="item")return hands();
+   if(G.pot===0){await brewGame();G.pot=1;G.T.coffee=true;sfx("pour");await say("think","A fresh pot. It smells good.","一壶新咖啡，闻着真香。");if(!(G.order&&G.order.at==="coffee"))return}
+   if(G.order&&G.order.at==="coffee"&&!G.carry){const s=await choose([["Small","小杯","small"],["Medium","中杯","medium"],["Large","大杯","large"]]);const t=await choose([["Black","黑咖啡（不加奶糖）","black"],["With milk","加奶","milk"],["With sugar","加糖","sugar"]]);sfx("pour");G.carry={kind:"item",id:s+"-"+t};await say("think",`One ${s} coffee, ${t==="black"?"black":"with "+t}.`,"咖啡倒好了。");return}
+   await say("think","The coffee is hot. Rule two.","咖啡是热的。第二条。");
+  }},
+ {x:361,w:7,label(){if(G.ph>=8&&!G.T.register)return["点算收银机","Count the register"];return["收银机","Register"]},async act(){if(G.ph>=8&&!G.T.register){await countGame();G.T.register=true;return}await say("think",G.ph>=8?"All counted.":"I'll count the money at closing time.",G.ph>=8?"已经点过了。":"关店的时候再点钱。")}},
+ {x:384,w:5,label(){return["读店长的纸条","Read the note"]},act:()=>readRules()},
+ {x:414,w:9,label(){return["看监控","Check the camera"]},async act(){await camModal();if(G.knocking&&!G.F.sawThing){G.F.sawThing=true;sfx("sting");await say("think","Someone is standing right at the door. Tall. Wearing a green vest... like mine.","有人就站在门口。很高。穿着绿色背心……和我的一样。")}if(G.F.inside&&G.clock>=1440&&!G.F.sawInside){G.F.sawInside=true;sfx("sting");await say("think","CAM 2... there's someone in the back room.","二号监控……仓库里有人。")}}},
+ {x:434,w:5,label(){return G.ringing?["接电话","Answer the phone"]:["电话","Phone"]},async act(){if(G.ringing)return answerPhone();await say("think","The store phone. Nobody calls it anymore.","店里的座机。现在已经没人打了。")}},
+ {x:467,w:5,label(){if(G.carry&&G.carry.kind==="mop")return["放回拖把","Put the mop back"];return(!G.carry&&G.puddle>0)?["拿拖把","Take the mop"]:null},act(){G.carry=G.carry?null:{kind:"mop"};sfx("click")}},
+ {x:500,w:10,label(){return G.puddle>0?(G.carry&&G.carry.kind==="mop"?["拖地","Mop"]:["门口的积水","Wet floor"]):null},async act(){if(!(G.carry&&G.carry.kind==="mop"))return say("think","Rainwater by the door. I need the mop.","门口一摊雨水。得拿拖把来。");G.puddle--;sfx("mop");if(G.puddle<=0){G.T.mop=true;sfx("ok");await say("think","Clean and dry.","拖干净了。")}}},
+ {x:525,w:4,label(){return G.lightsOn?["关灯","Turn off the lights"]:["开灯","Turn on the lights"]},async act(){
+   if(G.lightsOn&&G.ph<8)return say("think","Not yet. The lights stay on until closing time.","还不行，关店前灯要一直开着。");
+   G.lightsOn=!G.lightsOn;sfx("sw");setAmb("hum",G.lightsOn?.05:0);
+   if(!G.lightsOn&&!G.F.darkSeen){G.F.darkSeen=true;if(G.F.midnightBack||G.backOpen||G.F.inside){G.F.eyes=3;sfx("sting");await say("think","...Something in the back room just moved.","……仓库里有什么东西动了一下。");await say("think","I'm not checking. I'm leaving. Now.","我不去看。我现在就走。")}else await say("think","Dark and quiet. Time to go home.","又黑又安静。该回家了。")}}},
+ {x:560,w:18,label(){if(G.knocking)return["前门","Front door"];if(G.outsideFig==="rainWin")return["窗外的人","The man outside"];if(G.ph>=8)return["锁门离开","Leave"];return["前门","Front door"]},act:()=>frontDoor()}
+];
+const STREET_OBJ={
+  street0:[{x:356,w:10,label(){return["进店上班","Go inside"]},async act(){sfx("chime");await goScene("store",530);startPhase(0)}}],
+  street1:[{x:301,w:8,label(){return["选择回家的路","Choose a way home"]},async act(){
+    const v=await choose([["The main road. Bright, but long.","走大路。亮堂，但是远。","main"],["The underpass. Fifteen minutes.","走地下通道。十五分钟。","under"],["The alley. It's a shortcut.","走小巷。是条近路。","alley"]]);
+    G.route=v;G.followed=followCheck();await goScene(v,16);routeStart()}}],
+  main:[{x:540,w:9,label(){return["回家","Go home"]},act:()=>arriveHome()}],
+  under:[{x:520,w:12,label(){return["上楼梯回家","Take the stairs home"]},act:()=>arriveHome()}],
+  alley:[{x:448,w:9,label(){return["回家","Go home"]},act:()=>arriveHome()}]
+};
+function objs(){return G.scene==="store"?STORE_OBJ:(STREET_OBJ[G.scene]||[])}
+function nearest(){
+  let best=null,bd=99;
+  for(const n of G.npcs){if(n.stage==="order"||n.stage==="wait"||n.talk){const d=Math.abs(G.px-n.x)-10;if(d<=4&&d-3<bd){bd=d-3;best={npc:n}}}}
+  for(const o of objs()){const l=o.label();if(!l)continue;const d=Math.max(0,Math.abs(G.px-o.x)-o.w);if(d<=4&&d<bd){bd=d;best={o,l}}}
+  return best;
+}
+function interact(){
+  if(!G||G.paused||G.over)return;ac();
+  if(advanceFn){advanceFn();return}if(G.busy||G.modalOpen)return;
+  const n=nearest();if(!n)return;
+  if(n.npc)return run(()=>npcTalk(n.npc));
+  run(()=>n.o.act());
+}
+
+/* ================= NPCs & story ================= */
+const DEFS={
+ tom:{look:LOOK.tom,next:2,
+  async order(n){await say("tom","Hi. Do you have cup noodles? The spicy ones?","你好，有杯面吗？要辣的那种。");
+   const c=await choose([["Yes. I'll get one for you.","有的，我去给您拿。",1],["Sorry, can you say that again?","抱歉，您能再说一遍吗？",2]]);
+   if(c===2)await say("tom","Cup noodles. Spicy. Please.","杯面。辣的。麻烦了。",{slow:1});
+   await say("think","Spicy... the red cups, I think. On the noodle shelf.","辣的……应该是红色杯子，在杯面货架上。");
+   G.order={npc:n,need:"spicy",at:"noodle",hint:"Tom 要一杯辣味杯面 → 去杯面货架拿，再拿回来给他。"}},
+  remind:["The spicy ones, please.","麻烦拿辣的那种。"],
+  async serve(n,it){
+   if(it!=="spicy"){await say("tom","Hmm, that's not spicy. The red one, please.","嗯……这个不辣。麻烦换红色那种。");return false}
+   sfx("beep");await say("think","The register says $2.50.","收银机显示 $2.50。");
+   const p=await choose([["That's two fifty.","一共两块五。",1],["That's twenty-five.","一共二十五。",0],["That's two fifteen.","一共两块一毛五。",0]]);
+   if(!p)await say("tom","Um... the screen says two fifty?","呃……屏幕上写的是两块五？");
+   sfx("cash");await say("tom","Here you go. Keep the change.","给你。零钱不用找了。");
+   await say("tom","First night? You look nervous.","第一天上班？你看起来有点紧张。");
+   const c=await choose([["Is it that obvious?","有那么明显吗？",1],["I'm fine, thanks.","我还好，谢谢。",2]]);
+   await say("tom",c===1?"A little. Night shift is weird. Lock the door when you leave, okay?":"Okay. Night shift is weird, though. Lock the door when you leave, okay?",c===1?"有一点。夜班挺怪的。走的时候记得锁门，好吗？":"好吧。不过夜班挺怪的。走的时候记得锁门，好吗？");return true}},
+ lily:{look:LOOK.lily,next:3,
+  async order(n){await say("lily","Hey! Do you have green tea? Cold, no sugar.","嘿！有绿茶吗？冰的，无糖。");
+   await say("think","Green tea, no sugar. In the drinks fridge.","无糖绿茶。在饮料冰柜里。");
+   G.order={npc:n,need:"g",at:"fridge",hint:"Lily 要冰的无糖绿茶 → 去饮料冰柜拿。",opts:[["Green tea — no sugar","绿茶——无糖","g"],["Honey green tea","蜂蜜绿茶","h"],["Cola","可乐","c"]]}},
+  remind:["Green tea, no sugar!","无糖绿茶！"],
+  async serve(n,it){
+   if(it!=="g"){await say("lily",it==="h"?"Oh, this one has honey in it. I need no sugar.":"Haha, no, that's cola. Green tea, please!",it==="h"?"哦，这个加了蜂蜜。我要无糖的。":"哈哈，不对，那是可乐。要绿茶！");return false}
+   sfx("beep");const p=await choose([["That's one eighty.","一共一块八。",1],["That's eighteen dollars.","一共十八块。",0],["That's one eighteen.","一共一块一毛八。",0]]);
+   if(!p)await say("lily","Eighteen? Ha. I think you mean one eighty.","十八？哈，你是说一块八吧。");
+   sfx("cash");await say("lily","Thanks. Oh— look. He's there again.","谢啦。哦——你看，他又来了。");
+   await say("mia","Who?","谁？");
+   await say("lily","The man in the yellow raincoat. Across the street. He's there every night. Just... standing.","穿黄雨衣的那个男人。在马路对面。他每天晚上都在那儿。就……站着。");
+   const c=await choose([["Maybe he's waiting for the bus.","也许他在等公交。",1],["That's a little creepy.","这有点吓人。",2]]);
+   await say("lily",c===1?"The last bus left an hour ago. Anyway, good luck tonight!":"Right? But he's never done anything. Anyway, good luck tonight!",c===1?"末班车一小时前就走了。总之，今晚加油！":"是吧？不过他从来没做过什么。总之，今晚加油！");return true}},
+ rain:{look:LOOK.rain,next:4,
+  async order(n){await say("rain","Evening.","晚上好。");await say("rain","A bottle of milk, please.","一瓶牛奶，谢谢。");
+   await say("think","Rule five. The man in the yellow raincoat is a regular. Be nice to him.","第五条：穿黄雨衣的男人是常客，对他客气点。");
+   G.order={npc:n,need:"m",at:"fridge",hint:"黄雨衣男人要一瓶牛奶 → 去饮料冰柜拿。",opts:[["Milk","牛奶","m"],["Chocolate milk","巧克力牛奶","c"],["Yogurt drink","酸奶饮料","y"]]}},
+  remind:["Milk. Just milk.","牛奶。就要牛奶。"],
+  async serve(n,it){
+   if(it!=="m"){await say("rain","No. Plain milk. White, like snow.","不对。普通牛奶，像雪一样白的那种。");return false}
+   sfx("beep");sfx("cash");await say("rain","Exact change. Always exact.","正好的零钱。一向都是正好。");
+   await say("rain","Is the coffee hot?","咖啡是热的吗？");
+   await choose(G.pot>0?[["Yes. It's fresh.","是的，刚煮的。",1]]:[["Not yet. Sorry.","还没煮，抱歉。",1]]);
+   await say("rain",G.pot>0?"Good. Keep it hot. They don't like the heat.":"Make some. Keep it hot all night. They don't like the heat.",G.pot>0?"很好。让它一直热着。它们不喜欢热的东西。":"煮一壶吧。整晚都让它热着。它们不喜欢热的东西。");
+   const c=await choose([["Thank you. Have a good night.","谢谢您，晚安。","p"],["Sir, you're dripping on my floor.","先生，您把水滴到我地上了。","r"],["Who are \"they\"?","“它们”是谁？","q"]]);
+   if(c==="r"){G.F.rude=true;await say("rain","...Sorry.","……抱歉。")}
+   else{if(c==="q")await say("rain","Just... keep it hot.","总之……让它热着。");await say("rain","You're new. Read the rules again later. Read them slowly.","你是新来的。晚点再读一遍守则。慢慢读。");G.F.polite=true}
+   return true}},
+ grace:{look:LOOK.grace,next:5,
+  async order(n){await say("grace","Hi... one medium coffee, please. Black.","你好……一杯中杯咖啡，谢谢。黑咖啡。");
+   const c=await choose([["Sure. One moment.","好的，稍等。",1],["Sorry, what size?","抱歉，要多大杯？",2]]);
+   if(c===2)await say("grace","Medium. Not small, not large. And black, please.","中杯。不要小杯也不要大杯。黑咖啡，谢谢。",{slow:1});
+   G.order={npc:n,need:"medium-black",at:"coffee",hint:"Grace 要一杯中杯黑咖啡 → 去咖啡机倒。"}},
+  remind:["Medium, black. Thank you.","中杯，黑咖啡。谢谢。"],
+  async serve(n,it){
+   if(it!=="medium-black")await say("grace","Oh— I said medium, black. But it's okay. I'll take it.","哦——我说的是中杯黑咖啡。不过没关系，我就要这杯吧。");
+   sfx("beep");const p=await choose([["That's one seventy-five.","一共一块七毛五。","pay"],["It's on me tonight. You look exhausted.","今晚我请。你看起来累坏了。","free"],["That's seventeen fifty.","一共十七块五。","wrong"]]);
+   if(p==="wrong"){await say("grace","Seventeen fifty? For coffee? I think it's one seventy-five.","十七块五？一杯咖啡？应该是一块七毛五吧。");sfx("cash")}
+   else if(p==="free"){G.F.nurse=true;await say("grace","Really? ...Thank you. That's so kind.","真的吗？……谢谢你。你人真好。")}
+   else sfx("cash");
+   await say("grace","Long night at the hospital.","医院的夜班太长了。");
+   await say("grace","Hey, um... Is someone working with you tonight?","嘿，那个……今晚有人跟你一起上班吗？");
+   await choose([["No, it's just me. Why?","没有，就我一个。怎么了？",1],["My manager is in the back.","店长在后面。",2]]);
+   if(G.backOpen)await say("grace","Your back door is open. There was a tall man standing there. In a green vest... like yours.","你们后门开着。刚才有个很高的男人站在那儿。穿着绿背心……和你的一样。");
+   else await say("grace","I saw a tall man at your back door. From the parking lot. He had a green vest... like yours.","我在停车场看见有个很高的男人站在你们后门。穿着绿背心……和你的一样。");
+   await say("grace","Probably nothing. Take care, okay?","可能没什么。你小心点，好吗？");return true}}
+};
+function spawn(id){G.spawned[id]=1;G.npcs.push({id,def:DEFS[id],x:572,tx:376,face:-1,stage:"in",step:0,wt:0});sfx("chime");setAmb("rain",.14);after(1.2,()=>setAmb("rain",G.backOpen?.16:.05))}
+async function npcTalk(n){
+  if(n.stage==="order"){n.stage="wait";await n.def.order(n);return}
+  if(n.stage==="wait"){
+    if(G.carry&&G.carry.kind==="item"&&G.order&&G.order.npc===n){const it=G.carry.id;G.carry=null;const ok=await n.def.serve(n,it);if(ok||n.id==="grace"){G.order=null;n.stage="leave";n.tx=580;n.face=1;sfx("ok");const nx=n.def.next;after(2.5,()=>startPhase(nx))}return}
+    await say(n.id,n.def.remind[0],n.def.remind[1]);
+  }
+}
+function startPhase(n){G.ph=n;G.phT=0;const p=PH[n];G.clock=Math.max(G.clock,p.t0);G.cap=p.cap;p.start&&p.start()}
+const PH=[
+ {t0:22*60+28,cap:22*60+30,start(){queue(async()=>{setAmb("hum",.05);await say("think","Mr. Park left a note on the counter. I should read it.","店长在柜台上留了张纸条。我先看看。")})}},
+ {t0:22*60+31,cap:22*60+58,up(){if(!G.spawned.tom&&G.phT>6)spawn("tom")}},
+ {t0:23*60,cap:23*60+35,up(){if(!G.spawned.lily&&(G.phT>24||(G.phT>8&&tasksDone()>=2)))spawn("lily")}},
+ {t0:23*60+37,cap:23*60+46,up(){if(!G.spawned.rain){if(G.phT>2&&!G.F.rainSeen){G.F.rainSeen=1;G.outsideFig="rain"}if(G.phT>11){G.outsideFig=null;spawn("rain")}}}},
+ {t0:23*60+50,cap:24*60+9,up(){if(!G.spawned.grace&&G.clock>=24*60+5)spawn("grace")}},
+ {t0:24*60+15,cap:24*60+24,up(){if(!G.F.k&&G.phT>5){G.F.k=1;startKnock()}if(G.knocking){G.knockT+=G.dt;if(G.knockT-G.lastKnock>3.4){G.lastKnock=G.knockT;sfx("knock")}if(!G.busy&&G.knockT>50)endKnock()}}},
+ {t0:24*60+26,cap:24*60+34,up(){if(!G.F.r&&G.phT>6){G.F.r=1;G.ringing=true;G.ringT=0;G.lastRing=-9;G.clock=Math.max(G.clock,24*60+30);queue(()=>say("think","The store phone is ringing. After midnight.","店里的电话在响。午夜以后。"))}
+   if(G.ringing){G.ringT+=G.dt;if(G.ringT-G.lastRing>2.4){G.lastRing=G.ringT;sfx("ring")}if(!G.busy&&G.ringT>30){G.ringing=false;queue(()=>say("think","It stopped ringing.","电话不响了。"));phoneDone()}}}},
+ {t0:24*60+38,cap:24*60+47,up(){if(!G.F.w&&G.phT>6){G.F.w=1;G.clock=Math.max(G.clock,24*60+45);
+    if(G.F.polite){G.outsideFig="rainWin";G.winT=0;G.lastTap=-9;queue(()=>say("think","Tap, tap. Someone is at the window.","嗒，嗒。有人在敲窗户。"))}
+    else{queue(async()=>{await say("think","The man in yellow isn't across the street tonight.","今晚黄雨衣男人没站在马路对面。");await say("think","Lily said he's there every night.","Lily 说他每天晚上都在的。")});after(4,()=>startPhase(8))}}
+   if(G.outsideFig==="rainWin"){G.winT+=G.dt;if(G.winT-G.lastTap>4){G.lastTap=G.winT;sfx("tap")}if(!G.busy&&G.winT>35){G.outsideFig=null;G.F.ignoredWin=true;startPhase(8)}}}},
+ {t0:24*60+50,cap:25*60,start(){queue(()=>say("think","Almost one. Count the register, turn off the lights, and lock up.","快一点了。点算收银机、关灯、锁门。"))}}
+];
+function startKnock(){G.knocking=true;G.knockT=0;G.lastKnock=-9;G.clock=Math.max(G.clock,24*60+20);setAmb("drone",.12);queue(async()=>{await say("think","Someone is knocking on the front door.","有人在敲前门。");await say("think","At this hour?","这个点？")})}
+function endKnock(){G.knocking=false;G.F.handprint=true;G.F.prints=true;setAmb("drone",.04);sfx("thud");queue(async()=>{await say("think","It stopped.","停了。");await say("think","...There's a handprint on the glass. On the outside.","……玻璃上有个手印。在外面那一侧。")});after(3,()=>startPhase(6))}
+async function frontDoor(){
+  if(G.knocking){
+    await say("think","I can see the door. There's nobody outside. Just the rain.","我能看到门口。外面一个人都没有。只有雨。");
+    await say("unk","Hello? Are you open? It's so cold out here.","你好？还营业吗？外面好冷。");
+    let c=await choose([["Open the door","开门","o"],["\"Sorry, we're closed.\"","“抱歉，我们打烊了。”","c"],["Step back from the door","离门远一点","b"]]);
+    if(c==="o")return ending("front");
+    await say("unk","Mia. It's me. Let me in.","Mia。是我。让我进去。");
+    await say("think","How does it know my name? ...My name tag.","它怎么知道我的名字？……是我的名牌。");
+    c=await choose([["Open the door","开门","o"],["Step back from the door","离门远一点","b"]]);
+    if(c==="o")return ending("front");
+    return endKnock();
+  }
+  if(G.outsideFig==="rainWin"){
+    const c=await choose([["Talk to him","和他说话","t"],[G.F.sawRed?"Ignore him (Rule 10)":"Ignore him",G.F.sawRed?"不理他（第十条）":"不理他","i"]]);
+    G.outsideFig=c==="t"?"rainWin":null;
+    if(c==="t"){G.F.windowTalk=true;
+      await say("rain","Almost home time.","快下班了。");
+      if(G.backOpen){await say("rain","Your back door is open. Close it. Now.","你的后门开着。关上它。现在就去。");G.F.warned=true}
+      else if(G.F.midnightBack||G.F.inside){await say("rain","Something came in through the back. Don't look at it. Just leave.","有东西从后门进来了。别看它。直接走。")}
+      await say("rain","On your way home, don't take the alley tonight.","回家路上，今晚别走小巷。");
+      await say("rain","And if you hear footsteps behind you... come through the underpass.","如果你听见身后有脚步声……就走地下通道。");
+      G.outsideFig=null;await say("think","He's gone. Like he was never there.","他走了。就像从来没来过一样。");
+    }else{G.F.ignoredWin=true;await say("think","I look away. When I look back, he's gone.","我移开视线。再看过去时，他已经不见了。")}
+    after(3,()=>startPhase(8));return;
+  }
+  if(G.ph>=8){
+    if(G.clock<24*60+55)return say("think",`It's ${hhmm(G.clock)}. Rule one: close at one. Not earlier.`,`现在 ${hhmm(G.clock)}。第一条：一点关店，不能提前。`);
+    if(G.lightsOn)await say("think","The lights are still on. The switch is by the door.","灯还开着。开关就在门边。");
+    if(G.backOpen)await say("think","...Is the back door still open?","……后门是不是还开着？");
+    const c=await choose([["Leave and lock the door","出门，锁好门","l"],[G.F.sawRed?"Leave without locking (Rule 11)":"Leave without locking",G.F.sawRed?"出门，不锁门（第十一条）":"出门，不锁门","u"],["Not yet","再等等",0]]);
+    if(!c)return;
+    G.T.lights=!G.lightsOn&&c==="l";if(c==="u")G.F.unlocked=true;if(G.backOpen)G.F.backAtExit=true;
+    sfx("chime");if(c==="l"){await wait(300);sfx("lock")}
+    G.clock=25*60;await goScene("street1",60);
+    await say("think","1:00 a.m. Finally.","凌晨一点。终于下班了。");return;
+  }
+  await say("think",G.F.handprint?"The handprint is still on the glass.":"Rain, and an empty street.",G.F.handprint?"那个手印还在玻璃上。":"雨，和空荡荡的街。");
+}
+async function answerPhone(){
+  G.ringing=false;sfx("click");setAmb("drone",.08);
+  await say("park","Mia? It's me, Mr. Park.","Mia？是我，朴店长。");
+  if(G.backOpen){await say("park","Oh, good. The back door is open. I'm coming in.","哦，太好了，后门开着。我进来了。");G.F.inside=true;G.F.midnightBack=true;sfx("sting");await say("think","...Nobody came in. Did they?","……没有人进来啊。是吧？");return phoneDone()}
+  await say("park","I forgot my keys. I'm at the back door. Can you open it for me?","我忘带钥匙了。我在后门。你能给我开一下吗？");
+  const c=await choose([["Okay, I'm coming.","好的，我这就去。","y"],["Mr. Park... you said you never call at night.","店长……你说过你晚上从不打电话。","n"],["Hang up","挂断","h"]]);
+  if(c==="y"){G.F.goBack=true;await say("think","The back door. Okay.","后门。好。")}
+  else if(c==="n"){await say("park","...","……");await say("unk","Open. The. Door.","开。门。");sfx("sting");await say("think","That was not Mr. Park.","那不是朴店长。")}
+  else sfx("click");
+  phoneDone();
+}
+function phoneDone(){if(G.F.pd)return;G.F.pd=1;setAmb("drone",.04);after(4,()=>startPhase(7))}
+function midnight(){
+  G.F.mid=1;G.redRules=true;if(G.backOpen)G.F.midnightBack=true;if(G.pot===0)G.F.cold=true;
+  for(const x of[150,250,350,450])G.flick[x]=.6+Math.random()*.6;sfx("buzz");setAmb("drone",.04);
+  queue(()=>say("think","Midnight. The lights flicker for a second.","午夜了。灯闪了一下。"));
+}
+function followCheck(){
+  const r=[];if(G.route==="alley")r.push("alley");if(G.F.unlocked)r.push("unlocked");if(G.F.midnightBack||G.F.backAtExit)r.push("back");if(G.F.cold)r.push("cold");
+  G.reasons=r;if(!r.length)return false;
+  if(G.route==="under"&&G.F.polite&&!G.F.ignoredWin&&!r.includes("alley")){G.saved=true;return true}
+  return true;
+}
+function routeStart(){
+  queue(async()=>{if(G.route==="alley")await say("think","The alley. Five minutes and I'm home.","走小巷。五分钟就到家了。");else if(G.route==="under")await say("think","The underpass. At least it has lights.","地下通道。至少那里有灯。");else await say("think","The main road. Long, but bright.","走大路。远，但是亮。")});
+  setAmb("rain",G.route==="under"?.03:.12);setAmb("hum",0);setAmb("drone",G.followed?.06:0);
+}
+function routeUpdate(){
+  const w=SC[G.scene].w,b=G.beats;
+  if(G.route==="main"){if(!G.car&&Math.random()<G.dt*.12){G.car=G.CX+W+40;sfx("car")}if(G.car){G.car-=G.dt*140;if(G.car<G.CX-60)G.car=0}}
+  if(!b.a&&G.px>w*.33){b.a=1;
+    if(G.followed)queue(async()=>{G.F.stopTest=1;await say("think","Footsteps. Behind me.","脚步声。在我身后。");await say("think","When I stop... they stop a second later.","我一停下……它们晚一秒也停下。")});
+    else queue(()=>say("think",G.route==="under"?"Just me and the buzzing lights.":"Quiet streets. Almost home.",G.route==="under"?"只有我，和嗡嗡响的灯。":"街上很安静。快到家了。"));}
+  if(G.route==="main"&&G.F.nurse&&!b.g&&G.px>210){b.g=1;queue(async()=>{
+    await say("grace","Hey! The coffee girl. Thank you again for tonight.","嘿！是请我喝咖啡的那个女孩。今晚真的谢谢你。");
+    if(G.followed){await say("grace","Is he with you? The tall guy... back there?","他是跟你一起的吗？后面那个……很高的人？");sfx("sting");await say("think","I don't turn around. I can't.","我没有回头。我不敢。")}
+    else{await say("grace","My taxi is coming. Get home safe, okay?","我的出租车快到了。你安全到家，好吗？");await choose([["You too. Good night.","你也是。晚安。",1]])}})}
+  if(G.route==="under"&&G.F.polite&&!G.F.ignoredWin&&!b.k&&G.px>360){b.k=1;G.kevin={x:430,a:1};const sv=G.followed&&G.saved;if(sv){G.followed=false;G.echoLeft=0;b.s=1}queue(async()=>{
+    if(sv){await say("kevin","Keep walking, Mia. Don't look back.","继续走，Mia。别回头。");await say("kevin","I'll stay here.","我留在这儿。");setAmb("drone",0);sfx("thud");await say("think","The footsteps behind me... stop. And don't start again.","我身后的脚步声……停了。再也没有响起。")}
+    else await say("kevin","Good night, Mia. Get home safe.","晚安，Mia。安全到家。");
+    G.kevin.fade=1})}
+  if(G.followed&&!b.s&&G.px>w*.68){b.s=1;G.shadowT=1.6;sfx("sting");queue(()=>say("think","Don't look back. Just walk.","别回头。往前走就好。"))}
+}
+async function arriveHome(){
+  sfx("door");await wait(300);sfx("lock");
+  const F=G.F;let id;
+  if(G.followed)id="followed";
+  else{const miss=["noodles","drinks","coffee","mop","trash","register"].filter(k=>!G.T[k]).length;
+    if(miss>=2)id="fired";else if(F.polite&&!F.ignoredWin&&F.nurse&&F.oldNote&&miss===0)id="true";else id="good"}
+  return ending(id);
+}
+
+/* ================= endings ================= */
+const END={
+ good:{t:"Clocked Out",z:"准时下班",L:[["You lock your door. You fall into bed with your shoes on.","你锁上门，连鞋都没脱就倒在了床上。"],["At 9 a.m., your phone buzzes. It's Mr. Park.","早上九点，手机震了一下。是朴店长。"],["\"Good job last night. See you at 10:30.\"","“昨晚干得不错。十点半见。”"],["Then a second message.","接着又来了一条。"],["\"P.S. Who wrote on my note in red ink?\"","“附：是谁用红笔在我的纸条上写了字？”"]]},
+ true:{t:"The Night Regular",z:"夜里的常客",L:[["The next night, Mr. Park is waiting at the counter.","第二天晚上，朴店长在柜台后面等你。"],["You tell him about the man in the yellow raincoat.","你跟他说起那个穿黄雨衣的男人。"],["His face goes white.","他的脸一下子白了。"],["\"Kevin worked nights before you. He loved that ugly yellow raincoat.\"","“你之前上夜班的是 Kevin。他特别喜欢那件难看的黄雨衣。”"],["\"One night last winter, he didn't come to work. Nobody has seen him since.\"","“去年冬天有一天晚上，他没来上班。之后再也没人见过他。”"],["You check last night's camera. At 11:40 p.m., the door opens by itself.","你翻看昨晚的监控。晚上 11:40，门自己开了。"],["Nobody comes in. But on the counter, there is exact change for a bottle of milk.","没有人进来。可柜台上，放着正好够买一瓶牛奶的零钱。"]]},
+ front:{t:"The Customer Is Always Right",z:"顾客永远是对的",L:[["You open the door. The cold comes in first.","你打开门。先进来的是一阵寒气。"],["Then the lights go out.","然后，灯灭了。"],["At 7 a.m., the morning staff finds the front door wide open.","早上七点，早班同事发现店门大开。"],["Mia is behind the counter, smiling.","Mia 站在柜台后面，微笑着。"],["\"Welcome! We're open 24 hours now.\"","“欢迎光临！我们现在 24 小时营业了。”"],["She doesn't blink. Not once.","她没有眨眼。一次都没有。"]]},
+ back:{t:"Staff Only",z:"员工专用",L:[["You open the back door. \"Mr. Park?\"","你打开后门。“店长？”"],["Nobody is there. Only rain, and a green vest on the ground.","没有人。只有雨，和地上的一件绿色背心。"],["It has your name tag on it.","上面别着你的名牌。"],["You look down at your own vest. Your name tag is gone.","你低头看自己的背心。名牌不见了。"],["The next night, a new girl starts the night shift.","第二天晚上，一个新来的女孩开始上夜班。"],["There is one more rule on the note now. In red.","纸条上又多了一条规则。红色的。"],["\"12. If Mia calls, do not answer.\"","“12. 如果 Mia 打电话来，不要接。”"]]},
+ followed:{t:"Someone Walked You Home",z:"有人送你回家",L:[["You get home. You lock the door. Twice.","你到家了。锁上门。锁了两道。"],["Your phone buzzes. A photo from an unknown number.","手机震了一下。一个陌生号码发来一张照片。"],["It's your front door. From the outside. Taken one minute ago.","是你家的门。从外面拍的。一分钟前。"],["@reason",""],["Someone knocks. Three times.","有人敲门。敲了三下。"]]},
+ fired:{t:"Please Don't Come Back",z:"明天别来了",L:[["At 9 a.m., Mr. Park calls you.","早上九点，朴店长给你打电话。"],["\"Mia, half of the work isn't done.\"","“Mia，一半的活都没干完。”"],["\"I'm sorry, but please don't come back.\"","“抱歉，你明天别来了。”"],["You feel bad. But also... a little relieved.","你有点难过。但也……松了口气。"],["That night, you walk past the store. A new girl is reading the note.","那天晚上你路过便利店。一个新来的女孩正在读那张纸条。"],["It's much longer now.","纸条比以前长多了。"]]}
+};
+const REASON={alley:["\"Thanks for walking me home. You took the short way.\"","“谢谢你带我回家。你走了近路。”"],unlocked:["\"Thanks for leaving the door open for me.\"","“谢谢你给我留了门。”"],back:["\"Thanks for opening the back door for me.\"","“谢谢你给我开了后门。”"],cold:["\"The coffee was cold. So I followed you home.\"","“咖啡凉了。所以我跟你回了家。”"]};
+const ORDER=["good","true","front","back","followed","fired"];
+async function ending(id){
+  G.over=true;G.busy=true;advanceFn=null;setAmb("drone",id==="good"||id==="true"?0:.1);
+  if(id==="front"||id==="back"){sfx("door");G.lightsOn=false;await wait(500);sfx("sting");G.fadeTo=1;await wait(1400)}else{G.fadeTo=1;await wait(900)}
+  const got=LS.get("end",[]);if(!got.includes(id)){got.push(id);LS.set("end",got)}
+  const e=END[id];let L=e.L.map(l=>l[0]==="@reason"?REASON[(G.reasons&&G.reasons[0])||"alley"]:l);
+  const words=[...G.words].slice(0,24);
+  SUB.innerHTML="";setAmb("rain",0);setAmb("hum",0);
+  await modal(`<div class="end"><p style="color:var(--dim);margin:0">ENDING ${ORDER.indexOf(id)+1} / 6</p><h2 style="font-family:VT323,monospace;font-size:34px;font-weight:400;margin:2px 0">${e.t}</h2><p style="color:var(--dim);margin-top:0">${e.z}</p>
+    ${L.map(l=>`<p class="e">${l[0]}</p><p class="z">${l[1]}</p>`).join("")}
+    <h3 style="margin:18px 0 0;font-size:15px">今晚遇到的词</h3><div class="wl">${words.map(w=>`<span>${w}<i>${WORDS[w]}</i></span>`).join("")||"<span>—</span>"}</div>
+    <p class="hint">已解锁结局：${got.length} / 6。不同的选择会走向不同的结局。</p>
+    <div class="row"><button class="btn pri" data-close="again">再上一次夜班</button><button class="btn" data-close="title">回标题</button></div></div>`).then(v=>{newGame();if(v==="again")startGame();else title()});
+}
+
+/* ================= scenes ================= */
+async function goScene(sc,x){G.fadeTo=1;await wait(450);G.scene=sc;G.px=x;G.face=1;G.npcs=G.scene==="store"?G.npcs:[];G.CX=clampCam();G.fadeTo=0;
+  setAmb("rain",sc==="store"?.05:sc==="under"?.03:.13);setAmb("hum",sc==="store"&&G.lightsOn?.05:0);await wait(300)}
+function clampCam(){const w=SC[G.scene].w;return Math.max(0,Math.min(w-W,G.px-W/2))}
+
+/* ================= loop ================= */
+const keys={l:0,r:0};
+function update(dt){
+  G.t+=dt;G.dt=dt;
+  for(const k in G.flick)G.flick[k]-=dt;
+  if(Math.random()<dt*(G.clock>=1440?.25:.06)){const fl=G.scene==="store"?[40,150,250,350,450]:G.scene==="under"?[60,140,220,300,380,460]:G.scene==="alley"?[240]:[];if(fl.length){const x=fl[Math.random()*fl.length|0];G.flick[x]=.05+Math.random()*.25;if(x===40||G.clock>=1440)G.flick[x]+=.1}}
+  const free=!G.busy&&!G.modalOpen&&!G.paused&&!G.over;
+  const dir=free?(keys.r-keys.l):0;
+  if(dir){const sp=(G.carry&&G.carry.kind&&G.carry.kind.startsWith("box"))?34:50;G.px+=dir*sp*dt;G.face=dir;G.walkT+=dt;const w=SC[G.scene].w;G.px=Math.max(8,Math.min(w-8,G.px));
+    G.idleT=0;if(G.walkT-G.lastStep>.3){G.lastStep=G.walkT;G.stepN++;sfx(G.scene==="store"?"step":"stepOut");if(G.followed){G.echoLeft=2;after(.22,()=>{if(G.followed)sfx("echo")})}}}
+  else if(G.followed&&G.echoLeft>0){G.idleT=(G.idleT||0)+dt;if(G.idleT>.45){G.idleT=0;G.echoLeft--;sfx("echo")}}
+  const tc=clampCam();G.CX=G.CX==null?tc:G.CX+(tc-G.CX)*Math.min(1,dt*6);
+  for(const n of G.npcs){const d=n.tx-n.x;if(Math.abs(d)>1){n.x+=Math.sign(d)*Math.min(Math.abs(d),32*dt);n.face=Math.sign(d);n.wt+=dt;n.step=(n.wt*3.3|0)}else if(n.stage==="in"){n.stage="order";n.face=-1}
+    if(n.stage==="leave"&&Math.abs(n.tx-n.x)<=1){n.stage="gone";sfx("chime")}}
+  G.npcs=G.npcs.filter(n=>n.stage!=="gone");
+  for(let i=G.timers.length-1;i>=0;i--)if(G.t>=G.timers[i].t){const f=G.timers[i].fn;G.timers.splice(i,1);f()}
+  if(G.scene==="store"&&!G.over){
+    if(!G.paused&&!G.modalOpen)G.clock=Math.min(G.cap,G.clock+dt/3);G.phT+=dt;
+    if(!G.F.mid&&G.clock>=1440)midnight();
+    const p=PH[G.ph];p&&p.up&&p.up();
+  }else if(G.scene!=="street0"&&G.scene!=="store")G.clock+=dt/6;
+  if(["main","under","alley"].includes(G.scene))routeUpdate();
+  if(G.shadowT>0)G.shadowT-=dt;
+  if(G.kevin&&G.kevin.fade){G.kevin.a-=dt*.5;if(G.kevin.a<=0)G.kevin=null}
+  if(G.eyesT==null)G.eyesT=0;
+  G.fade+=(G.fadeTo-G.fade)*Math.min(1,dt*5);
+  if(!G.busy&&!G.modalOpen&&G.q.length&&!G.over&&!G.paused)run(G.q.shift());
+  if(G.scene==="street0"&&!G.F.intro&&!G.paused){G.F.intro=1;queue(async()=>{await say("think","10:27 p.m. Rain again.","晚上十点二十七。又下雨了。");await say("think","My first night shift alone. It's just a store. I can do this.","第一次一个人上夜班。只是个便利店而已，我可以的。")})}
+  updateUI();
+}
+let lastBtn="";
+function updateUI(){
+  $("#clock").textContent=hhmm(G.clock);
+  const n=(!G.busy&&!G.modalOpen)?nearest():null;
+  let h=advanceFn?"<b>继续</b><small>Next</small>":G.choosing?"<b>请选择</b><small>Choose</small>":n?(n.npc?"<b>说话</b><small>Talk</small>":`<b>${n.l[0]}</b><small>${n.l[1]}</small>`):"<b>互动</b><small>Space</small>";
+  if(h!==lastBtn){lastBtn=h;const b=$("#bA");b.innerHTML=h;b.classList.toggle("has",!!n||!!advanceFn)}
+  G.prompt=n;
+}
+function draw(){
+  g=ctx;CX=Math.round(G.CX||0);G.lights=[];
+  SC[G.scene].draw();
+  for(const n of G.npcs)person(n.x,FLOOR,n.def.look,n.face,n.step);
+  if(G.kevin){person(G.kevin.x,FLOOR,LOOK.rain,-1,0,Math.max(0,G.kevin.a))}
+  if(G.F.eyes&&G.scene==="store"&&!G.lightsOn){R(92,FLOOR-30,1,1,"#e8f0e8");R(95,FLOOR-30,1,1,"#e8f0e8")}
+  person(G.px,FLOOR,LOOK.mia,G.face,(G.walkT*3.3|0));
+  const c=G.carry;
+  if(c){const x=G.px,y=FLOOR;if(c.kind==="boxN"||c.kind==="boxD"){R(x-6,y-24,12,9,"#a57c4c");R(x-6,y-20,12,1,"#c9a77a")}else if(c.kind==="trash")R(x+(G.face>0?3:-9),y-12,6,8,"#111");else if(c.kind==="mop"){for(let i=0;i<14;i++)R(x+G.face*(3+i/2),y-22+i*1.4,1,2,"#9a7b52");R(x+G.face*10-2,y-3,5,3,"#ddd")}else R(x+(G.face>0?3:-6),y-14,3,4,c.id==="spicy"?"#d23b2f":c.id==="g"?"#7ccf7a":c.id==="m"?"#f2f2ea":"#c9b28a")}
+  const dark=G.scene==="store"?(G.lightsOn?(G.clock>=1440?.58:.48):.9):SC[G.scene].dark;
+  if(G.scene==="store"&&G.lightsOn)G.lights.push({x:G.px,y:FLOOR-14,r:30,i:.3});
+  if(G.scene!=="store")G.lights.push({x:G.px,y:FLOOR-14,r:18,i:.35});
+  lighting(dark);
+  if(G.shadowT>0){g=ctx;CX=0;const a=Math.min(1,G.shadowT)*.85;person(10,FLOOR,{skin:"#050607",hair:"#050607",top:"#050607",pants:"#050607",shoes:"#050607",tall:1,faceless:1},1,0,a);CX=Math.round(G.CX||0)}
+  g=ctx;CX=Math.round(G.CX||0);for(const n of G.npcs)if(n.stage==="order"||n.stage==="wait"){const b=Math.sin(G.t*5)>0?1:0,y=FLOOR-37-b;R(n.x-3,y,7,9,"#111");R(n.x-2,y+1,5,7,n.stage==="order"?"#ffd77a":"#cfcfcf");if(n.stage==="order"){R(n.x,y+2,1,3,"#111");R(n.x,y+6,1,1,"#111")}else{R(n.x-1,y+4,1,1,"#111");R(n.x+1,y+4,1,1,"#111")}}
+  if(G.prompt&&!G.busy){const x=G.prompt.npc?G.prompt.npc.x:G.prompt.o.x,b=(G.t*4|0)%2;g=ctx;R(x-2,FLOOR-44-b,5,1,"#7cf29a");R(x-1,FLOOR-43-b,3,1,"#7cf29a");R(x,FLOOR-42-b,1,1,"#7cf29a")}
+  if(G.fade>.01){ctx.fillStyle=`rgba(0,0,0,${G.fade})`;ctx.fillRect(0,0,W,H)}
+}
+let lastT=0;
+function frame(ts){const dt=Math.min(.05,(ts-lastT)/1000||0);lastT=ts;if(G){if(!G.over)update(dt);else{G.t+=dt;G.fade+=(G.fadeTo-G.fade)*Math.min(1,dt*4)}draw()}requestAnimationFrame(frame)}
+
+/* ================= input & layout ================= */
+function hold(el,k){const on=e=>{e.preventDefault();ac();keys[k]=1;el.classList.add("on")},off=e=>{keys[k]=0;el.classList.remove("on")};el.addEventListener("pointerdown",on);el.addEventListener("pointerup",off);el.addEventListener("pointerleave",off);el.addEventListener("pointercancel",off);el.addEventListener("contextmenu",e=>e.preventDefault())}
+hold($("#bL"),"l");hold($("#bR"),"r");
+$("#bA").addEventListener("click",()=>{if(G&&G.choosing)return;interact()});
+addEventListener("keydown",e=>{
+  if(MOD.classList.contains("show"))return;
+  if(e.key==="ArrowLeft"||e.key==="a"||e.key==="A")keys.l=1;
+  else if(e.key==="ArrowRight"||e.key==="d"||e.key==="D")keys.r=1;
+  else if(e.key===" "||e.key==="Enter"||e.key==="e"||e.key==="E"){e.preventDefault();if(!G||!G.choosing)interact()}
+  else if(/^[1-4]$/.test(e.key)&&G&&G.choosing&&G.chOpts[+e.key-1])G.choosing(G.chOpts[+e.key-1][2]);
+});
+addEventListener("keyup",e=>{if(e.key==="ArrowLeft"||e.key==="a"||e.key==="A")keys.l=0;if(e.key==="ArrowRight"||e.key==="d"||e.key==="D")keys.r=0});
+addEventListener("blur",()=>{keys.l=keys.r=0});
+$("#hTask").onclick=()=>{if(G&&!G.modalOpen)showTasks()};
+$("#hRule").onclick=()=>{if(G&&!G.busy&&!G.modalOpen)run(readRules)};
+$("#hSet").onclick=()=>settings();
+function settings(){
+  const row=(k,t)=>`<div class="tog"><span>${t}</span><button class="sw ${SET[k]?"on":""}" data-k="${k}"></button></div>`;
+  return modal(`<h2>设置</h2>${row("sfx","音效和环境声")}${row("voice","自动朗读台词（英文）")}${row("zh","字幕默认显示中文")}<p class="hint">朗读用的是你设备自带的英文语音，不同手机声音不一样。</p><div class="row"><button class="btn pri" data-close>好</button></div>`,m=>{
+    m.querySelectorAll(".sw").forEach(b=>b.onclick=()=>{const k=b.dataset.k;SET[k]=!SET[k];b.classList.toggle("on",SET[k]);LS.set("set",SET);if(k==="sfx"&&master)master.gain.value=SET.sfx?.9:0;if(k==="voice"&&!SET.voice&&tts)tts.cancel()});
+  });
+}
+function layout(){
+  const vw=innerWidth,vh=innerHeight,land=vw>vh*1.2&&vh<640;document.body.classList.toggle("land",land);
+  const nw=(!land&&vw<vh)?Math.max(168,Math.min(256,Math.round(H*vw/(vh*.48)))):256;
+  if(nw!==W){W=nw;cv.width=W;LC.width=W;if(G)G.CX=null}
+  const aw=land?vw-350:vw,ah=land?vh-12:vh-250;let s=Math.max(1,Math.min(aw/W,ah/H));if(s>=3)s=Math.floor(s);
+  const st=$("#stage");st.style.width=Math.floor(W*s)+"px";st.style.height=Math.floor(H*s)+"px";
+}
+addEventListener("resize",layout);layout();
+
+/* ================= title ================= */
+function title(){
+  const got=LS.get("end",[]);
+  modal(`<div style="text-align:center"><div class="title">CLOSING TIME</div><p style="color:var(--dim);margin:6px 0 2px">便利店夜班 · 微恐 · 英文字幕</p></div>
+  <p style="margin-top:14px">你是 Mia，今晚第一次一个人在街角便利店值夜班。22:30 打卡，凌晨 1 点锁门回家。</p>
+  <p class="hint">◀ ▶ 移动，「互动」按钮（或空格）和物品、客人互动。字幕点「中文」看翻译，点「听」朗读。建议戴耳机。</p>
+  <div class="gal">${ORDER.map((id,i)=>got.includes(id)?`<div><b>${END[id].t}</b>${END[id].z}</div>`:`<div class="lock"><b>???</b>结局 ${i+1}</div>`).join("")}</div>
+  <div class="row"><button class="btn pri" data-close="go" style="flex:1;font-size:17px">开始上班</button><button class="btn" id="tset">设置</button></div>
+  <p class="hint" style="text-align:center"><a href="../../" style="color:var(--dim)">← 回到 Prime Time English</a></p>`,m=>{m.querySelector("#tset").onclick=()=>{settings().then(title)}}).then(v=>{if(v==="go")startGame()});
+}
+function startGame(){ac();G.paused=false;G.fadeTo=0;setAmb("rain",.13);showIdle()}
+newGame();G.fade=1;G.fadeTo=.35;requestAnimationFrame(frame);title();
+</script>
+</body>
+</html>
