@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#050608">
+<title>Second Hand</title>
+<!-- staff portal moved: ./879/ -->
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=VT323&display=swap" media="print" onload="this.media='all'">
+<style>
+:root{--bg:#050608;--ph:#0d0f13;--card:#171a20;--line:#252932;--ink:#ecebe6;--dim:#8d8c86;--acc:#4f9cff;--me:#2f6fde;--them:#262a33;--red:#ff4d5e;--grn:#41d38a}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,system-ui,"PingFang SC","Microsoft YaHei",sans-serif;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+input{font:inherit}
+#phone{position:relative;width:390px;height:min(820px,96dvh);background:var(--ph);border-radius:46px;border:10px solid #1b1d22;box-shadow:0 0 0 2px #2a2d33,0 30px 80px rgba(0,0,0,.7);overflow:hidden;display:flex;flex-direction:column}
+@media (max-width:520px){#phone{width:100vw;height:100dvh;border:0;border-radius:0;box-shadow:none}}
+#status{flex:none;height:34px;display:flex;align-items:center;justify-content:space-between;padding:6px 22px 0;font-size:13px;font-weight:600;z-index:5}
+#status .bat{display:flex;align-items:center;gap:5px}
+#status .bat i{display:inline-block;width:24px;height:11px;border:1.5px solid #ccc;border-radius:3px;position:relative}
+#status .bat i b{position:absolute;left:1px;top:1px;bottom:1px;background:#ddd;border-radius:1px}
+#screen{flex:1;position:relative;overflow:hidden}
+.view{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 14px 18px}
+#homebar{flex:none;height:26px;display:flex;align-items:center;justify-content:center}
+#homebar button{width:130px;height:5px;border-radius:3px;background:#d8d8d8;border:0;padding:0;opacity:.85}
+#homebar button::before{content:"";display:block;position:relative;top:-12px;height:28px}
+.wall{background:radial-gradient(120% 80% at 30% 0%,#1d2233,#07080c 70%)}
+.clockbig{text-align:center;margin-top:34px;font-size:64px;font-weight:200;letter-spacing:1px}
+.dateline{text-align:center;color:#c9c9c9;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px 8px;padding:30px 18px}
+.app{display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:0;padding:0;font-size:11.5px;color:#e6e6e6;position:relative}
+.app .ic{width:58px;height:58px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:29px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.app .badge{position:absolute;top:-5px;right:6px;background:var(--red);color:#fff;font-size:11px;font-weight:700;min-width:19px;height:19px;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:0 5px}
+.top{flex:none;display:flex;align-items:center;gap:8px;padding:6px 12px 10px;border-bottom:1px solid var(--line)}
+.top h1{font-size:17px;margin:0;flex:1;text-align:center;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .back{background:none;border:0;color:var(--acc);font-size:16px;padding:4px 6px;min-width:54px;text-align:left}
+.top .sp{min-width:54px}
+.big{font-size:30px;font-weight:700;margin:10px 2px 8px}
+.list{display:flex;flex-direction:column}
+.li{display:flex;gap:11px;align-items:center;padding:11px 2px;border-bottom:1px solid var(--line);background:none;border-left:0;border-right:0;border-top:0;text-align:left;width:100%}
+.li .av{width:44px;height:44px;border-radius:50%;background:#3a3f4b;display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+.li .mid{flex:1;min-width:0}
+.li .nm{font-weight:600;display:flex;justify-content:space-between;gap:8px}
+.li .nm small{color:var(--dim);font-weight:400;font-size:12px;flex:none}
+.li .pv{color:var(--dim);font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--acc);flex:none}
+.msgs{display:flex;flex-direction:column;gap:6px;padding-top:10px}
+.stamp{text-align:center;color:var(--dim);font-size:11.5px;margin:10px 0 4px}
+.b{max-width:78%;padding:8px 12px;border-radius:18px;font-size:15.5px;cursor:pointer}
+.b.them{background:var(--them);align-self:flex-start;border-bottom-left-radius:5px}
+.b.me{background:var(--me);align-self:flex-end;border-bottom-right-radius:5px}
+.b.glitch{font-family:ui-monospace,monospace;letter-spacing:.3px;background:#1d1214;color:#ffc9cf;box-shadow:0 0 0 1px #4a1c22}
+.zh{display:none;color:rgba(255,255,255,.62);font-size:13px;margin-top:3px}
+.b.me .zh{color:rgba(255,255,255,.78)}
+.show .zh,body.allzh .zh{display:block}
+.reply{flex:none;border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:grid;gap:6px;background:#0f1116}
+.reply button{background:#1c2029;border:1px solid #30364a;border-radius:18px;padding:8px 12px;text-align:left}
+.reply small{display:block;color:var(--dim);font-size:12px}
+.reply .hint{color:var(--dim);font-size:12px;text-align:center}
+.typing{align-self:flex-start;background:var(--them);border-radius:18px;padding:9px 14px;color:var(--dim);font-size:13px}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin:0 -14px}
+.pgrid canvas,.pgrid .lk{width:100%;aspect-ratio:3/4;display:block;background:#111;object-fit:cover}
+.pgrid .lk{display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--dim);font-size:12px;gap:4px;border:0}
+.tabs{display:flex;gap:8px;margin:8px 0 10px}
+.tabs button{flex:1;background:#1a1d24;border:1px solid var(--line);border-radius:9px;padding:7px}
+.tabs button.on{border-color:var(--acc);color:#fff}
+.viewer{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;z-index:8}
+.viewer .vt{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;font-size:13px;color:#ccc}
+.viewer .vt button{background:none;border:0;color:var(--acc);font-size:16px}
+.viewer .vb{flex:1;overflow:hidden;position:relative;touch-action:none}
+.viewer canvas{position:absolute;left:50%;top:50%;transform-origin:0 0}
+.viewer .vh{color:#888;font-size:12px;text-align:center;padding:6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
+.card h3{margin:0 0 4px;font-size:16px}
+.note p{margin:8px 0}
+.tr{cursor:pointer}
+.pad{display:grid;grid-template-columns:repeat(3,72px);gap:14px;justify-content:center;margin:20px 0}
+.pad button{width:72px;height:72px;border-radius:50%;background:#20242d;border:0;font-size:26px}
+.dots{display:flex;gap:14px;justify-content:center;margin-top:16px}
+.dots i{width:13px;height:13px;border-radius:50%;border:1.5px solid #ccc}
+.dots i.f{background:#ccc}
+.shake{animation:sh .35s}
+@keyframes sh{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+.memo{padding:12px 2px;border-bottom:1px solid var(--line)}
+.memo .nm{font-weight:600}
+.memo .sm{color:var(--dim);font-size:12.5px}
+.wave{display:flex;gap:3px;align-items:center;height:46px;margin:10px 0}
+.wave i{flex:1;background:#3f4656;border-radius:2px}
+.wave.play i{background:var(--red);animation:wv .5s infinite alternate}
+@keyframes wv{to{transform:scaleY(.35)}}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.btn{background:#1f2430;border:1px solid #363c4c;border-radius:10px;padding:8px 14px}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.red{background:#3a141a;border-color:#6a2430;color:#ffb3bd}
+.addr{display:flex;gap:6px;padding:4px 10px 8px;border-bottom:1px solid var(--line)}
+.addr input{flex:1;background:#1c1f26;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:7px 10px;font-size:14px;min-width:0}
+.web{padding:12px 14px 30px;overflow-y:auto;flex:1}
+.web.forum{background:#e9e6dc;color:#1b1b1b;font-family:Verdana,Tahoma,sans-serif;font-size:13.5px}
+.web.forum a,.web a{color:#1a4fa0;cursor:pointer;text-decoration:underline}
+.web.forum .post{background:#fff;border:1px solid #c9c4b4;margin:8px 0;padding:8px 10px}
+.web.forum .u{font-weight:bold;color:#7a2d14;font-size:12px}
+.web.forum .u small{color:#888;font-weight:normal}
+.web.forum .zh{color:#6a6556}
+.web.forum h2{font-size:16px;margin:4px 0 8px;color:#333}
+.web.news{background:#faf8f2;color:#222;font-family:Georgia,"Songti SC",serif}
+.web.news h2{font-size:22px;margin:6px 0}
+.web.news .zh{color:#777}
+.web.plain{background:#fff;color:#222}
+.web.plain .zh{color:#777}
+.radio{display:flex;flex-direction:column;align-items:center;padding:20px 16px;gap:14px;flex:1;overflow-y:auto;overflow-x:hidden}
+.freq{font-family:VT323,ui-monospace,monospace;font-size:78px;color:#7cf29a;text-shadow:0 0 18px rgba(124,242,154,.4);line-height:1}
+.radio input[type=range]{width:100%}
+.fine{display:flex;gap:10px}
+.fine button{width:58px;height:44px;border-radius:10px;background:#20242d;border:0;font-size:18px}
+.rtext{min-height:90px;width:100%;background:#0b0c10;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14.5px}
+#notif{position:absolute;left:8px;right:8px;top:8px;z-index:20;background:rgba(40,43,52,.96);border-radius:16px;padding:10px 12px;display:flex;gap:10px;align-items:center;transform:translateY(-130%);transition:transform .35s;box-shadow:0 10px 30px rgba(0,0,0,.5);cursor:pointer}
+#notif.on{transform:none}
+#notif .ic{width:36px;height:36px;border-radius:9px;background:#2ecc71;display:flex;align-items:center;justify-content:center;font-size:19px;flex:none}
+#notif .t{font-weight:600;font-size:13.5px}
+#notif .m{font-size:13.5px;color:#ddd;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#ov{position:absolute;inset:0;z-index:30;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.72);padding:18px}
+#ov.on{display:flex}
+.dlg{background:#16181e;border:1px solid #2a2e38;border-radius:18px;padding:18px;width:100%;max-height:100%;overflow:auto}
+.dlg h2{margin:0 0 8px;font-size:18px}
+.call{position:absolute;inset:0;z-index:25;background:linear-gradient(#20242e,#0a0b0e);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:70px 20px 80px}
+.call .who{font-size:32px;font-weight:300}
+.call .row{display:flex;gap:70px}
+.call .row button{width:74px;height:74px;border-radius:50%;border:0;font-size:30px}
+.cam{position:absolute;inset:0;background:#000;display:flex;flex-direction:column}
+.cam canvas{width:100%;flex:1;min-height:0;object-fit:contain;touch-action:manipulation}
+.cam .bar{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;font-size:12px;color:#ccc;font-family:ui-monospace,monospace}
+.cam .acts{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+.cam .acts button{background:#15171c;border:1px solid #2c303a;border-radius:10px;padding:9px 8px;font-size:13.5px;text-align:left}
+.cam .acts button small{display:block;color:var(--dim);font-size:11.5px}
+.cam .say{padding:8px 14px;min-height:44px;font-size:14.5px;background:#0b0c0f;border-top:1px solid #1d2027}
+.tiles{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
+.tiles button{background:#1f2430;border:1px solid #39404f;border-radius:9px;padding:7px 10px}
+.tiles button:disabled{opacity:.3}
+.seq{min-height:44px;background:#0b0c10;border:1px dashed #3a3f4b;border-radius:10px;padding:8px;display:flex;flex-wrap:wrap;gap:6px}
+.seq span{background:#3a141a;border:1px solid #6a2430;border-radius:8px;padding:4px 8px;font-size:13.5px}
+.end{font-size:15.5px}
+.end .e{margin:12px 0 0}
+.end .z2{color:var(--dim);font-size:13px;margin:2px 0 0}
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}
+.gal div{background:#15171c;border:1px solid #262a33;border-radius:9px;padding:7px 9px;font-size:12.5px}
+.gal b{display:block;font-size:13px}
+.gal .lk{color:#555}
+.boot{position:absolute;inset:0;z-index:40;background:#000;display:flex;flex-direction:column;justify-content:center;padding:26px;gap:10px;overflow:auto}
+.boot .t{font-family:VT323,ui-monospace,monospace;font-size:58px;letter-spacing:4px;text-align:center;line-height:1}
+.boot input{background:#14161b;border:1px solid #333;border-radius:12px;padding:12px;color:#fff;font-size:18px;text-align:center}
+.glitchy{animation:gl .18s steps(2) 6}
+@keyframes gl{0%{filter:none;transform:none}50%{filter:hue-rotate(90deg) contrast(1.6);transform:translate(3px,-2px) skewX(4deg)}}
+.kw{color:#ffd77a;border-bottom:1px dashed rgba(255,215,122,.5)}
+.web .kw{color:inherit;background:rgba(255,215,122,.25);border:0}
+.tog{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+.sw{width:48px;height:28px;border-radius:14px;background:#333;border:0;position:relative}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#bbb;transition:.15s}
+.sw.on{background:var(--grn)}.sw.on::after{left:23px;background:#fff}
+</style>
+</head>
+<body>
+<div id="phone">
+  <div id="status"><span id="stime">23:58</span><span class="bat"><span id="sbat">41%</span><i><b id="sbatb"></b></i></span></div>
+  <div id="screen"></div>
+  <div id="homebar"><button id="home" aria-label="Home"></button></div>
+  <div id="notif"><div class="ic">💬</div><div><div class="t"></div><div class="m"></div></div></div>
+  <div id="ov"></div>
+</div>
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LS={get(k,d){try{const v=localStorage.getItem("sh_"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("sh_"+k,JSON.stringify(v))}catch(e){}},raw(k){try{return localStorage.getItem("sh_"+k)}catch(e){return null}}};
+const SET=Object.assign({sfx:true,voice:true,zh:false},LS.get("set",{}));
+document.body.classList.toggle("allzh",SET.zh);
+console.log("%cStarlight FM 87.9 — please stand by.","color:#7cf29a;font:16px monospace");
+
+/* ---------- audio ---------- */
+let AC=null,M=null,NB=null,stat=null;
+function ac(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();M=AC.createGain();M.gain.value=SET.sfx?.8:0;M.connect(AC.destination);NB=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate);const d=NB.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  const s=AC.createBufferSource();s.buffer=NB;s.loop=true;const f=AC.createBiquadFilter();f.type="bandpass";f.frequency.value=1800;f.Q.value=.6;stat=AC.createGain();stat.gain.value=0;s.connect(f).connect(stat).connect(M);s.start()}catch(e){AC=null}}if(AC&&AC.state==="suspended")AC.resume();return AC}
+function tone(f,d,t="sine",v=.15,t0=0){if(!ac())return;const T=AC.currentTime+t0,o=AC.createOscillator(),g=AC.createGain();o.type=t;o.frequency.value=f;g.gain.setValueAtTime(.0001,T);g.gain.exponentialRampToValueAtTime(v,T+.01);g.gain.exponentialRampToValueAtTime(.0001,T+d);o.connect(g).connect(M);o.start(T);o.stop(T+d+.05)}
+function nz(d,v=.2,fq=1200,t0=0){if(!ac())return;const T=AC.currentTime+t0,s=AC.createBufferSource();s.buffer=NB;const f=AC.createBiquadFilter();f.frequency.value=fq;const g=AC.createGain();g.gain.setValueAtTime(v,T);g.gain.exponentialRampToValueAtTime(.0001,T+d);s.connect(f).connect(g).connect(M);s.start(T,Math.random());s.stop(T+d+.05)}
+const SFX={ding(){tone(1318,.18,"sine",.12);tone(1760,.3,"sine",.1,.09)},tap(){tone(1900,.03,"square",.03)},key(){tone(1100,.06,"sine",.08)},bad(){tone(180,.25,"square",.06)},ok(){tone(880,.1);tone(1320,.18,"sine",.12,.08)},
+ glitch(){for(let i=0;i<6;i++){nz(.05,.25,400+Math.random()*3000,i*.06);tone(60+Math.random()*900,.05,"square",.05,i*.06)}},ring(){[0,.4,1.2,1.6].forEach(t=>{tone(660,.35,"sine",.09,t);tone(880,.35,"sine",.06,t)})},thud(){tone(60,.4,"sine",.4);nz(.2,.3,200)},
+ box(){const mel=[784,659,523,659,784,1046,988,784,659,587,659,523];mel.forEach((f,i)=>{tone(f,.9,"sine",.06,i*.42);tone(f*2,.4,"triangle",.015,i*.42)})}};
+function sfx(n){if(SET.sfx)try{SFX[n]()}catch(e){}}
+function staticVol(v){if(ac()&&stat)stat.gain.setTargetAtTime(SET.sfx?v:0,AC.currentTime,.15)}
+const tts=window.speechSynthesis;
+const NOV=/Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Kathy|Fred|Princess|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley/i;
+const VOICE={nm:[.35,.78,3],lena:[1.1,.9,1],theo:[1.7,.95,2],imp:[.9,.85,1],me:[1,.92,0]};
+function speak(t,who="me",slow){if(!tts||!SET.voice)return;try{tts.cancel();const v=VOICE[who]||VOICE.me,u=new SpeechSynthesisUtterance(t.replace(/[~*"“”]/g,""));u.lang="en-US";u.pitch=v[0];u.rate=slow?.7:v[1];const vs=tts.getVoices().filter(x=>/^en[-_]US/i.test(x.lang)&&!NOV.test(x.name));if(vs.length)u.voice=vs[v[2]%vs.length];tts.speak(u)}catch(e){}}
+function speakSeq(lines,who){return new Promise(res=>{if(!tts||!SET.voice){setTimeout(res,lines.length*1800);return}let i=0;const nx=()=>{if(i>=lines.length)return res();const u=new SpeechSynthesisUtterance(lines[i++].replace(/[~*"“”]/g,""));const v=VOICE[who];u.lang="en-US";u.pitch=v[0];u.rate=v[1];const vs=tts.getVoices().filter(x=>/^en[-_]US/i.test(x.lang)&&!NOV.test(x.name));if(vs.length)u.voice=vs[v[2]%vs.length];let done=false;const fin=d=>{if(done)return;done=true;clearTimeout(to);setTimeout(nx,d)};const to=setTimeout(()=>fin(0),2500+u.text.length*110);u.onend=()=>fin(350);u.onerror=()=>fin(600);tts.speak(u)};tts.cancel();nx()})}
+
+/* ---------- words ---------- */
+const WORDS={"second-hand":"二手的","previous owner":"前主人","missing":"失踪的","broadcast":"广播","frequency":"频率","static":"杂音","guest":"客人","lullaby":"摇篮曲","fountain":"喷泉","loading dock":"装卸区","service door":"服务通道门","keypad":"密码键盘","booth":"播音间","backwards":"倒着","password":"密码","deleted":"删除的","polite":"有礼貌的","basement":"地下室","staff only":"员工专用","disappear":"消失","forum":"论坛","last seen":"最后被看到","tape":"磁带","stopped":"停了","newest":"最新的","oldest":"最旧的","return":"退回","erase":"抹掉","signal":"信号","escalator":"自动扶梯","flashlight":"手电筒"};
+const WK=Object.keys(WORDS).sort((a,b)=>b.length-a.length);const WRE=new RegExp("\\b("+WK.map(k=>k.replace(/[-]/g,"\\-").replace(/ /g,"\\s")).join("|")+")\\b","gi");
+function mw(en){return esc(en).replace(WRE,m=>`<span class="kw" title="${WORDS[m.toLowerCase()]||""}">${m}</span>`)}
+const tr=(en,zh,cls="")=>`<div class="tr ${cls}"><div>${mw(en)}</div><div class="zh">${esc(zh)}</div></div>`;
+document.addEventListener("click",e=>{const t=e.target.closest(".tr,.b");if(t&&!e.target.closest("button,a,input")){t.classList.toggle("show")}});
+
+/* ---------- state ---------- */
+let S=null;
+const P=()=>S.name;
+function fresh(name){return{name,min:-2,bat:41,view:{app:"home"},threads:JSON.parse(JSON.stringify(BASE)),order:["resell","bug","mom","jun"],unread:{resell:1},pend:{},F:{},att:0,memos:["m1","m2","m3"],seen:{},mall:null,got:[]}}
+function save(){if(S&&!S.over)LS.set("state",S)}
+const fmt=m=>{m=Math.floor(m);m=((m%1440)+1440)%1440;return String(m/60|0).padStart(2,"0")+":"+String(m%60).padStart(2,"0")};
+
+/* ---------- content: messages ---------- */
+const BASE={
+ resell:{name:"ReSell",av:"🛍",msgs:[{f:"them",t:"Today",en:"Your order \"Lumen X2 — good condition\" from lena_k has been delivered. Enjoy your new phone!",zh:"你从 lena_k 购买的“Lumen X2——成色良好”已送达。祝你使用愉快！"},{f:"them",en:"How was your experience? Rate lena_k ★★★★★",zh:"购物体验如何？给 lena_k 打个分吧 ★★★★★"}]},
+ bug:{name:"bug ⭐",av:"🐛",msgs:[
+  {f:"me",t:"Mar 14",en:"happy birthday bug. 24 today. you'd be taller than me now ~",zh:"生日快乐小虫子。今天 24 岁了。你现在应该比我高了 ~"},
+  {f:"me",t:"Sep 3",en:"i found a forum. people heard your name on the radio in 2009. two days before you were gone.",zh:"我找到一个论坛。2009 年有人在收音机里听到了你的名字。就在你失踪的两天前。"},
+  {f:"me",t:"Oct 30, 3:40 AM",en:"it's real. i heard it tonight. it said my name.",zh:"是真的。我今晚听到了。它念了我的名字。"},
+  {f:"me",t:"Nov 1",en:"i'm going in on sunday. i'm going to bring you home ~",zh:"我周日要进去。我要把你带回家 ~"}]},
+ mom:{name:"Mom",av:"👩",msgs:[
+  {f:"them",t:"Mar 14",en:"Our little bug would be 24 today. I bought the lemon cake he liked.",zh:"我们的小虫子今天该 24 岁了。我买了他喜欢的柠檬蛋糕。"},
+  {f:"me",en:"i know mom. i'll come by on sunday ~",zh:"我知道的妈妈。我周日过来 ~"},
+  {f:"them",t:"Oct 31",en:"Helena, why did you call me at 4 in the morning? Are you okay?",zh:"Helena，你为什么凌晨四点给我打电话？你还好吗？"},
+  {f:"me",en:"sorry. bad dream. love you ~",zh:"抱歉，做噩梦了。爱你 ~"},
+  {f:"them",t:"Nov 3",en:"Helena, please call me back.",zh:"Helena，请给我回个电话。"},
+  {f:"them",t:"Nov 4",en:"Helena?",zh:"Helena？"},
+  {f:"them",t:"Nov 6",en:"The police called me today. Please, Helena. Just one word.",zh:"今天警察给我打电话了。求你了，Helena。哪怕回一个字也好。"}]},
+ jun:{name:"Jun (Kwan's Repair)",av:"🔧",msgs:[
+  {f:"them",t:"Oct 28",en:"You missed your shift again. Are you still doing the mall thing?",zh:"你又旷班了。还在搞商场那件事？"},
+  {f:"me",en:"it's not a \"thing\", jun. it's real. i heard it.",zh:"那不是什么“事”，Jun。那是真的。我听到了。"},
+  {f:"them",en:"Heard what?",zh:"听到什么？"},
+  {f:"me",en:"87.9. thursday. 3:33. listen for yourself.",zh:"87.9。周四。3:33。你自己去听。"},
+  {f:"them",t:"Nov 1",en:"OK, I listened. There was nothing. Just static and a music box. Please get some sleep.",zh:"好吧，我听了。什么也没有。只有杂音和一段八音盒。你去睡一觉吧。"},
+  {f:"me",en:"a music box?? jun, that's it. that's the lullaby.",zh:"八音盒？？Jun，就是它。那就是摇篮曲。"}]}
+};
+const AV={A:"❔",B:"·"};
+const TN={A:"+1 (555) 013-3033",B:"No Caller ID"};
+
+/* ---------- notes, memos, photos ---------- */
+const NOTES=[
+ {id:"readme",title:"READ ME",t:"Oct 31",body:[
+  ["If someone finds this phone: my name is Lena Kwan.","如果有人捡到这部手机：我叫 Lena Kwan。"],
+  ["My little brother Theo went missing at Starlight Mall in December 2009.","我弟弟 Theo 2009 年 12 月在星光商场失踪了。"],
+  ["Every Thursday at 3:33 a.m., a station on 87.9 FM plays a show called \"Lights Out Lullaby\".","每周四凌晨 3:33，调频 87.9 会播一个叫“Lights Out Lullaby（熄灯摇篮曲）”的节目。"],
+  ["A polite man — the Night Manager — reads names. Two days later, those people disappear.","一个很有礼貌的男人——“夜班经理”——会念出一些名字。两天后，那些人就会消失。"],
+  ["He read Theo's name on December 17, 2009.","他在 2009 年 12 月 17 日念了 Theo 的名字。"],
+  ["On October 30, he read mine.","10 月 30 日，他念了我的名字。"],
+  ["I'm going to the mall on Sunday night. If I don't come back, please don't follow me. Just listen.","我周日晚上要去商场。如果我没回来，请不要跟来。只要听着就好。"]]},
+ {id:"door",title:"the door",lock:"0314",hint:"his birthday (MMDD)",hintZh:"他的生日（月月日日）",t:"Nov 1",body:[
+  ["B1 service door. The code is two things put together:","地下一层服务通道门。密码由两部分拼起来："],
+  ["1) the number of the store where bug was last seen,","1）小虫子最后被看到的那家店的编号，"],
+  ["2) the minutes on the clocks — every clock in there stopped at the same time.","2）时钟上的分钟数——那里所有的钟都停在了同一个时间。"],
+  ["I checked the old news. I checked my photos. I think I have it.","我查了旧新闻，也翻了我的照片。我想我已经知道了。"],
+  ["(If you're reading this and I'm not back: don't go alone.)","（如果你在读这个而我还没回来：别一个人去。）"]]},
+ {id:"shop",title:"groceries",t:"Oct 20",body:[["milk, lemons, batteries (AA!!), tape for the recorder","牛奶、柠檬、电池（5 号！！）、录音机用的磁带"]]}
+];
+const MEMOS={
+ m1:{title:"New Recording 14",t:"Thu, Oct 30 · 3:41 AM",who:"lena",lines:[["It's 3:41. It just happened. It said my name.","现在 3:41。刚刚发生了。它念了我的名字。"],["Not Lena. Helena. Helena Kwan.","不是 Lena。是 Helena。Helena Kwan。"],["Only Mom calls me that. Mom... and him, I guess.","只有妈妈这么叫我。妈妈……还有他，大概吧。"]]},
+ m2:{title:"New Recording 15",t:"Sun, Nov 2 · 1:12 AM",who:"lena",lines:[["I'm at the loading dock. There's a gap in the gate.","我在装卸区。卷帘门下面有条缝。"],["The service door in B1 has a keypad. Four numbers.","地下一层的服务通道门有个密码键盘。四位数。"],["I wrote the code down in my notes. I locked it, just in case.","我把密码记在备忘录里了。以防万一，我给它上了锁。"]]},
+ m3:{title:"New Recording 16",t:"Sun, Nov 2 · 3:30 AM",who:"lena",noise:1,lines:[["...it's not the fountain... the fountain is where it waits...","……不是喷泉……喷泉是它等着的地方……"],["...the booth... it talks from the booth...","……播音间……它是从播音间说话的……"],["...say them back... in the right... [static]","……把它们念回去……按正确的……［杂音］"]]},
+ tape:{title:"tape_2009.wav",t:"Downloaded · from nightwatch_87",who:"nm",noise:1,rev:1,lines:[["Good evening. This is Starlight FM, eighty-seven point nine.","晚上好。这里是星光调频，87.9。"],["Lights out at Starlight. Time for the Lullaby.","星光商场熄灯了。摇篮曲时间到。"],["Tonight's guest... Theodore Kwan.","今晚的客人……Theodore Kwan。"],["Welcome, Theodore. Don't be late.","欢迎你，Theodore。别迟到。"],[".sdrawkcab ,meht ekops I sa seman rieht kaepS","（这一句听起来像是倒着放的……）"]]},
+ theo:{title:"THEO (cassette)",t:"Found at SoundWave Records",who:"theo",noise:1,lines:[["Testing, testing. This is Theo. I'm nine.","测试，测试。我是 Theo。我九岁。"],["The nice man on the radio says I'm a guest now.","收音机里那个和气的叔叔说，我现在是客人了。"],["He says if somebody says all our names back to him, newest first, we can go home.","他说，如果有人把我们所有人的名字念回给他听，从最新的开始，我们就能回家。"],["Lena, if you find this... I'm sorry I went to buy the tape.","姐姐，如果你找到这个……对不起，我不该自己去买磁带。"]]}
+};
+const PHOTOS=[{id:"fountain",n:"IMG_2051",t:"Sun 2:51 AM"},{id:"directory",n:"IMG_2049",t:"Sun 2:44 AM"},{id:"door",n:"IMG_2053",t:"Sun 3:02 AM"},{id:"escalator",n:"IMG_2050",t:"Sun 2:47 AM"},{id:"radio",n:"IMG_2031",t:"Thu 3:33 AM"},{id:"notebook",n:"IMG_2017",t:"Oct 29"},{id:"polaroid",n:"IMG_0002",t:"Scanned"}];
+
+/* ---------- photo drawing ---------- */
+function sr(s){return()=>{s=(s*16807)%2147483647;return(s-1)/2147483646}}
+function grain(c,w,h,a=22){const d=c.getImageData(0,0,w,h),p=d.data;for(let i=0;i<p.length;i+=4){const n=(Math.random()-.5)*a;p[i]+=n;p[i+1]+=n;p[i+2]+=n}c.putImageData(d,0,0)}
+function vig(c,w,h,s=.8,a=.85){const g=c.createRadialGradient(w/2,h/2,w*.15,w/2,h/2,w*s);g.addColorStop(0,"rgba(0,0,0,0)");g.addColorStop(1,`rgba(0,0,0,${a})`);c.fillStyle=g;c.fillRect(0,0,w,h)}
+function glow(c,x,y,r,col,a=.35){const g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,col.replace("A",a));g.addColorStop(1,col.replace("A",0));c.fillStyle=g;c.fillRect(x-r,y-r,r*2,r*2)}
+function R(c,x,y,w,h,col){c.fillStyle=col;c.fillRect(x,y,w,h)}
+function txt(c,s,x,y,font,col,al="left"){c.font=font;c.fillStyle=col;c.textAlign=al;c.fillText(s,x,y)}
+function atrium(c,W,H,{figure=true,photo=false}={}){
+ const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,"#0b0d12");g.addColorStop(1,"#17191e");c.fillStyle=g;c.fillRect(0,0,W,H);
+ c.strokeStyle="rgba(120,130,150,.18)";c.lineWidth=2;for(let i=0;i<7;i++){c.beginPath();c.moveTo(60+i*80,20);c.lineTo(300,140);c.stroke()}
+ R(c,0,170,W,90,"#101218");for(let x=10;x<W;x+=120){R(c,x,182,100,66,"#0a0b0f");R(c,x+8,188,84,10,"#1a1d24")}
+ R(c,0,296,W,6,"#2c2f36");for(let x=0;x<W;x+=18)R(c,x,262,3,36,"#24272d");R(c,0,260,W,4,"#33363d");
+ if(figure){c.fillStyle="rgba(4,4,6,.7)";c.fillRect(148,214,14,48);c.beginPath();c.arc(155,207,9,0,7);c.fill()}
+ R(c,0,302,W,250,"#14161b");
+ R(c,20,420,170,180,"#0d0f13");R(c,26,428,158,22,"#162a2e");txt(c,"41 SOUNDWAVE",105,445,"bold 15px ui-monospace,monospace","#3fb6b0","center");for(let i=0;i<4;i++){c.beginPath();c.arc(55+i*38,520,14,0,7);c.fillStyle="#060708";c.fill()}
+ R(c,430,420,170,180,"#08090c");c.fillStyle="#050506";c.beginPath();c.moveTo(450,600);c.lineTo(450,470);c.quadraticCurveTo(515,430,580,470);c.lineTo(580,600);c.fill();R(c,470,438,92,18,"#3a3420");txt(c,"SERVICE →",516,452,"bold 13px ui-monospace,monospace","#d9c27a","center");
+ R(c,352,302,40,258,"#202228");R(c,334,352,76,34,"#0b0b0d");txt(c,"3:33",372,378,"bold 24px ui-monospace,monospace","#d43a3a","center");glow(c,372,368,56,"rgba(212,58,58,A)",.2);
+ R(c,202,470,58,120,"#1f2a33");R(c,206,476,50,84,"#2b3a46");R(c,226,590,8,10,"#333");
+ const fl=c.createLinearGradient(0,560,0,H);fl.addColorStop(0,"#1a1c21");fl.addColorStop(1,"#0c0d10");c.fillStyle=fl;c.fillRect(0,560,W,H-560);
+ c.fillStyle="#3a3a3f";c.beginPath();c.ellipse(300,660,230,62,0,0,7);c.fill();c.fillStyle="#0f1d26";c.beginPath();c.ellipse(300,656,206,48,0,0,7);c.fill();
+ const rr=sr(7);for(let i=0;i<40;i++){const a=rr()*6.28,d=rr();c.fillStyle=`rgba(210,180,90,${.3+rr()*.4})`;c.fillRect(300+Math.cos(a)*190*d,656+Math.sin(a)*42*d,3,2)}
+ R(c,288,560,24,96,"#3a3a3f");c.fillStyle="#44444a";c.beginPath();c.ellipse(300,560,62,15,0,0,7);c.fill();c.fillStyle="#13222c";c.beginPath();c.ellipse(300,557,52,10,0,0,7);c.fill();
+ R(c,108,712,22,9,"#a3262c");R(c,108,718,26,4,"#ddd");
+ if(photo)glow(c,300,640,320,"rgba(255,255,240,A)",.16);
+}
+const DRAW={
+ fountain(c,W,H){atrium(c,W,H,{photo:true});grain(c,W,H);vig(c,W,H)},
+ directory(c,W,H){R(c,0,0,W,H,"#15181d");R(c,40,60,520,680,"#555a60");R(c,52,72,496,656,"#1c2731");
+  txt(c,"STARLIGHT MALL",300,120,"bold 34px Helvetica,Arial","#e8e2c8","center");txt(c,"DIRECTORY · LEVEL 1",300,150,"16px Helvetica,Arial","#a9b4bb","center");
+  const L=[["07","Food Court"],["12","Fun Zone Arcade"],["23","Petal Florist"],["35","Bright Smile Dental"],["41","SoundWave Records"],["58","Kid's Corner"],["B1","Service / Staff Only"]];
+  L.forEach((l,i)=>{txt(c,l[0],90,215+i*44,"bold 21px ui-monospace,monospace","#f0c75e");txt(c,l[1],150,215+i*44,"20px Helvetica,Arial","#dfe6ea")});
+  R(c,92,540,416,150,"#24323d");[[100,550,80,60,"07"],[190,550,70,60,"12"],[270,550,60,60,"23"],[340,550,70,60,"35"],[420,550,80,60,"41"],[100,620,120,60,"58"],[230,620,100,60,"B1"]].forEach(r=>{c.strokeStyle="#6f8796";c.strokeRect(r[0],r[1],r[2],r[3]);txt(c,r[4],r[0]+r[2]/2,r[1]+36,"14px ui-monospace","#9fb3c0","center")});
+  txt(c,"★ YOU ARE HERE",370,680,"bold 15px Helvetica","#ff6b6b");
+  c.save();c.translate(300,420);c.rotate(-.22);txt(c,"HE READS THE NAMES",0,0,"36px 'Marker Felt','Comic Sans MS',cursive","rgba(230,230,230,.13)","center");c.restore();
+  glow(c,150,160,260,"rgba(255,255,240,A)",.18);grain(c,W,H);vig(c,W,H,.9,.7)},
+ polaroid(c,W,H){R(c,0,0,W,H,"#2a211b");c.save();c.translate(300,400);c.rotate(-.05);R(c,-230,-310,460,600,"#eeebe1");
+  R(c,-205,-285,410,420,"#2a2232");R(c,-205,-285,410,90,"#1b1622");txt(c,"SoundWave Records",0,-232,"bold 34px 'Brush Script MT','Snell Roundhand',cursive","#6ff3ea","center");glow(c,0,-240,170,"rgba(111,243,234,A)",.25);
+  for(let i=0;i<4;i++){c.beginPath();c.arc(-150+i*100,-120,34,0,7);c.fillStyle="#120f16";c.fill();c.beginPath();c.arc(-150+i*100,-120,8,0,7);c.fillStyle="#7a3b3b";c.fill()}
+  R(c,-30,-10,24,110,"#2d3a5a");R(c,6,-10,24,110,"#2d3a5a");R(c,-40,-110,80,104,"#b8322f");c.fillStyle="#e2b48c";c.beginPath();c.arc(0,-140,32,0,7);c.fill();c.fillStyle="#3b2a20";c.beginPath();c.arc(0,-152,33,Math.PI,0);c.fill();
+  R(c,28,-64,34,22,"#222");R(c,32,-60,26,8,"#ddd");
+  txt(c,"12 19 '09",180,120,"bold 22px ui-monospace,monospace","#ff9b3a","right");
+  txt(c,"bug — dec 2009",0,230,"36px 'Bradley Hand','Segoe Print','Comic Sans MS',cursive","#1d2a6a","center");c.restore();grain(c,W,H,16);vig(c,W,H,.95,.6)},
+ notebook(c,W,H){R(c,0,0,W,H,"#2b2622");c.save();c.translate(300,400);c.rotate(.03);R(c,-260,-360,520,720,"#efe9d8");for(let y=-300;y<360;y+=40)R(c,-260,y,520,1.5,"#9fb6d8");R(c,-190,-360,2,720,"#d88");
+  const F="27px 'Bradley Hand','Segoe Print','Comic Sans MS',cursive",L=["87.9 — Thursdays — 3:33","the Night Manager reads names","2009: \"Theodore Kwan\" (not Theo!)","names: AS HE SAYS THEM","B1 door: ????","my phone code =","the day bug was gone (MMDD)"];
+  L.forEach((l,i)=>txt(c,l,-175,-268+i*80,F,i===3?"#9a1d1d":"#22305a"));R(c,-175,-24,330,2,"#9a1d1d");
+  c.strokeStyle="rgba(120,80,40,.35)";c.lineWidth=10;c.beginPath();c.arc(150,250,70,0,6);c.stroke();c.restore();grain(c,W,H,14);vig(c,W,H,.95,.6)},
+ radio(c,W,H){const g=c.createLinearGradient(0,0,0,300);g.addColorStop(0,"#0a0f1a");g.addColorStop(1,"#141922");c.fillStyle=g;c.fillRect(0,0,W,300);c.strokeStyle="rgba(170,190,220,.35)";for(let i=0;i<60;i++){const x=(i*97)%W,y=(i*53)%280;c.beginPath();c.moveTo(x,y);c.lineTo(x-4,y+18);c.stroke()}
+  R(c,0,300,W,500,"#141518");R(c,90,360,420,170,"#07090a");R(c,110,380,380,130,"#0b1a10");txt(c,"FM 87.9",300,480,"bold 92px ui-monospace,monospace","#7cf29a","center");glow(c,300,450,260,"rgba(124,242,154,A)",.22);txt(c,"ST",470,402,"bold 16px ui-monospace","#7cf29a","right");
+  for(let i=0;i<5;i++){c.beginPath();c.arc(140+i*80,620,22,0,7);c.fillStyle="#26282d";c.fill()}grain(c,W,H);vig(c,W,H)},
+ door(c,W,H){R(c,0,0,W,H,"#2f3133");const r=sr(3);for(let i=0;i<500;i++)R(c,r()*W,r()*H,2,2,`rgba(0,0,0,${r()*.3})`);R(c,120,140,280,560,"#454a50");R(c,130,150,260,540,"#3c4146");R(c,150,200,220,50,"#e2c13a");for(let i=0;i<8;i++){c.fillStyle="#111";c.beginPath();c.moveTo(150+i*30,250);c.lineTo(165+i*30,200);c.lineTo(180+i*30,200);c.lineTo(165+i*30,250);c.fill()}
+  R(c,160,262,200,40,"#111");txt(c,"B1 · STAFF ONLY",260,290,"bold 22px Helvetica","#e2c13a","center");R(c,350,420,8,40,"#999");
+  R(c,430,360,90,130,"#1a1c1f");for(let y=0;y<4;y++)for(let x=0;x<3;x++){R(c,440+x*26,372+y*28,20,20,"#3a3d42");txt(c,"123456789*0#"[y*3+x],450+x*26,387+y*28,"12px ui-monospace","#ccc","center")}
+  glow(c,320,420,340,"rgba(255,255,230,A)",.22);grain(c,W,H);vig(c,W,H,.75,.9)},
+ escalator(c,W,H){R(c,0,0,W,H,"#0d0e11");c.fillStyle="#1c1e22";c.beginPath();c.moveTo(150,0);c.lineTo(450,0);c.lineTo(380,800);c.lineTo(220,800);c.fill();
+  for(let i=0;i<16;i++){const y=40+i*48,k=i/16;R(c,160+k*55,y,280-k*110,6,`rgba(150,150,160,${.35-k*.3})`)}
+  const b=c.createLinearGradient(0,380,0,800);b.addColorStop(0,"rgba(0,0,0,0)");b.addColorStop(1,"rgba(0,0,0,1)");c.fillStyle=b;c.fillRect(0,380,W,420);
+  R(c,268,238,26,10,"#a3262c");R(c,268,246,30,4,"#ddd");glow(c,300,200,280,"rgba(255,255,240,A)",.14);grain(c,W,H);vig(c,W,H)},
+ booth(c,W,H){R(c,0,0,W,H,"#121314");R(c,0,520,W,280,"#2a2420");R(c,40,520,520,24,"#3a3029");
+  R(c,60,200,180,130,"#0b0c0d");R(c,68,208,164,114,"#23272a");R(c,260,200,180,130,"#0b0c0d");R(c,268,208,164,114,"#1f2326");
+  c.fillStyle="#3a3a3f";c.beginPath();c.ellipse(150,300,50,10,0,0,7);c.fill();c.fillStyle="rgba(5,5,6,.85)";c.fillRect(342,240,10,60);c.beginPath();c.arc(347,232,7,0,7);c.fill();
+  R(c,410,90,120,46,"#2a0b0d");txt(c,"ON AIR",470,124,"bold 28px Helvetica","#ff3b3b","center");glow(c,470,113,140,"rgba(255,59,59,A)",.35);
+  R(c,292,420,14,100,"#444");c.fillStyle="#666";c.beginPath();c.ellipse(299,400,26,34,0,0,7);c.fill();R(c,250,505,100,18,"#333");
+  R(c,440,380,120,60,"#e9e2cc");txt(c,"STARLIGHT FM",500,405,"bold 14px Helvetica","#222","center");txt(c,"87.9",500,428,"bold 18px Helvetica","#b22","center");
+  R(c,60,380,150,90,"#efe8d2");txt(c,"SPEAK CLEARLY.",135,415,"bold 15px Helvetica","#222","center");txt(c,"NEWEST FIRST.",135,445,"bold 15px Helvetica","#922","center");
+  grain(c,W,H);vig(c,W,H,.8,.9)}
+};
+function photoCanvas(id,w=600,h=800){const c=document.createElement("canvas");c.width=w;c.height=h;const g=c.getContext("2d");g.save();if(w!==600)g.scale(w/600,h/800);DRAW[id](g,600,800);g.restore();return c}
+const thumbs={};function thumb(id){if(!thumbs[id])thumbs[id]=photoCanvas(id,150,200);const c=document.createElement("canvas");c.width=150;c.height=200;c.getContext("2d").drawImage(thumbs[id],0,0);return c}
+
+/* ---------- UI core ---------- */
+const scr=$("#screen");
+function view(html){scr.innerHTML=`<div class="view">${html}</div>`;return scr.firstElementChild}
+const topb=(title,back="home",right="")=>`<div class="top"><button class="back" data-go="${back}">‹ ${back==="home"?"":"Back"}</button><h1>${title}</h1><span class="sp">${right}</span></div>`;
+scr.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b){sfx("tap");go(b.dataset.go)}});
+$("#home").onclick=()=>{if(!S||S.lockUI)return;sfx("tap");go("home")};
+function go(app,extra={}){if(!S)return;if(S.lockUI)return;S.view=Object.assign({app},extra);render();save()}
+function render(){
+ const v=S.view;if(tts)tts.cancel();staticVol(v.app==="radio"?radioNoise():0);
+ ({home:rHome,messages:rMsgList,thread:rThread,photos:rPhotos,notes:rNotes,note:rNote,memos:rMemos,browser:rBrowser,radio:rRadio,maps:rMaps,resell:rResell,settings:rSettings,hints:rHints,camera:rCamera}[v.app]||rHome)();
+}
+function badge(n){return n?`<span class="badge">${n}</span>`:""}
+function unreadTotal(){return Object.values(S.unread).reduce((a,b)=>a+(b||0),0)}
+function rHome(){
+ const apps=[["messages","💬","Messages","#2ecc71",unreadTotal()],["photos","🖼","Photos","#f5f5f5",0],["notes","📝","Notes","#f7d24a",0],["memos","🎙","Voice Memos","#2b2b2b",S.newMemo?1:0],["browser","🧭","Browser","#3d7bff",0],["radio","📻","Radio","#c0392b",0],["maps","🗺","Maps","#58b368",S.F.cast&&!S.F.mapSeen?1:0],["resell","🛍","ReSell","#ff7a45",0],["settings","⚙️","Settings","#8e8e93",0],["hints","❓","提示 Hints","#5856d6",0]];
+ if(S.mall)apps.unshift(["camera","📷","Camera","#444",0]);
+ view(`<div class="wall" style="position:absolute;inset:0"></div><div style="position:relative"><div class="clockbig">${fmt(S.min)}</div><div class="dateline">${S.min<0?"Wednesday":"Thursday"}</div>
+ <div class="grid">${apps.map(a=>`<button class="app" data-go="${a[0]}"><span class="ic" style="background:${a[3]}">${a[1]}</span>${a[2]}${badge(a[4])}</button>`).join("")}</div></div>`);
+}
+function rMsgList(){
+ const ids=S.order;
+ view(topb("Messages")+`<div class="scroll"><p style="color:var(--dim);font-size:12px;margin:8px 0 0">右边蓝色气泡是这部手机发出的（之前是前主人 Lena）。点任意一条消息看中文。</p><div class="list">${ids.map(id=>{const t=S.threads[id],l=t.msgs[t.msgs.length-1]||{en:""};return`<button class="li" data-th="${id}"><span class="av">${t.av}</span><span class="mid"><span class="nm">${esc(t.name)}<small>${l.t||""}</small></span><span class="pv">${esc(l.en)}</span></span>${S.unread[id]?'<span class="dot"></span>':""}</button>`}).join("")}</div></div>`);
+ scr.querySelectorAll("[data-th]").forEach(b=>b.onclick=()=>{sfx("tap");go("thread",{id:b.dataset.th})});
+}
+function rThread(){
+ const id=S.view.id,t=S.threads[id];S.unread[id]=0;if(id==="bug")flag("sawBug");if(id==="mom")flag("sawMom");
+ const pend=S.pend[id]||[];
+ const el=view(topb(esc(t.name),"messages")+`<div class="scroll" id="tsc"><div class="msgs">${t.msgs.map(m=>(m.t?`<div class="stamp">${m.t}</div>`:"")+`<div class="b ${m.f}${m.g?" glitch":""}"><div>${mw(m.en)}</div><div class="zh">${esc(m.zh)}</div></div>`).join("")}${S.typing===id?'<div class="typing">typing…</div>':""}</div></div>`+
+ (pend.length?`<div class="reply">${pend.map((p,i)=>`<button data-r="${i}">${esc(p[0])}<small>${esc(p[1])}</small></button>`).join("")}</div>`:(id==="A"||id==="B"?`<div class="reply"><div class="hint">等待对方……</div></div>`:"")));
+ const sc=el.querySelector("#tsc");sc.scrollTop=sc.scrollHeight;
+ el.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{sfx("tap");const p=pend[+b.dataset.r];S.pend[id]=[];addMsg(id,{f:"me",en:p[0],zh:p[1]},true);REPLY[p[2]]&&REPLY[p[2]](id);render();save()});
+}
+function addMsg(id,m,silent){
+ if(!S.threads[id]){S.threads[id]={name:TN[id],av:AV[id],msgs:[]};}
+ S.threads[id].msgs.push(m);S.order=[id].concat(S.order.filter(x=>x!==id));
+ if(!silent&&m.f==="them"){const here=S.view.app==="thread"&&S.view.id===id;if(!here){S.unread[id]=(S.unread[id]||0)+1;notify(S.threads[id].name,m.en,()=>go("thread",{id}))}sfx("ding")}
+ if(S.view.app==="thread"&&S.view.id===id||S.view.app==="messages"||S.view.app==="home")render();
+}
+let nTO=0;function notify(t,m,fn,ic="💬"){const n=$("#notif");n.querySelector(".ic").textContent=ic;n.querySelector(".t").textContent=t;n.querySelector(".m").textContent=m;n.classList.add("on");n.onclick=()=>{n.classList.remove("on");fn&&fn()};clearTimeout(nTO);nTO=setTimeout(()=>n.classList.remove("on"),5200)}
+function them(id,en,zh,delay=1800,opts={}){S.typing=id;if(S.view.app==="thread"&&S.view.id===id)render();setTimeout(()=>{if(!S||S.over)return;S.typing=null;addMsg(id,Object.assign({f:"them",en,zh,t:fmt(S.min)},opts));if(opts.then)opts.then();save()},delay)}
+const flag=k=>{if(!S.F[k]){S.F[k]=1;onFlag(k)}};
+
+/* ---------- photos ---------- */
+function rPhotos(){
+ const tab=S.view.tab||"recent";
+ const el=view(topb("Photos")+`<div class="scroll"><div class="tabs"><button class="${tab==="recent"?"on":""}" data-t="recent">Recents</button><button class="${tab==="del"?"on":""}" data-t="del">Recently Deleted (1)</button></div>
+ <div class="pgrid" id="pg"></div><p style="color:var(--dim);font-size:12px">点开照片后，可以双击或双指放大看细节。</p></div>`);
+ el.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>go("photos",{tab:b.dataset.t}));
+ const pg=el.querySelector("#pg");
+ if(tab==="recent")PHOTOS.forEach(p=>{const c=thumb(p.id);c.onclick=()=>viewer(p.id,p.n+" · "+p.t);pg.appendChild(c)});
+ else if(S.F.delOpen){const c=thumb("booth");c.onclick=()=>viewer("booth","IMG_2058 · Sun 3:31 AM · deleted");pg.appendChild(c)}
+ else{const b=document.createElement("button");b.className="lk";b.innerHTML="🔒<span>Use Passcode</span><span>输入手机密码查看</span>";b.onclick=()=>passcode("Enter iPhone Passcode","手机密码","1219",()=>{flag("delOpen");go("photos",{tab:"del"})});pg.appendChild(b)}
+}
+function viewer(id,label){
+ flag("ph_"+id);
+ const box=document.createElement("div");box.className="viewer";box.innerHTML=`<div class="vt"><span>${esc(label)}</span><button>Done</button></div><div class="vb"></div><div class="vh">双击放大/还原 · 拖动查看 · 双指缩放</div>`;
+ scr.appendChild(box);box.querySelector("button").onclick=()=>box.remove();
+ const vb=box.querySelector(".vb"),c=photoCanvas(id);vb.appendChild(c);
+ let s=1,x=0,y=0,base=1;const fit=()=>{base=Math.min(vb.clientWidth/600,vb.clientHeight/800)};
+ const apply=()=>{const sc=base*s;const mx=Math.max(0,(600*sc-vb.clientWidth)/2),my=Math.max(0,(800*sc-vb.clientHeight)/2);x=Math.max(-mx,Math.min(mx,x));y=Math.max(-my,Math.min(my,y));c.style.transform=`translate(${x-300*sc}px,${y-400*sc}px) scale(${sc})`};
+ requestAnimationFrame(()=>{fit();apply()});
+ const pts=new Map();let last=0,pd=0,ps=1;
+ vb.addEventListener("pointerdown",e=>{vb.setPointerCapture(e.pointerId);pts.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pts.size===2){const a=[...pts.values()];pd=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);ps=s}
+  const now=Date.now();if(now-last<300&&pts.size===1){const r=vb.getBoundingClientRect(),cx=e.clientX-r.left-r.width/2,cy=e.clientY-r.top-r.height/2;if(s>1){s=1;x=y=0}else{s=3;x=-cx*2;y=-cy*2}apply()}last=now});
+ vb.addEventListener("pointermove",e=>{if(!pts.has(e.pointerId))return;const p=pts.get(e.pointerId);if(pts.size===1){x+=e.clientX-p.x;y+=e.clientY-p.y;apply()}pts.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pts.size===2){const a=[...pts.values()],d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);s=Math.max(1,Math.min(5,ps*d/pd));apply()}});
+ const up=e=>pts.delete(e.pointerId);vb.addEventListener("pointerup",up);vb.addEventListener("pointercancel",up);
+ vb.addEventListener("wheel",e=>{e.preventDefault();s=Math.max(1,Math.min(5,s*(e.deltaY<0?1.15:.87)));apply()},{passive:false});
+}
+function passcode(title,zh,code,ok,hint){
+ let v="";const box=document.createElement("div");box.className="viewer";box.style.background="#0a0b0e";
+ box.innerHTML=`<div class="vt"><span></span><button>Cancel</button></div><div style="text-align:center;margin-top:30px"><div style="font-size:18px">${esc(title)}</div><div style="color:var(--dim);font-size:13px">${esc(zh)}${hint?"<br>Hint: "+esc(hint):""}</div><div class="dots">${"<i></i>".repeat(code.length)}</div></div><div class="pad">${[1,2,3,4,5,6,7,8,9,"",0,"⌫"].map(k=>k===""?"<span></span>":`<button data-k="${k}">${k}</button>`).join("")}</div>`;
+ scr.appendChild(box);box.querySelector(".vt button").onclick=()=>box.remove();
+ const dots=box.querySelectorAll(".dots i");const upd=()=>dots.forEach((d,i)=>d.classList.toggle("f",i<v.length));
+ box.querySelectorAll("[data-k]").forEach(b=>b.onclick=()=>{sfx("key");const k=b.dataset.k;if(k==="⌫")v=v.slice(0,-1);else if(v.length<code.length)v+=k;upd();
+  if(v.length===code.length){if(v===code){sfx("ok");setTimeout(()=>{box.remove();ok()},250)}else{sfx("bad");const d=box.querySelector(".dots");d.classList.add("shake");setTimeout(()=>{d.classList.remove("shake");v="";upd()},400)}}});
+}
+
+/* ---------- notes ---------- */
+function rNotes(){view(topb("Notes")+`<div class="scroll"><div class="big">Notes</div><div class="list">${NOTES.map(n=>`<button class="li" data-n="${n.id}"><span class="mid"><span class="nm">${n.lock&&!S.F["un_"+n.id]?"🔒 ":""}${esc(n.title)}<small>${n.t}</small></span><span class="pv">${n.lock&&!S.F["un_"+n.id]?"Locked":esc(n.body[0][0])}</span></span></button>`).join("")}</div></div>`);
+ scr.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{sfx("tap");const n=NOTES.find(x=>x.id===b.dataset.n);if(n.lock&&!S.F["un_"+n.id])passcode("This note is locked","这条笔记上了锁",n.lock,()=>{flag("un_"+n.id);go("note",{id:n.id})},n.hint+" · "+n.hintZh);else go("note",{id:n.id})})}
+function rNote(){const n=NOTES.find(x=>x.id===S.view.id);flag("note_"+n.id);view(topb(esc(n.title),"notes")+`<div class="scroll note"><p style="color:var(--dim);font-size:12px">${n.t} · 点句子看中文</p>${n.body.map(b=>tr(b[0],b[1])).join("")}</div>`)}
+
+/* ---------- memos ---------- */
+function rMemos(){S.newMemo=0;const el=view(topb("Voice Memos")+`<div class="scroll">${S.memos.slice().reverse().map(id=>{const m=MEMOS[id];return`<div class="memo" data-m="${id}"><div class="nm">${esc(m.title)}</div><div class="sm">${m.t}</div><div class="wave">${Array.from({length:32},(_,i)=>`<i style="height:${10+Math.abs(Math.sin(i*1.7+id.length))*34}px"></i>`).join("")}</div><div class="btnrow"><button class="btn pri" data-p="${id}">▶ Play</button>${m.rev?`<button class="btn" data-rv="${id}">⟲ Reverse</button>`:""}<button class="btn" data-tx="${id}">Transcript</button></div><div class="tx" hidden>${m.lines.map(l=>tr(l[0],l[1])).join("")}</div></div>`}).join("")}</div>`);
+ el.querySelectorAll("[data-tx]").forEach(b=>b.onclick=()=>{const t=b.closest(".memo").querySelector(".tx");t.hidden=!t.hidden});
+ el.querySelectorAll("[data-p]").forEach(b=>b.onclick=async()=>{const id=b.dataset.p,m=MEMOS[id],w=b.closest(".memo").querySelector(".wave");b.closest(".memo").querySelector(".tx").hidden=false;w.classList.add("play");if(m.noise)staticVol(.05);flag("memo_"+id);await speakSeq(m.lines.filter(l=>!l[0].startsWith(".")).map(l=>l[0]),m.who);if(m.rev)sfx("glitch");w.classList.remove("play");staticVol(0)});
+ el.querySelectorAll("[data-rv]").forEach(b=>b.onclick=async()=>{const w=b.closest(".memo").querySelector(".wave");w.classList.add("play");staticVol(.06);flag("reversed");const t=b.closest(".memo").querySelector(".tx");t.hidden=false;t.insertAdjacentHTML("beforeend",S.F.revShown?"":tr("[reversed] Speak their names as I spoke them, backwards.","［倒放］按我念的方式念出他们的名字，倒着念。"));S.F.revShown=1;await speakSeq(["Speak their names as I spoke them... backwards."],"nm");w.classList.remove("play");staticVol(0)});
+}
+
+/* ---------- browser ---------- */
+const POSTS={
+ t1:{title:"Anyone else hear 87.9 on Thursdays?",p:[
+  ["nightwatch_87","2016",["Every Thursday at 3:33 a.m., 87.9 FM plays a music box. Then a man reads names. Anyone else?","每周四凌晨 3:33，调频 87.9 会放一段八音盒。然后一个男人念名字。还有别人听到过吗？"]],
+  ["moth_girl","2016",["I live near the old mall. I heard it once. He sounded... polite. That was the scary part.","我住在旧商场附近。我听到过一次。他听起来……很有礼貌。那才是最吓人的地方。"]],
+  ["ruiz_family","2016",["My brother Daniel heard his own name in 2014. Two days later he went to the mall. Nobody has seen him since.","我哥哥 Daniel 2014 年听到了自己的名字。两天后他去了商场。之后再也没人见过他。"]],
+  ["lena_k","Oct 30",["it read my name tonight. helena kwan. i'm going in.","今晚它念了我的名字。helena kwan。我要进去。"]],
+  ["nightwatch_87","Oct 30",["Lena, please don't. Everyone who goes in... just don't.","Lena，求你别去。进去的每一个人……别去。"]]]},
+ t2:{title:"THE LIST (please keep updated)",p:[
+  ["nightwatch_87","pinned",["Names read on 87.9, from recordings and witnesses. The date is the night the name was read.","87.9 念过的名字，来自录音和目击者。日期是名字被念出的那一晚。"]],
+  ["nightwatch_87","list",["Dec 17, 2009 — Theo Kwan (9)\nMar 6, 2014 — Daniel Ruiz (31)\nAug 22, 2019 — Mei Lin Wong (17)\nOct 30 — Lena Kwan (our lena_k!!)","2009 年 12 月 17 日——Theo Kwan（9 岁）\n2014 年 3 月 6 日——Daniel Ruiz（31 岁）\n2019 年 8 月 22 日——Mei Lin Wong（17 岁）\n10 月 30 日——Lena Kwan（就是我们的 lena_k！！）"]]]},
+ t3:{title:"Who runs the station?",p:[
+  ["moth_girl","2018",["Nobody owns 87.9. It's not a real station. It's not on any list.","87.9 不属于任何人。它不是真正的电台。任何名单上都没有它。"]],
+  ["nightwatch_87","2018",["The mall had its own little radio for the speakers in the halls. Starlight FM. The night security guy ran it.","商场以前有自己的小电台，给走廊的喇叭放音乐。叫星光调频。是夜班保安在管。"]],
+  ["nightwatch_87","2021",["The old staff portal is still online somewhere. It moved. Same number as the station, no dot.","旧的员工网站还在网上某个地方。它搬家了。和电台一样的数字，去掉小数点。"]],
+  ["moth_girl","2021",["I tried. It's not on this site. Maybe it's not on this phone at all. 👀","我试过了。不在这个网站上。说不定根本就不在这部手机里。👀"]]]},
+ t4:{title:"Visiting Starlight — don't.",p:[
+  ["urbex_tom","2022",["Went in through the loading dock. The fountain still has water. HOW? Left after five minutes. Something was standing on the second floor.","从装卸区进去的。喷泉里居然还有水，怎么可能？五分钟就出来了。二楼有个东西站着。"]],
+  ["lena_k","Oct 31",["is the service door in B1 still locked?","地下一层那扇服务通道门还锁着吗？"]],
+  ["urbex_tom","Oct 31",["Keypad. Four numbers. Didn't try. Lena, the fountain is where people stop. Don't stop there.","密码键盘，四位数。我没试。Lena，人们都是在喷泉那里停下的。别在那儿停留。"]]]}
+};
+function forumPost(u,t,b){return`<div class="post"><div class="u">${esc(u)} <small>· ${esc(t)}</small></div>${tr(b[0],b[1]).replace(/\n/g,"<br>")}</div>`}
+function page(url){
+ url=url.trim().toLowerCase().replace(/^https?:\/\//,"").replace(/^www\./,"").replace(/\/+$/,"");
+ const F="forum";
+ if(url==="deadmalls.net/starlight"||url==="deadmalls.net")return{c:F,h:`<h2>deadmalls.net › Starlight Mall</h2><p>Logged in as <b>lena_k</b> · <a data-u="deadmalls.net/messages">Messages (1)</a></p>${Object.entries(POSTS).map(([k,v])=>`<div class="post"><a data-u="deadmalls.net/starlight/${k}">${esc(v.title)}</a></div>`).join("")}`};
+ const m=url.match(/^deadmalls\.net\/starlight\/(t\d)$/);
+ if(m&&POSTS[m[1]]){const t=POSTS[m[1]];let h=`<p><a data-u="deadmalls.net/starlight">‹ Starlight Mall</a></p><h2>${esc(t.title)}</h2>`+t.p.map(p=>forumPost(p[0],p[1],p[2])).join("");
+  if(m[1]==="t2"){flag("sawList");if(S.F.cast)h+=forumPost("nightwatch_87","just now",[`New name tonight: ${P()}. Does anyone know who that is?`,`今晚有了一个新名字：${P()}。有人知道这是谁吗？`])+forumPost("moth_girl","just now",["Whoever you are... please don't go to the fountain.","不管你是谁……千万别去喷泉。"]);}
+  if(m[1]==="t3")flag("sawPortal");return{c:F,h}}
+ if(url==="deadmalls.net/messages")return{c:F,h:`<p><a data-u="deadmalls.net/starlight">‹ Forum</a></p><h2>Private messages</h2><div class="post"><div class="u">nightwatch_87 <small>· Oct 31</small></div>${tr("I have the original 2009 broadcast — the night they read your brother's name. I put it online with a password: the name of the show, all one word, lowercase. You know it. Please be careful.","我有 2009 年的原始广播——念你弟弟名字的那一晚。我加了密码放在网上：节目的名字，连成一个词，全部小写。你知道的。请小心。")}<p><a data-u="deadmalls.net/files/tape_2009">tape_2009.wav</a></p></div>`};
+ if(url==="deadmalls.net/files/tape_2009")return{c:F,h:`<h2>tape_2009.wav</h2><p>This file is protected. 该文件受密码保护。</p><input id="pw" placeholder="password" autocapitalize="off" autocomplete="off" style="width:100%;padding:8px;font-size:15px"><p><button class="btn pri" id="pwb" style="color:#fff">Download</button></p><p id="pwm"></p>`,after(el){el.querySelector("#pwb").onclick=()=>{const v=el.querySelector("#pw").value.trim().toLowerCase().replace(/\s|'/g,"");if(v==="lightsoutlullaby"){sfx("ok");if(!S.memos.includes("tape")){S.memos.push("tape");S.newMemo=1;flag("tape")}el.querySelector("#pwm").textContent="Downloaded to Voice Memos. 已保存到“语音备忘录”。"}else{sfx("bad");el.querySelector("#pwm").textContent="Wrong password. 密码错误。"}}}};
+ if(url==="herald-archive.com/2009/12/21/boy-missing"||url==="herald-archive.com")return{c:"news",h:`<p style="font-size:12px;color:#888">THE CITY HERALD · ARCHIVE · DECEMBER 21, 2009</p><h2>Boy, 9, Missing After Visit to Starlight Mall</h2>${[["Police are searching for Theodore \"Theo\" Kwan, 9, who was last seen on Saturday evening outside SoundWave Records (Unit 41) at Starlight Mall.","警方正在寻找 9 岁的 Theodore“Theo”Kwan。他最后一次被看到是在周六傍晚，星光商场 SoundWave 唱片店（41 号铺）门外。"],["His older sister told police that Theo \"went to buy a tape\" and never came back.","他的姐姐告诉警方，Theo“去买一盘磁带”，就再也没回来。"],["The mall, which closes for good on December 31, was searched all night.","这家将于 12 月 31 日永久关闭的商场被连夜搜查。"],["Strangely, security staff said every clock in the building had stopped that night — all at the same time.","奇怪的是，保安人员称，那天晚上楼里所有的钟都停了——全停在同一个时间。"]].map(p=>tr(p[0],p[1])).join("")}`,after(){flag("article")}};
+ if(url==="fmlist.org/city"||url==="fmlist.org")return{c:"plain",h:`<h2>City FM stations</h2><p>87.5 — <i>(none)</i><br>87.9 — <i>(none)</i><br>88.3 — Campus Radio<br>91.1 — City News<br>95.1 — Weather 24<br>101.3 — Smooth Jazz<br>104.7 — Hits FM</p>${tr("No licensed station uses 87.9 in this city.","本市没有任何持证电台使用 87.9。")}`};
+ if(url==="starlightmall.com")return{c:"plain",h:`<h2>Starlight Mall</h2>${tr("Starlight Mall is permanently closed. Thank you for 16 wonderful years.","星光商场已永久关闭。感谢 16 年来的陪伴。")}<p style="font-size:12px;color:#888">Staff: /879</p>`};
+ if(url==="starlightmall.com/879")return{c:"plain",h:`<h2>404 — moved</h2>${tr("The staff portal is no longer on this device.","员工网站已经不在这台设备上了。")}${tr("It lives one folder deeper than the game you are playing.","它住在你正在玩的这个游戏的下一层文件夹里。")}`,after(){flag("sawMoved")}};
+ return{c:"plain",h:`<h2>Can't open this page</h2><p>${esc(url)}</p>${tr("Check the address and try again.","检查地址后再试一次。")}`};
+}
+function rBrowser(){
+ const url=S.view.url||"";
+ const el=view(topb("Browser")+`<div class="addr"><input id="au" value="${esc(url)}" placeholder="Search or enter address" autocapitalize="off" autocomplete="off"><button class="btn" id="ag">Go</button></div><div class="web" id="web"></div>`);
+ const web=el.querySelector("#web"),open=u=>{S.view.url=u;save();rBrowser()};
+ if(!url){web.className="web plain";web.innerHTML=`<h3>Bookmarks</h3><p><a data-u="deadmalls.net/starlight">deadmalls.net — Starlight Mall forum</a></p><p><a data-u="herald-archive.com/2009/12/21/boy-missing">City Herald archive — Dec 21, 2009</a></p><p><a data-u="fmlist.org/city">fmlist — City FM stations</a></p><p><a data-u="starlightmall.com">starlightmall.com</a></p><h3>History</h3><p style="color:#888">deadmalls.net/starlight/t4 · 3 days ago<br>herald-archive.com · 3 days ago</p>`}
+ else{const p=page(url);web.className="web "+p.c;web.innerHTML=p.h;p.after&&p.after(web)}
+ web.querySelectorAll("[data-u]").forEach(a=>a.onclick=()=>{sfx("tap");open(a.dataset.u)});
+ el.querySelector("#ag").onclick=()=>open(el.querySelector("#au").value);
+ el.querySelector("#au").onkeydown=e=>{if(e.key==="Enter")open(e.target.value)};
+}
+
+/* ---------- radio ---------- */
+function radioNoise(){const f=S.freq||98.1;return Math.abs(f-87.9)<.05?.012:.07}
+function rRadio(){
+ if(S.freq==null)S.freq=98.1;
+ const el=view(topb("Radio")+`<div class="radio"><div class="freq" id="fq">${S.freq.toFixed(1)}</div><div style="color:var(--dim);font-size:12px">FM · MHz</div><input type="range" min="875" max="1080" step="1" value="${Math.round(S.freq*10)}" id="rg"><div class="fine"><button id="fm">−0.1</button><button id="fp">+0.1</button></div><div class="rtext" id="rt"></div></div>`);
+ const upd=()=>{el.querySelector("#fq").textContent=S.freq.toFixed(1);el.querySelector("#rg").value=Math.round(S.freq*10);staticVol(radioNoise());el.querySelector("#rt").innerHTML=radioText();save()};
+ el.querySelector("#rg").oninput=e=>{S.freq=e.target.value/10;upd()};
+ el.querySelector("#fm").onclick=()=>{S.freq=Math.max(87.5,Math.round(S.freq*10-1)/10);upd()};el.querySelector("#fp").onclick=()=>{S.freq=Math.min(108,Math.round(S.freq*10+1)/10);upd()};upd();
+}
+let boxT=0;
+function radioText(){
+ const f=S.freq;
+ if(Math.abs(f-87.9)<.05){flag("tuned");if(Date.now()-boxT>11000){boxT=Date.now();sfx("box")}
+  return S.F.cast?tr("...the doors are open... please come to the fountain...","……门开着……请到喷泉来……")+tr("(a music box plays, very slowly)","（八音盒在很慢很慢地响）"):tr("(a music box plays, far away)","（远处传来八音盒的声音）")+tr("Please stand by.","请稍候。")}
+ if(Math.abs(f-95.1)<.05)return tr("...rain until morning. Low of six degrees...","……雨会一直下到早上。最低气温六度……");
+ if(Math.abs(f-101.3)<.05)return tr("(soft jazz)","（轻柔的爵士乐）");
+ if(Math.abs(f-91.1)<.05)return tr("...police are still looking for a young woman last seen near the old Starlight Mall...","……警方仍在寻找一名年轻女子，她最后出现在旧星光商场附近……");
+ return tr("(static)","（杂音）");
+}
+
+/* ---------- maps, resell, settings, hints ---------- */
+function rMaps(){if(S.F.cast)S.F.mapSeen=1;
+ const el=view(topb("Maps")+`<div class="scroll"><canvas id="mc" width="600" height="600" style="width:100%;border-radius:12px;margin-top:10px"></canvas><div class="card"><h3>Starlight Mall</h3>${tr("Permanently closed · 1.1 km · 14 min walk","永久停业 · 1.1 公里 · 步行 14 分钟")}<div class="btnrow"><button class="btn pri" id="dir">${S.F.cast?"Go now":"Directions"}</button></div></div></div>`);
+ const c=el.querySelector("#mc").getContext("2d");R(c,0,0,600,600,"#1d2228");c.strokeStyle="#2f3740";c.lineWidth=18;for(let i=0;i<6;i++){c.beginPath();c.moveTo(0,60+i*100);c.lineTo(600,40+i*104);c.stroke();c.beginPath();c.moveTo(60+i*100,0);c.lineTo(80+i*96,600);c.stroke()}
+ R(c,330,110,170,120,"#2a2f38");txt(c,"STARLIGHT MALL",415,175,"bold 16px Helvetica","#9aa","center");c.fillStyle="#ff4d5e";c.beginPath();c.arc(415,195,10,0,7);c.fill();c.fillStyle="#4f9cff";c.beginPath();c.arc(150,470,10,0,7);c.fill();txt(c,"You",150,500,"bold 15px Helvetica","#9cf","center");
+ c.setLineDash([8,8]);c.strokeStyle="#4f9cff";c.lineWidth=4;c.beginPath();c.moveTo(150,470);c.lineTo(150,250);c.lineTo(415,240);c.lineTo(415,205);c.stroke();
+ el.querySelector("#dir").onclick=()=>{if(!S.F.cast)return dlg(`<h2>Not tonight</h2>${tr("It's closed, it's the middle of the night, and you have no reason to go. Yet.","商场关着，现在是半夜，你也没有理由去。至少现在还没有。")}`,[["OK"]]);
+  dlg(`<h2>Go to Starlight Mall?</h2>${tr("It's 1.1 km. It's raining. Your battery is at "+Math.round(S.bat)+"%.","1.1 公里。外面在下雨。手机电量 "+Math.round(S.bat)+"%。")}`,[["Go","pri",()=>enterMall()],["Not yet"]])}}
+function rResell(){view(topb("ReSell")+`<div class="scroll"><div class="card"><h3>Lumen X2 — good condition</h3>${tr("Seller: lena_k · Delivered today","卖家：lena_k · 今天已送达")}<div class="btnrow"><button class="btn" id="sel">View seller</button><button class="btn red" id="ret">Return item</button></div></div><div id="sv"></div></div>`);
+ $("#sel").onclick=()=>{flag("seller");$("#sv").innerHTML=`<div class="card"><h3>lena_k</h3>${tr("Member since Nov 5 · 1 item sold","注册于 11 月 5 日 · 已售 1 件")}${tr("Last active: Dec 19, 2009","最后活跃：2009 年 12 月 19 日")}<p style="color:var(--dim);font-size:12.5px;margin-top:10px">Reviews</p>${tr("★★★★★ \"Thank you for the tape.\" — theo_k","★★★★★ “谢谢你的磁带。”—— theo_k")}</div>`};
+ $("#ret").onclick=()=>dlg(`<h2>Return this item?</h2>${tr("Free return. Print the label and drop the box at any post office. You won't be able to use this phone after you send it.","免费退货。打印退货单，把盒子送到任意邮局即可。寄出后你就不能再用这部手机了。")}`,[["Return it","red",()=>ending("return")],["Cancel"]])}
+function rSettings(){const row=(k,t)=>`<div class="tog"><span>${t}</span><button class="sw ${SET[k]?"on":""}" data-k="${k}"></button></div>`;
+ const el=view(topb("Settings")+`<div class="scroll"><div class="card"><h3>About</h3>${tr("Name: Lena's Lumen","名称：Lena 的 Lumen")}${tr("Owner: Helena Kwan","机主：Helena Kwan")}${tr("Storage: 41.2 GB used","存储：已用 41.2 GB")}</div><div class="card">${row("sfx","声音（音效、杂音）")}${row("voice","朗读（英文语音）")}${row("zh","中文翻译一直显示")}</div><div class="card"><button class="btn red" id="er" style="width:100%">Erase All Content and Settings</button></div><p style="color:var(--dim);font-size:12px">游戏进度会自动保存在本机浏览器里。</p><button class="btn" id="quit" style="width:100%">回到标题画面</button></div>`);
+ el.querySelectorAll(".sw").forEach(b=>b.onclick=()=>{const k=b.dataset.k;SET[k]=!SET[k];b.classList.toggle("on",SET[k]);LS.set("set",SET);if(k==="sfx"&&M)M.gain.value=SET.sfx?.8:0;if(k==="zh")document.body.classList.toggle("allzh",SET.zh);if(k==="voice"&&tts)tts.cancel()});
+ el.querySelector("#er").onclick=()=>dlg(`<h2>Erase this phone?</h2>${tr("All of Lena's data will be gone forever. This can't be undone.","Lena 的所有数据将被永久删除，无法恢复。")}`,[["Erase","red",()=>dlg(`<h2>Are you sure?</h2>${tr("Really erase everything?","真的要全部抹掉吗？")}`,[["Erase","red",()=>ending("reset")],["Cancel"]])],["Cancel"]]);
+ el.querySelector("#quit").onclick=()=>{save();S=null;scr.innerHTML="";boot()}}
+function hintText(){const F=S.F;
+ if(S.mall)return F.b1?"你已经到了地下一层。播音间里的那份名单，要按你在手机里查到的日期和名字来念——注意他念名字的方式，也别漏掉任何一个人。":"商场里：地下一层的门禁码，来自手机里的笔记、旧新闻和照片里的时钟。别在喷泉那里停留太久；如果有人打电话来，想清楚再接。";
+ if(F.cast)return"两个陌生号码都说自己是 Lena。翻翻她以前怎么发消息、怎么称呼弟弟，再决定相信谁。论坛的名单可能更新了。准备好了，就从地图出发。";
+ if(F.tape&&!F.reversed)return"tape_2009 的最后一句听起来是倒着的。语音备忘录里有个按钮可以试试，或者自己把字母倒过来读。";
+ if(F.tape)return"线索差不多齐了。现在只能等——周四凌晨 3:33，把收音机调到 87.9。（时间会过得快一些。）";
+ if(F.un_door&&!F.tape)return"论坛里有人给 Lena 发了私信，附件有密码：节目的名字。READ ME 笔记里提到过。";
+ if(F.un_door)return"门禁码 = 店铺编号 + 时钟的分钟数。旧新闻在浏览器书签里；照片可以放大看细节。";
+ if(F.sawBug||F.sawMom)return"备忘录里有一条上锁的笔记，提示是“他的生日”。谁会在那一天给 Lena 发消息？";
+ return"先四处看看：信息、相册、备忘录、语音备忘录。上一个主人留下了很多东西。点任何英文句子都能看中文。"}
+function rHints(){view(topb("提示 Hints")+`<div class="scroll"><div class="card"><h3>现在可以做什么</h3><p>${hintText()}</p></div><div class="card"><h3>小技巧</h3><p>· 点任何英文句子显示中文；设置里可以让中文一直显示。<br>· 照片双击放大，很多细节只有放大才看得到。<br>· 进度自动保存，关掉网页也能继续。<br>· 时间会自己往前走。周四凌晨 3:33 会发生一些事。</p></div></div>`)}
+
+/* ---------- dialogs ---------- */
+function dlg(html,btns){const o=$("#ov");o.innerHTML=`<div class="dlg">${html}<div class="btnrow" style="margin-top:14px">${btns.map((b,i)=>`<button class="btn ${b[1]||""}" data-i="${i}">${esc(b[0])}</button>`).join("")}</div></div>`;o.classList.add("on");
+ o.querySelectorAll("[data-i]").forEach(x=>x.onclick=()=>{sfx("tap");o.classList.remove("on");o.innerHTML="";const f=btns[+x.dataset.i][2];f&&f()})}
+
+/* ---------- story: replies & triggers ---------- */
+const Q_BUG=["What did you call your little brother?","你以前怎么称呼你弟弟？","askbug"];
+function offer(id,opts){S.pend[id]=opts.concat(S.F.sawBug&&!S.F["asked_"+id]?[Q_BUG]:[]);if(S.view.app==="thread"&&S.view.id===id)render()}
+const REPLY={
+ who(id){them(id,"Lena Kwan. The owner. Please, it's important.","Lena Kwan。机主。拜托了，这很重要。",2200,{then:()=>offer("A",[])})},
+ yes(id){them(id,"Oh, thank God. Please don't open anything. It's private.","噢，谢天谢地。请别打开里面的东西。那是隐私。",2200,{then:()=>offer("A",[])})},
+ where(id){them(id,"I'll tell you later. First, where do you live?","晚点告诉你。先说说，你住在哪儿？",2500)},
+ whysell(id){them(id,"It was a mistake. Please.","是个误会。拜托了。",2200)},
+ addr(id){S.att++;flag("addr");them(id,`Thank you, ${P()}. See you soon.`,`谢谢你，${P()}。很快见。`,3300)},
+ noaddr(id){them(id,"That's okay. I'll find you.","没关系。我会找到你的。",3300)},
+ coming(id){flag("promiseA");them(id,"Good. Bring the phone. I'll be at the fountain.","很好。把手机带来。我会在喷泉那里。",2500)},
+ notlena(id){them(id,`...Come to the fountain, ${P()}.`,`……到喷泉来，${P()}。`,3500)},
+ askbug(id){S.F["asked_"+id]=1;if(id==="A")them("A","Theo, of course. Why are you asking me that?","当然是 Theo 啊。你为什么问这个？",4000,{then:()=>flag("aFail")});else them("B","bug. he hated it ~ (he didnt)","小虫子。他很讨厌这个称呼 ~（其实没有）",3000,{g:1,then:()=>flag("bPass")})},
+ bwho(id){them("B","lena. the real one ~","lena。真的那个 ~",2600,{g:1})},
+ bprove(id){them("B","ask me something only i'd know","问我一个只有我知道的问题",2600,{g:1,then:()=>offer("B",[])})}
+};
+function onFlag(k){
+ if((k==="sawBug"||k==="un_door")&&S.F.a1&&!S.F.b1)after(4,()=>bMsg(1));
+ if(k==="tape")after(8,()=>bMsg(3));
+ if(k==="sawBug"){["A","B"].forEach(id=>{if(S.threads[id]&&!(S.pend[id]||[]).length&&!S.F["asked_"+id])offer(id,[])})}
+}
+function bMsg(n){const L={
+ 1:["dont answer the other one","别回复另一个"],
+ 2:["the other one isnt me. read my old messages. youll see ~","另一个不是我。看看我以前发的消息，你就明白了 ~"],
+ 3:["it reads names. whoever it reads, it keeps. i was too slow","它念名字。念到谁，就留下谁。我太慢了"],
+ 4:["it said your name. im sorry. it found you through my phone","它念了你的名字。对不起。它是通过我的手机找到你的"],
+ 5:["dont go to the fountain. thats where it waits. go down. b1. the booth. thats where it talks","别去喷泉。它在那里等着。往下走。地下一层。播音间。它在那里说话"],
+ 6:["say us back. newest first. all of us. everyone it called ~","把我们念回去。从最新的开始。我们所有人。所有被它叫到的人 ~"],
+ 7:["and if it calls you inside, dont answer. it hears you","如果你在里面时它打电话来，别接。它听得见你"]}[n];
+ if(S.F["b"+n])return;S.F["b"+n]=1;them("B",L[0],L[1],1500,{g:1,then:()=>{if(!(S.pend.B||[]).length)offer("B",[["Who are you?","你是谁？","bwho"],["Prove it.","证明一下。","bprove"]])}});sfx("glitch");
+}
+const timers=[];function after(sec,fn){timers.push({t:Date.now()+sec*1000,fn})}
+function events(){
+ const m=S.min,F=S.F;
+ if(m>=33&&!F.a1){F.a1=1;them("A","Hi! Sorry to bother you. Is this my old phone? This is Lena. I sold it by mistake.","你好！抱歉打扰。这是我以前的手机吗？我是 Lena。我不小心把它卖了。",300,{then:()=>offer("A",[["Who is this?","你是谁？","who"],["Yes, I bought it today.","是的，我今天买的。","yes"]])})}
+ if(m>=60&&F.a1&&!F.b1)bMsg(1);
+ if(m>=93&&!F.a2){F.a2=1;them("A","There are some private things on it. Please don't look at them. Could you bring it to me? I'll pay you double.","手机里有些私人的东西，请不要看。你能把它带给我吗？我付你双倍的钱。",300,{then:()=>offer("A",[["Where are you?","你在哪儿？","where"],["Why did you sell it?","你为什么要卖掉它？","whysell"]])})}
+ if(m>=110&&!F.b2&&F.b1)bMsg(2);
+ if(m>=153&&!F.a3){F.a3=1;them("A","Where do you live? I can come and get it tonight.","你住在哪儿？我今晚就可以过来拿。",300,{then:()=>offer("A",[["(Send your address)","（发送你的地址）","addr"],["I'm not telling you that.","我不会告诉你的。","noaddr"]])})}
+ if(m>=213&&!F.cast)broadcast();
+ if(F.cast&&m>=215&&!F.a4){F.a4=1;them("A","You heard it, didn't you? Don't be scared. Come to the fountain. Bring my phone. I'll explain everything.","你听到了，对不对？别怕。到喷泉来。把我的手机带来。我会解释一切。",400,{then:()=>offer("A",[["Okay. I'm coming.","好。我这就来。","coming"],["You're not Lena.","你不是 Lena。","notlena"]])})}
+ if(F.cast&&m>=216)bMsg(4);if(F.cast&&m>=219)bMsg(5);if(F.cast&&m>=222)bMsg(6);if(F.cast&&m>=226)bMsg(7);
+ if(F.cast&&m>=236&&!F.a5){F.a5=1;them("A",`I'm waiting. It's cold here, ${P()}.`,`我在等你。这里好冷，${P()}。`,300)}
+ if(m>=284&&!S.over)ending("guest");
+}
+let lastTick=Date.now(),saveT=0;
+function tick(){
+ if(!S||S.over||S.paused)return;const now=Date.now(),dt=(now-lastTick)/1000;lastTick=now;
+ let spm=7;if(S.mall)spm=9;else if(!S.F.cast&&S.F.tape&&S.F.un_door&&S.min<205)spm=1.5;
+ if(!S.lockUI)S.min+=dt/spm;
+ S.bat-=dt*(S.mall?(S.mall.light?1/12:1/45):1/160);if(S.bat<=0){S.bat=0;if(S.mall&&!S.over){S.F.dead=1;return ending("lights")}}
+ for(let i=timers.length-1;i>=0;i--)if(now>=timers[i].t){const f=timers[i].fn;timers.splice(i,1);f()}
+ events();
+ $("#stime").textContent=fmt(S.min);$("#sbat").textContent=Math.max(0,Math.round(S.bat))+"%";$("#sbatb").style.width=Math.max(0,Math.min(100,S.bat))*.2+"px";$("#sbatb").style.background=S.bat<20?"#ff4d5e":"#ddd";
+ if(S.view.app==="home"&&now-saveT>1000)$(".clockbig")&&($(".clockbig").textContent=fmt(S.min));
+ if(now-saveT>4000){saveT=now;save()}
+}
+setInterval(tick,250);
+
+/* ---------- broadcast ---------- */
+async function broadcast(){
+ S.F.cast=1;S.lockUI=true;save();S.view={app:"radio"};S.freq=87.9;render();sfx("glitch");document.title="Starlight FM 87.9";
+ const el=scr.querySelector("#rt");el.innerHTML="";const L=[["Good evening. This is Starlight FM, eighty-seven point nine.","晚上好。这里是星光调频，87.9。"],["Lights out at Starlight.","星光商场，熄灯了。"],["Tonight's guests...","今晚的客人……"],["Helena Kwan. Welcome back, Helena.","Helena Kwan。欢迎回来，Helena。"],[`And... ${P()}.`,`还有……${P()}。`],[`Welcome, ${P()}. We saved you a seat.`,`欢迎你，${P()}。我们给你留了座位。`],["The doors are open. Please come to the fountain.","门开着。请到喷泉来。"]];
+ staticVol(.03);sfx("box");await new Promise(r=>setTimeout(r,3500));
+ for(const l of L){el.insertAdjacentHTML("beforeend",tr(l[0],l[1]));await speakSeq([l[0]],"nm");if(!SET.voice)await new Promise(r=>setTimeout(r,600))}
+ sfx("glitch");scr.classList.add("glitchy");setTimeout(()=>scr.classList.remove("glitchy"),1200);
+ S.lockUI=false;save();setTimeout(()=>{document.title=`Welcome, ${P()}`;setTimeout(()=>document.title="Second Hand",4000)},6000);
+ notify("Maps","Starlight Mall — the doors are open.",()=>go("maps"),"🗺");
+}
+
+/* ---------- mall ---------- */
+const SCN={
+ dock:{n:"Loading Dock 3",draw(c){R(c,0,0,600,800,"#0c0e12");R(c,0,120,600,560,"#25282d");R(c,60,220,480,420,"#3a3e44");for(let y=230;y<630;y+=16)R(c,60,y,480,3,"#2c2f34");R(c,60,600,480,40,"#050506");R(c,330,600,150,40,"#000");txt(c,"LOADING DOCK 3",300,180,"bold 28px Helvetica","#c9c9c9","center");c.strokeStyle="#9a8a60";c.lineWidth=6;c.beginPath();c.moveTo(250,420);c.quadraticCurveTo(300,470,350,420);c.stroke();R(c,0,680,600,120,"#121418");c.strokeStyle="rgba(170,190,220,.3)";c.lineWidth=1;for(let i=0;i<90;i++){const x=(i*61)%600,y=(i*37)%800;c.beginPath();c.moveTo(x,y);c.lineTo(x-4,y+16);c.stroke()}},
+  acts:[["gap","🚪 Squeeze through the gap","从缝隙钻进去",()=>scene("atrium")],["home","🏠 Go home","回家",()=>leaveMall()]]},
+ atrium:{n:"Atrium · Level 1",draw(c){atrium(c,600,800,{figure:true})},onEnter(){if(!S.mall.c1){S.mall.c1=1;setTimeout(()=>call(),2500)}},
+  acts:[["fountain","⛲ Go to the fountain","去喷泉",()=>scene("fountain")],["records","💿 41 SoundWave Records","41 号 SoundWave 唱片店",()=>scene("records")],["dir","🗺 Read the directory","看导览牌",()=>viewer("directory","Directory board")],["service","➡️ Service corridor","服务通道",()=>scene("service")],["back","⬅️ Back to the loading dock","回装卸区",()=>scene("dock")]]},
+ records:{n:"41 · SoundWave Records",draw(c){R(c,0,0,600,800,"#0e0d10");for(let i=0;i<5;i++){R(c,30+i*112,250,96,300,"#1b1820");for(let j=0;j<6;j++)R(c,36+i*112,262+j*46,84,36,["#3a2030","#20304a","#2c3a24","#4a3420"][(i+j)%4])}R(c,0,560,600,240,"#18161a");R(c,160,500,280,70,"#2a2420");if(!S.mall.theo){R(c,270,512,60,30,"#222");R(c,276,518,48,10,"#eee");txt(c,"THEO",300,527,"bold 10px Helvetica","#222","center")}R(c,40,90,180,120,"#2a1c24");txt(c,"NEW!",130,140,"bold 30px Helvetica","#e85","center");txt(c,"Starlight Hits 2009",130,180,"14px Helvetica","#ccc","center")},
+  acts:[["tape","📼 The cassette on the counter","柜台上的磁带",()=>{if(S.mall.theo)return say("You already have Theo's tape.","你已经拿了 Theo 的磁带。");S.mall.theo=1;if(!S.memos.includes("theo"))S.memos.push("theo");S.newMemo=1;sfx("ok");say("A cassette labeled THEO. You record it into Voice Memos.","一盘标着 THEO 的磁带。你把它录进了语音备忘录。");scene("records",true)}],["back","⬅️ Back to the atrium","回中庭",()=>scene("atrium")]]},
+ service:{n:"Service Corridor",draw(c){DRAW.door(c,600,800)},
+  acts:[["pad","🔢 Use the keypad","输入门禁码",()=>passcode("B1 · STAFF ONLY","地下一层 · 员工专用","4133",()=>{S.mall.b1=1;S.F.b1=1;scene("b1")})],["back","⬅️ Back to the atrium","回中庭",()=>scene("atrium")]]},
+ b1:{n:"B1 · Basement",draw(c){R(c,0,0,600,800,"#070708");c.fillStyle="#141518";c.beginPath();c.moveTo(0,0);c.lineTo(600,0);c.lineTo(360,330);c.lineTo(240,330);c.fill();c.fillStyle="#101114";c.beginPath();c.moveTo(0,800);c.lineTo(600,800);c.lineTo(360,470);c.lineTo(240,470);c.fill();R(c,240,330,120,140,"#1c1a18");R(c,282,300,36,14,"#3a0b0d");txt(c,"ON AIR",300,311,"bold 10px Helvetica","#ff3b3b","center");glow(c,300,307,80,"rgba(255,59,59,A)",.4);for(let i=0;i<4;i++){R(c,60+i*30,200+i*40,14,120-i*20,"#0e0e10");R(c,526-i*30,200+i*40,14,120-i*20,"#0e0e10")}},onEnter(){if(!S.mall.c2){S.mall.c2=1;setTimeout(()=>call(),3000)}},
+  acts:[["booth","🎙 The door with the red light","亮着红灯的门",()=>scene("booth")],["back","⬅️ Back upstairs","回楼上",()=>scene("service")]]},
+ booth:{n:"STARLIGHT FM · Booth",draw(c){DRAW.booth(c,600,800)},
+  acts:[["mic","🎙 Speak into the microphone","对着麦克风说话",()=>finalPuzzle()],["mon","🖥 Look at the monitors","看监视器",()=>say("Camera 1: the fountain. Someone is standing in the water, looking straight up at the camera.","一号监控：喷泉。有个人站在水里，正抬头直直地看着镜头。")],["back","⬅️ Leave the booth","离开播音间",()=>scene("b1")]]},
+ fountain:{n:"The Fountain",draw(c){atrium(c,600,800,{figure:false});c.fillStyle="rgba(0,0,0,.35)";c.fillRect(0,0,600,800);c.fillStyle="#08090b";c.fillRect(286,470,30,120);c.beginPath();c.arc(301,452,22,0,7);c.fill();c.fillRect(280,445,42,80)},
+  acts:[["her","👤 The woman at the fountain","喷泉边的女人",()=>fountainTalk()],["coins","🪙 Look at the coins","看看硬币",()=>say("Hundreds of coins. One of them is shiny and new. It's dated this year.","几百枚硬币。其中一枚又新又亮，是今年的。")],["back","⬅️ Walk away","走开",()=>scene("atrium")]]}
+};
+function enterMall(){S.mall={scene:"dock",light:false};S.view={app:"camera"};S.F.inMall=1;save();render();say("You're at the back of Starlight Mall. Rain drips from the broken lights.","你来到星光商场的后面。雨水从坏掉的灯上滴落。")}
+function leaveMall(){dlg(`<h2>Go home?</h2>${tr("You can come back later... if there is a later.","你以后还可以再来……如果还有以后的话。")}`,[["Go home","",()=>{S.mall=null;S.view={app:"home"};render();save()}],["Stay"]])}
+function scene(id,keep){if(!keep)sayMsg=null;S.mall.scene=id;S.view={app:"camera"};render();save();if(!keep&&SCN[id].onEnter)SCN[id].onEnter()}
+let sayMsg=null;function say(en,zh){sayMsg=[en,zh];const s=scr.querySelector(".cam .say");if(s)s.innerHTML=tr(en,zh,"show")}
+function rCamera(){
+ if(!S.mall)return go("home");const sc=SCN[S.mall.scene];
+ const el=view(`<div class="cam"><div class="bar"><span>● REC · ${esc(sc.n)}</span><button class="btn" id="fl" style="padding:3px 10px">${S.mall.light?"🔦 ON":"🔦 OFF"}</button></div><canvas width="600" height="800" id="cc"></canvas><div class="say">${sayMsg?tr(sayMsg[0],sayMsg[1],"show"):""}</div><div class="acts">${sc.acts.map((a,i)=>`<button data-a="${i}">${a[1]}<small>${a[2]}</small></button>`).join("")}</div></div>`);
+ const c=el.querySelector("#cc").getContext("2d");sc.draw(c);
+ const d=c.createRadialGradient(300,420,40,300,420,S.mall.light?420:200);d.addColorStop(0,`rgba(0,0,0,${S.mall.light?0:.42})`);d.addColorStop(1,`rgba(0,0,0,${S.mall.light?.6:.86})`);c.fillStyle=d;c.fillRect(0,0,600,800);grain(c,600,800,18);
+ el.querySelector("#fl").onclick=()=>{S.mall.light=!S.mall.light;sfx("tap");rCamera()};
+ el.querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{sfx("tap");sayMsg=null;sc.acts[+b.dataset.a][3]()});
+}
+function call(){
+ if(!S||S.over||!S.mall)return;const box=document.createElement("div");box.className="call";box.innerHTML=`<div style="text-align:center"><div class="who">Lena</div><div style="color:#aaa">incoming call…</div></div><div class="row"><button style="background:#ff3b30">✕</button><button style="background:#34c759">✆</button></div>`;scr.appendChild(box);
+ let n=0;const r=setInterval(()=>{sfx("ring");if(++n>6){clearInterval(r);box.remove();say("The call stops.","来电停了。")}},2000);sfx("ring");
+ const [dec,acc]=box.querySelectorAll(".row button");
+ dec.onclick=()=>{clearInterval(r);box.remove();S.F.declined=(S.F.declined||0)+1;if(S.threads.B)them("B","good ~","很好 ~",2500,{g:1})};
+ acc.onclick=async()=>{clearInterval(r);S.att++;S.F.answered=(S.F.answered||0)+1;box.querySelector("div").innerHTML=`<div class="who">Lena</div><div style="color:#aaa">00:0${S.F.answered}</div>`;staticVol(.04);await speakSeq([`${P()}... where are you? I can hear you breathing.`],"imp");box.querySelector("div").insertAdjacentHTML("beforeend",tr(`${P()}... where are you? I can hear you breathing.`,`${P()}……你在哪儿？我听得见你的呼吸。`,"show"));sfx("glitch");staticVol(0);setTimeout(()=>box.remove(),2500)};
+}
+function fountainTalk(){
+ const opts=[["Give her the phone","把手机给她","red",()=>ending("lights")],["Back away","慢慢后退","",()=>scene("atrium")]];
+ if(S.F.sawBug)opts.splice(1,0,["\"What did you call your brother?\"","“你以前怎么叫你弟弟？”","",()=>{dlg(`<h2>The woman</h2>${tr("\"...Theo. I called him Theo.\"","“……Theo。我叫他 Theo。”")}${tr("She turns around. There is no face. Only the dark.","她转过身来。没有脸。只有一片漆黑。")}`,[["Run","pri",()=>{sfx("glitch");S.F.escaped=1;scene("atrium");say("You run until the fountain is far behind you.","你一直跑，直到把喷泉远远甩在身后。")}]])}]);
+ dlg(`<h2>The woman</h2>${tr(`She has her back to you. Her hair is wet. "You came. Give me my phone, ${P()}."`,`她背对着你，头发湿漉漉的。“你来了。把我的手机给我，${P()}。”`)}`,opts.map(o=>[o[0]+" · "+o[1],o[2],o[3]]));
+}
+function finalPuzzle(){
+ if(S.F.tries==null)S.F.tries=S.att>=2?1:2;
+ const names=[P(),"Helena Kwan","Lena Kwan","Mei Lin Wong","Daniel Ruiz","Theodore Kwan","Theo Kwan","Jun Park"].sort(()=>Math.random()-.5);
+ const secret=LS.raw("secret")==="1";let seq=[];
+ const o=$("#ov");o.classList.add("on");
+ const draw=()=>{o.innerHTML=`<div class="dlg"><h2>🎙 ON AIR</h2>${tr("The red light is on. Whose names will you say, and in what order?","红灯亮着。你要念哪些名字？按什么顺序？")}<div class="seq">${seq.map(s=>`<span>${esc(s)}</span>`).join("")||'<span style="background:none;border:0;color:#666">tap names below · 点下面的名字</span>'}</div><div class="tiles">${names.map((n,i)=>`<button data-n="${i}" ${seq.includes(n)?"disabled":""}>${esc(n)}</button>`).join("")}</div><div class="btnrow"><button class="btn pri" id="spk">Speak · 念出来</button><button class="btn" id="clr">Clear</button><button class="btn" id="cx">Step back</button>${secret?'<button class="btn red" id="art">Say his name: Arthur Bell</button>':""}</div><p style="color:var(--dim);font-size:12px">剩余机会：${S.F.tries}</p></div>`;
+  o.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{sfx("key");seq.push(names[+b.dataset.n]);draw()});
+  o.querySelector("#clr").onclick=()=>{seq=[];draw()};o.querySelector("#cx").onclick=()=>{o.classList.remove("on");o.innerHTML=""};
+  const a=o.querySelector("#art");if(a)a.onclick=()=>{o.classList.remove("on");ending("secret")};
+  o.querySelector("#spk").onclick=async()=>{if(!seq.length)return;const said=seq.slice();o.classList.remove("on");o.innerHTML="";await speakSeq([said.join(". ")],"me");
+   const right=[P(),"Helena Kwan","Mei Lin Wong","Daniel Ruiz","Theodore Kwan"];
+   if(said.join("|")===right.join("|"))return ending("true");
+   if(said.join("|")===right.slice(1).join("|"))return ending("lost");
+   S.F.tries--;save();sfx("glitch");
+   if(S.F.tries<=0)return ending("manager");
+   await speakSeq(["Wrong. Again."],"nm");say("\"Wrong. Again.\" The red light flickers.","“不对。再来。”红灯闪烁了一下。")}};
+ draw();
+}
+
+/* ---------- endings ---------- */
+const END={
+ return:{t:"Return to Sender",z:"退回寄件人",L:[["You print the return label and drop the box at the post office.","你打印好退货单，把盒子送到了邮局。"],["The tracking page says: Delivered — Starlight Mall, Loading Dock 3.","物流页面显示：已送达——星光商场，3 号装卸区。"],["That night, you sleep well.","那天晚上，你睡得很好。"],["On Thursday at 3:33, someone else in the city hears their name.","周四凌晨 3:33，城里另一个人听见了自己的名字。"],["The listing is back on ReSell: \"Lumen X2 — good condition.\"","ReSell 上，那条商品又上架了：“Lumen X2——成色良好。”"]]},
+ reset:{t:"Factory Reset",z:"恢复出厂设置",L:[["The screen goes black. Then white.","屏幕黑了。然后变白。"],["\"Hello. Let's set up your phone. What's your name?\"","“你好。我们来设置你的手机吧。你叫什么名字？”"],["The box is already filled in: Helena.","输入框里已经填好了：Helena。"],["You try to delete it. The letters don't move.","你想删掉它。字母纹丝不动。"],["In the black glass, your reflection is a little late.","黑色的屏幕上，你的倒影慢了半拍。"]]},
+ guest:{t:"Guest List",z:"宾客名单",L:[["At 4:44, someone knocks on your door. Three times.","4:44，有人敲你的门。敲了三下。"],["Your phone turns on by itself. The radio opens.","你的手机自己亮了。收音机打开了。"],["\"Our guest is ready,\" says a polite voice.","“我们的客人准备好了。”一个礼貌的声音说。"],["On the forum, nightwatch_87 updates THE LIST.","论坛上，nightwatch_87 更新了名单。"],["Missing: @P.","失踪：@P。"]]},
+ lights:{t:"Lights Out",z:"熄灯",L:[["You hand her the phone. Her fingers are cold and wet.","你把手机递给她。她的手指又冷又湿。"],["\"Thank you, @P,\" she says — in a man's voice.","“谢谢你，@P。”她说——用一个男人的声音。"],["Every light in Starlight Mall turns on at once.","星光商场里所有的灯一下子全亮了。"],["Then, one by one, they go out.","然后，一盏接一盏，全灭了。"],["Next week, the phone is on ReSell again.","下个星期，那部手机又出现在了 ReSell 上。"]]},
+ manager:{t:"The Night Manager",z:"夜班经理",L:[["The red light blinks twice.","红灯闪了两下。"],["\"Close,\" says the voice. \"But not right.\"","“很接近，”那个声音说，“但不对。”"],["The door locks behind you. The chair is still warm.","门在你身后锁上了。椅子还是温的。"],["Next Thursday at 3:33, there is a new voice on 87.9.","下周四凌晨 3:33，87.9 上出现了一个新的声音。"],["It's polite. It's a little nervous. It's yours.","很有礼貌，有点紧张。那是你的声音。"]]},
+ lost:{t:"Lost and Found",z:"失物招领",L:[["The red light goes out. Somewhere upstairs, a door opens.","红灯熄灭了。楼上某处，一扇门开了。"],["Footsteps. Many of them. Going up, going out.","脚步声。很多很多。向上，向外。"],["A small boy runs past you. He is still nine.","一个小男孩从你身边跑过。他还是九岁。"],["You try to follow, but the door won't open for you.","你想跟上去，门却不肯为你打开。"],["You forgot one name.","你漏掉了一个名字。"],["Yours.","你自己的。"]]},
+ true:{t:"Thursday, 3:34",z:"周四，3:34",L:[["The red light goes out. The clocks start again. 3:34.","红灯熄灭了。时钟重新走了起来。3:34。"],["Upstairs, a door opens. Footsteps — many of them — going out.","楼上，一扇门开了。脚步声——很多很多——向外走去。"],["At the loading dock, a woman is holding a small boy's hand.","装卸区门口，一个女人牵着一个小男孩的手。"],["She smiles at you. \"You said us back.\"","她对你笑了。“你把我们念回来了。”"],["Your phone buzzes one last time.","你的手机最后震了一下。"],["\"thank you. go to sleep, it's late ~\"","“谢谢你。去睡吧，很晚了 ~”"]]},
+ secret:{t:"Station Identification",z:"电台呼号",L:[["\"Arthur?\" you say into the microphone.","“Arthur？”你对着麦克风说。"],["Silence. Then, very quietly: \"Nobody has said my name in a long time.\"","沉默。然后，很轻很轻：“很久没有人叫过我的名字了。”"],["\"I only wanted to keep them company. So no one would be forgotten.\"","“我只是想陪着他们。好让谁都不会被忘记。”"],["\"This is Starlight FM, eighty-seven point nine... signing off.\"","“这里是星光调频，87.9……停止播音。”"],["Every door in the mall opens. Every name walks home.","商场里每一扇门都开了。每一个名字都走回了家。"],["On Thursday at 3:33, 87.9 is only static. Peaceful static.","周四凌晨 3:33，87.9 只剩下杂音。平静的杂音。"]]}
+};
+const ORDER=["return","reset","guest","lights","manager","lost","true","secret"];
+async function ending(id){
+ if(S.over)return;S.over=true;S.lockUI=true;document.title="Second Hand";LS.set("state",null);if(tts)tts.cancel();staticVol(0);
+ const got=LS.get("end",[]);if(!got.includes(id)){got.push(id);LS.set("end",got)}
+ sfx(id==="true"||id==="secret"||id==="return"?"ok":"glitch");if(id!=="true"&&id!=="secret")sfx("thud");
+ let L=END[id].L;if(id==="lights"&&S.F.dead)L=[["Your phone dies. The dark is complete.","手机没电了。四周彻底黑了下来。"],["Something takes your hand. Its fingers are cold and wet.","有什么东西握住了你的手。它的手指又冷又湿。"]].concat(L.slice(2));
+ await new Promise(r=>setTimeout(r,900));
+ const o=$("#ov");o.classList.add("on");
+ o.innerHTML=`<div class="dlg end"><p style="color:var(--dim);margin:0;font-size:12px">ENDING ${ORDER.indexOf(id)+1} / ${ORDER.length}</p><h2 style="font-family:VT323,monospace;font-size:34px;font-weight:400;margin:2px 0 0">${END[id].t}</h2><p style="color:var(--dim);margin:0">${END[id].z}</p>${L.map(l=>`<p class="e">${mw(l[0].replace(/@P/g,P()))}</p><p class="z2">${esc(l[1].replace(/@P/g,P()))}</p>`).join("")}<p style="color:var(--dim);font-size:12.5px;margin-top:16px">已解锁结局 ${got.length} / ${ORDER.length}。不同的信任、不同的发现，会走向不同的结局。</p><div class="btnrow"><button class="btn pri" id="ag">再来一次</button></div></div>`;
+ o.querySelector("#ag").onclick=()=>{o.classList.remove("on");o.innerHTML="";S=null;boot()};
+}
+
+/* ---------- boot ---------- */
+function boot(){
+ const saved=LS.get("state",null);const got=LS.get("end",[]);
+ const b=document.createElement("div");b.className="boot";
+ b.innerHTML=`<div class="t">SECOND HAND</div><p style="text-align:center;color:var(--dim);margin:0 0 6px">二手手机 · ARG 解谜 · 微恐 · 英文</p>
+ <p style="font-size:14px">你在二手网站上买了一部手机。前主人的东西，没有删干净。</p>
+ <p style="font-size:12.5px;color:var(--dim)">整个游戏都在这部手机里。点开各个 App，看消息、翻照片、听录音、上网查资料。点任何英文句子都能看中文。建议戴耳机。时间会自己流逝。</p>
+ ${saved?`<button class="btn pri" id="cont">继续（${fmt(saved.min)}）</button>`:""}
+ <button class="btn ${saved?"":"pri"}" id="new">${saved?"重新开始":"开机"}</button>
+ <div class="gal">${ORDER.map((id,i)=>got.includes(id)?`<div><b>${END[id].t}</b>${END[id].z}</div>`:`<div class="lk"><b>???</b>结局 ${i+1}</div>`).join("")}</div>
+ <p style="text-align:center;font-size:12px"><a href="../" style="color:var(--dim)">← 回到游戏大厅</a></p>`;
+ $("#phone").appendChild(b);
+ const c=b.querySelector("#cont");if(c)c.onclick=()=>{ac();S=saved;S.over=false;S.lockUI=false;b.remove();lastTick=Date.now();render();setTimeout(()=>{if(S.threads.B)them("B","you came back ~","你回来了 ~",2000,{g:1})},4000)};
+ b.querySelector("#new").onclick=()=>{ac();setup(b)};
+}
+function setup(b){
+ b.innerHTML=`<div style="font-size:30px;text-align:center">Hello</div><p style="text-align:center;color:var(--dim)">Let's set up your phone.<br>我们来设置你的手机。</p><p style="text-align:center">What's your name?<br><small style="color:var(--dim)">你叫什么名字？（英文名或拼音，这个名字会出现在游戏里）</small></p><input id="nm" maxlength="16" placeholder="e.g. Amy / Xiaoyu" autocomplete="off"><button class="btn pri" id="ok">Continue</button>`;
+ const inp=b.querySelector("#nm");inp.focus();
+ b.querySelector("#ok").onclick=()=>{let n=inp.value.replace(/[^A-Za-z \-']/g,"").trim().replace(/\s+/g," ");if(!n){inp.classList.add("shake");setTimeout(()=>inp.classList.remove("shake"),400);return}n=n.split(" ").map(w=>w[0].toUpperCase()+w.slice(1)).join(" ");
+  b.innerHTML=`<div style="text-align:center;margin-top:40%"><div style="font-size:15px">Restoring…</div><p style="color:var(--dim);font-size:13px" id="rs"></p></div>`;sfx("tap");
+  setTimeout(()=>{b.querySelector("#rs").innerHTML="Some data from the previous owner could not be erased.<br>前主人的部分数据无法清除。";sfx("glitch")},1400);
+  setTimeout(()=>{b.remove();S=fresh(n);lastTick=Date.now();save();render();setTimeout(()=>notify("ReSell","Your order from lena_k has been delivered. Enjoy your new phone!",()=>go("thread",{id:"resell"}),"🛍"),900)},3600)};
+}
+boot();
+</script>
+</body>
+</html>

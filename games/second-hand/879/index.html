@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Starlight Mall — Staff Portal</title>
+<style>
+body{margin:0;background:#c0c0c0;color:#000;font:14px/1.5 Verdana,Tahoma,"PingFang SC",sans-serif}
+.wrap{max-width:640px;margin:0 auto;background:#fff;border:2px outset #ddd;min-height:100vh}
+.hd{background:#000080;color:#fff;padding:10px 14px}
+.hd h1{margin:0;font:bold 20px "Times New Roman",serif}
+.hd small{color:#ffff99}
+.mq{background:#ffffcc;border-bottom:1px solid #999;padding:4px 10px;font-size:12px;color:#900;white-space:nowrap;overflow:hidden}
+.mq span{display:inline-block;animation:mq 18s linear infinite;padding-left:100%}
+@keyframes mq{to{transform:translateX(-100%)}}
+.bd{padding:12px 16px}
+h2{font:bold 16px "Times New Roman",serif;border-bottom:1px solid #999;margin:18px 0 6px}
+.log{margin:10px 0;padding:6px 8px;border-left:3px solid #000080;background:#f4f4ff}
+.log b{color:#000080}
+.zh{color:#777;font-size:12.5px;display:none}
+.log.on .zh,.p.on .zh{display:block}
+.log,.p{cursor:pointer}
+.ft{font-size:11px;color:#666;text-align:center;padding:14px}
+a{color:#00e}
+.count{font-family:monospace;background:#000;color:#0f0;padding:1px 5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="hd"><h1>★ Starlight Mall — Staff Portal ★</h1><small>Night Security · Starlight FM 87.9 (in-house radio)</small></div>
+ <div class="mq"><span>REMINDER: The mall closes for good on 12/31/2009. Thank you for 16 wonderful years! · Please return your keys to the office. · Lights out at 1:00 a.m.</span></div>
+ <div class="bd">
+  <p class="p">You are visitor number <span class="count">000879</span>. <span style="color:#777;font-size:12px">（点日志看中文）</span></p>
+  <h2>Night Security Log — A. Bell</h2>
+  <div class="log"><b>11/14/1993</b> — Fire in Unit 41 tonight. Everyone got out. Almost everyone. I keep hearing a small voice on the speakers.<div class="zh">1993 年 11 月 14 日——今晚 41 号铺起火了。大家都逃出来了。几乎所有人。我总是在喇叭里听见一个小小的声音。</div></div>
+  <div class="log"><b>12/03/1993</b> — The doctors say I should rest. But someone has to do the night shift. Someone has to keep the lights on.<div class="zh">1993 年 12 月 3 日——医生说我该休息。可总得有人值夜班。总得有人让灯一直亮着。</div></div>
+  <div class="log"><b>06/18/2001</b> — I play music in the empty halls at night. It feels less lonely. For me, and for them.<div class="zh">2001 年 6 月 18 日——夜里我在空荡荡的走廊里放音乐。这样就没那么孤单了。对我，对他们，都是。</div></div>
+  <div class="log"><b>11/30/2009</b> — They're closing us down. When the lights go out, who will keep them company? I'll read their names every Thursday. So no one is forgotten.<div class="zh">2009 年 11 月 30 日——他们要关掉这里了。灯一灭，谁来陪着他们？我会每周四念一遍他们的名字。好让谁都不会被忘记。</div></div>
+  <div class="log"><b>12/17/2009</b> — A new guest tonight. A little boy who loves tapes. Theodore. I said his name very carefully.<div class="zh">2009 年 12 月 17 日——今晚来了一位新客人。一个喜欢磁带的小男孩。Theodore。我很小心地念了他的名字。</div></div>
+  <div class="log"><b>??/??/????</b> — I don't remember how long I've been here. If you're reading this, please — call me by my name. I'd like to go home too.<br>— Arthur Bell, Night Manager<div class="zh">????——我已经不记得自己在这里多久了。如果你在读这些，求你——叫我的名字。我也想回家。<br>—— Arthur Bell，夜班经理</div></div>
+  <h2>Staff links</h2>
+  <p>· <a href="#" onclick="alert('Access denied.');return false">Payroll</a> · <a href="#" onclick="alert('Access denied.');return false">Key list</a> · <a href="../">Return to the phone</a></p>
+ </div>
+ <div class="ft">Best viewed in Netscape Navigator 4.0 at 800×600 · © 1993–2009 Starlight Mall</div>
+</div>
+<script>
+try{localStorage.setItem("sh_secret","1")}catch(e){}
+document.querySelectorAll(".log,.p").forEach(function(el){el.onclick=function(){el.classList.toggle("on")}});
+</script>
+</body>
+</html>

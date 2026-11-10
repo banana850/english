@@ -558,6 +558,7 @@ body{background-image:none}
     <button class="ch" role="tab" data-v="talk" style="--c:#9CC2FF"><b>CH 04</b><span>AI 对练</span></button>
     <button class="ch" role="tab" data-v="fun" style="--c:var(--orange)"><b>CH 05</b><span>娱乐频道</span></button>
     <button class="ch" role="tab" data-v="bar" style="--c:#F2C38B"><b>CH 06</b><span>咖啡吧台</span><em class="newtag" id="barNew" hidden>NEW</em></button>
+    <a class="ch" href="games/" style="--c:#C9A4FF;text-decoration:none"><b>CH 07</b><span>小游戏</span><em class="newtag">NEW</em></a>
   </div>
 </nav>
 
@@ -919,7 +920,7 @@ function go(v) {
   $("#barNew").hidden = !!S.seenBar;
   window.scrollTo({ top: 0 });
 }
-$$(".ch").forEach(b => b.addEventListener("click", () => go(b.dataset.v)));
+$$(".ch[data-v]").forEach(b => b.addEventListener("click", () => go(b.dataset.v)));
 
 /* ============ CH 01 TODAY ============ */
 const STEPS = [
