@@ -290,6 +290,8 @@ yuki:{n:"Yuki",role:["Chef","厨师"],v:[1.15,.95,7],look:{skin:"#f0d0b0",hair:"
  chgPa:[["Blue Moon Diner now. Better hours!","现在在蓝月亮餐厅了，上班时间好多了！"],"Yuki works at Blue Moon Diner now.","Yuki 现在在蓝月亮餐厅上班。"],
  mut:[{top:"#262626"},{band:"#3b6fd0"},{mole:1}]}
 };
+const PAT={tom:2,lily:2,grace:3,okafor:3,dana:1,yuki:2};
+const EXC={tom:["Cash today. My card got stuck in the ATM. Long story.","今天付现金。卡被取款机吞了，说来话长。"],lily:["Cash today. My phone is dead. Zero percent!","今天付现金。手机没电了，一格都没有！"],grace:["Card tonight, sweetie. I spent all my coins on the bus.","今晚刷卡，亲爱的。零钱都坐公交用光了。"],okafor:["Card today. My grandson set it up for me. Modern times!","今天刷卡。我孙子帮我弄好的。时代变啦！"],dana:["Phone today. I left my card in the truck. Quick!","今天手机付。卡落在车里了。快点！"],yuki:["Cash. My phone fell in the soup. Don't ask.","现金。手机掉汤里了。别问。"]};
 const SQ=[["Where are you headed tonight?","你今晚要去哪儿？"],["Cash or card?","现金还是刷卡？"]];
 const SMIM=[["Where am I headed tonight? ...Where am I headed. Here. I am here.","我今晚要去哪儿？……我要去哪儿。这里。我就在这里。"],["Cash or card? Cash or card. ...Yes.","现金还是刷卡？现金还是刷卡。……是的。"]];
 const STR={
@@ -300,11 +302,12 @@ hood:{n:"Man in a Hood",v:[.6,.9,11],look:{skin:"#c9a080",hair:"#222",style:"sho
 grandma:{n:"Old Woman",v:[1.3,.8,12],look:{skin:"#e8c8a8",hair:"#dddddd",style:"bun",top:"#7a5a8a",scarf:"#c9a24a"},greet:["I've been walking for a long, long time. Do you have cold medicine?","我走了好久好久。你们有感冒药吗？"],h:[["Home. My grandson has a fever, poor thing.","回家。我孙子发烧了，可怜的孩子。"],["Cash, dear. Let me find my purse.","现金，孩子。我找找钱包。"]]}
 };
 const PARK={look:{skin:"#e0b894",hair:"#5a5a5a",style:"short",top:"#4a4033",scar:1},facts:[["Has a scar over one eyebrow.","一边眉毛上有道疤。"],["Calls everyone \"kid\".","管谁都叫“kid（小家伙）”。"],["Never drinks coffee. Only barley tea.","从不喝咖啡，只喝大麦茶。"]]};
-const RIDDLE=[["fridge","Where the cold drinks sleep.","冷饮睡觉的地方。"],["register","Under the place where the money sleeps.","钱睡觉的地方的下面。"],["trash","Where everything nobody wants goes.","没人要的东西都去的地方。"]];
+const KEV={look:{skin:"#e8c3a0",hair:"#6a4a2a",style:"short",top:"#e3be38",hood:"#c9a42a",bandage:1},facts:[["Kevin has a bandage on his cheek. Cut himself shaving.","Kevin 脸上贴着创可贴，刮胡子刮破的。"],["Kevin says \"Yo\" before anything else.","Kevin 开口第一句永远是“Yo”。"],["Kevin's favorite food: spicy noodles. Extra hot.","Kevin 最爱吃：辣味杯面，特辣。"]]};
+const RIDDLE=[["fridge","Where the cold drinks sleep.","冷饮睡觉的地方。"],["register","Under the place where the money sleeps.","钱睡觉的地方的下面。"],["trash","Where everything nobody wants goes.","没人要的东西都去的地方。"],["coffee","Where it is always warm and smells like morning.","永远暖和、闻起来像早晨的地方。"],["stock","Behind the boxes, where customers never go.","箱子后面，客人从来不去的地方。"]];
 const KNOTE=[
- [["If you found this, you got the job. Good luck.","你能找到这张，说明你被录用了。祝你好运。"],["The things copy the BOOK, not the people. When a regular changes, the thing doesn't know.","那些东西模仿的是名册，不是人。常客要是变了，它们不会知道。"],["P.S. Mr. Park has a scar over one eyebrow. Remember that.","附：朴店长一边眉毛上有道疤。记住。"]],
- [["The camera doesn't lie. They don't look right on camera.","监控不会说谎。它们在监控里看起来不对劲。"],["Strangers are the worst. You can't check them in the book. Listen to HOW they answer.","陌生人最难办。名册里查不到。听它们回答的方式。"],["P.S. Mr. Park calls everyone \"kid\". Everyone.","附：朴店长管谁都叫“kid”。谁都是。"]],
- [["I let one in. Just one. It bought a bottle of milk. That's all.","我放进来了一个。就一个。它买了一瓶牛奶。就这样。"],["Then I started to forget things. My phone number. My mom's face. My own name.","然后我开始忘事。我的电话号码。我妈的脸。我自己的名字。"],["P.S. Park never drinks coffee. Only barley tea. Don't let him take the keys if he's wrong. — K","附：朴店长从不喝咖啡，只喝大麦茶。如果他不对，别让他拿走钥匙。—— K"]]
+ [["If you found this, you got the job. Good luck.","你能找到这张，说明你被录用了。祝你好运。"],["Real people have bad days. They forget things, they change their minds. But when they do, they tell you WHY. The things never explain.","真正的人也会有状态不好的时候，会忘事、会改主意。但他们会告诉你为什么。那些东西从来不解释。"],["P.S. Mr. Park has a scar over one eyebrow.","附：朴店长一边眉毛上有道疤。"],["P.P.S. If I ever come back... I'm the one with the bandage on my cheek.","再附：如果我哪天回来了……脸上贴创可贴的那个才是我。"]],
+ [["The camera doesn't lie. But the battery is dying. Save it for the ones you can't check in the book.","监控不会说谎。但电池快没电了。留给名册里查不到的那些。"],["Strangers are the worst. Listen to HOW they answer.","陌生人最难办。听它们回答的方式。"],["P.S. Mr. Park calls everyone \"kid\". Everyone.","附：朴店长管谁都叫“kid”。谁都是。"],["P.P.S. I say \"yo\" too much. My mom hates it.","再附：我太爱说“yo”了。我妈可讨厌了。"]],
+ [["I let one in. Just one. Then I started to forget things. My phone number. My own name.","我放进来了一个。就一个。然后我开始忘事。电话号码。我自己的名字。"],["They want two things: the keys, and a way in. Don't give them either.","它们想要两样东西：钥匙，和进门的路。哪样都别给。"],["P.S. Park never drinks coffee. Only barley tea.","附：朴店长从不喝咖啡，只喝大麦茶。"],["P.P.S. I'd kill for a cup of spicy noodles right now. Extra hot. — K","再附：我现在超想来一碗辣味杯面，特辣。—— K"]]
 ];
 const SPOTS=[["fridge","Drinks fridge","饮料冰柜"],["register","Under the register","收银机下面"],["coffee","Coffee machine","咖啡机"],["trash","Trash can","垃圾桶"],["stock","Stockroom","仓库"]];
 const SPOTX={fridge:["Cold bottles. Nothing else.","冰凉的瓶子。没别的。"],register:["Old receipts and a broken pen.","旧收据和一支坏掉的笔。"],coffee:["The coffee pot is still warm.","咖啡壶还是温的。"],trash:["It smells bad. Nothing here.","好臭。什么都没有。"],stock:["Boxes. And... was that a sound? No. Just the fridge humming.","一堆箱子。还有……刚才是什么声音？不，只是冰柜在嗡嗡响。"]};
@@ -317,16 +320,17 @@ let G=null;
 const rnd=a=>a[Math.random()*a.length|0];
 const shuf=a=>{for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 function newGame(){
-  G={night:1,clock:22*60+30,t:0,cur:null,words:new Set(),busy:false,over:false,deciding:false,decide:null,asks:2,cam:0,
+  const pair=rnd([[1,0],[0,1],[1,1]]);
+  G={pf:pair[0],kf:pair[1],night:1,clock:22*60+30,t:0,cur:null,words:new Set(),busy:false,over:false,deciding:false,decide:null,asks:2,cam:0,
     mimicsIn:0,nightM:0,missing:{},pend:[],served:{},refused:{},updates:[],notes:0,chgA:null,chgB:null,
-    park:Math.random()<.5?"fake":"real",parkWrong:rnd(["look","greet","drink"]),flick:0,mSeen:0,lastTab:"notes"};
+    parkWrong:rnd(["look","greet","drink"]),kWrong:rnd(["look","greet","food"]),rid:shuf(RIDDLE.slice()),flick:0,mSeen:0,lastTab:"notes"};
 }
 const hhmm=m=>{m=Math.floor(m)%1440;return String(m/60|0).padStart(2,"0")+":"+String(m%60).padStart(2,"0")};
 const WHO={mia:{n:"Mia",c:"#7cf29a",v:[1.1,.95,0]},think:{n:"Mia（心里）",c:"#8f8d86",v:[1.1,.95,0],quiet:1},cust:{n:"",c:"#9fc3ff",v:[1,1,1]},park:{n:"Mr. Park",c:"#ffb36b",v:[.7,.85,3]},phone:{n:"📞 Phone",c:"#8fe0d0",v:[1,.95,4]},sys:{n:"",c:"#ebe7dc"}};
 
 /* ================= customers ================= */
 function mkReg(id,mimic,wrong){
-  const r=REG[id],c={kind:"reg",id,mimic:!!mimic,wrong,n:r.n,v:r.v,greet:r.greet,order:r.order,pay:r.pay,pa:r.pa,coffee:r.coffee};
+  const r=REG[id],c={kind:"reg",id,mimic:!!mimic,wrong,n:r.n,v:r.v,pat:PAT[id],greet:r.greet,order:r.order,pay:r.pay,pa:r.pa,coffee:r.coffee};
   if(!mimic){c.look=Object.assign({},r.look,G.chgA===id?r.chgLook[0]:{});if(G.chgB===id)c.pa=r.chgPa[0];return c}
   c.look=Object.assign({},r.look); // they copy the book
   if(wrong==="look")Object.assign(c.look,r.mut[c.lv]);
@@ -341,11 +345,12 @@ function build(n){
     const a=shuf(ids.filter(i=>!used.has(i)&&i!==G.chgA&&i!==G.chgB));id=a[0]||rnd(ids);used.add(id);const c={lv};const r=mkRegLv(id,wrong,lv);return r};
   const S=[];
   if(n===1){S.push(mkReg(real()),mkReg(real()),mim("look",0),mkReg(real()),mkStr("tourist",0))}
-  if(n===2){used.add(G.chgA);S.push(G.missing[G.chgA]?mim(rnd(["greet","order","pay","pa"])):mkReg(G.chgA),mim(rnd(["greet","order","pay","pa"])),mkStr(rnd(["white","hood"]),Math.random()<.6),mkReg(real()),mim("look",1+(Math.random()*2|0)),mkReg(real()))}
+  if(n===2){used.add(G.chgA);S.push(G.missing[G.chgA]?mim(rnd(["greet","order","pay","pa"])):mkReg(G.chgA),mim(rnd(["greet","order","pay","pa"])),mkStr(rnd(["white","hood"]),Math.random()<.6),exc(mkReg(real())),mim("look",1+(Math.random()*2|0)),mkReg(real()))}
   if(n===3){used.add(G.chgB);used.add(G.chgA);const cp=mkReg(G.chgA,1,"copy");
-    S.push(G.missing[G.chgB]?mim(rnd(["order","pay","pa"])):mkReg(G.chgB),mim(rnd(["order","pay","pa"])),mkStr(rnd(["grandma","courier"]),Math.random()<.5),cp,mkReg(real()),Math.random()<.5?mim("look",1+(Math.random()*2|0)):mim(rnd(["greet","order","pay","pa"])))}
+    S.push(G.missing[G.chgB]?mim(rnd(["order","pay","pa"])):mkReg(G.chgB),mim(rnd(["order","pay","pa"])),mkStr(rnd(["grandma","courier"]),Math.random()<.5),cp,exc(mkReg(real())),Math.random()<.5?mim("look",1+(Math.random()*2|0)):mim(rnd(["greet","order","pay","pa"])))}
   return S;
 }
+function exc(c){c.pay=EXC[c.id];return c}
 function mkRegLv(id,wrong,lv){const r=REG[id],c=mkReg(id,1,null);c.wrong=wrong;c.look=Object.assign({},r.look);if(wrong==="look")Object.assign(c.look,r.mut[lv||0]);else c[wrong]=r[wrong+"Alt"];return c}
 
 /* ================= drawing ================= */
@@ -371,6 +376,7 @@ function bust(gx,gy,s,L,al=1){
   if(L.glasses==="square"){for(const x of[8,13]){B(x,9,4,1,k);B(x,12,4,1,k);B(x,9,1,4,k);B(x+3,9,1,4,k)}B(12,10,1,1,k)}
   if(L.glasses==="round"){for(const x of[8,13]){B(x+1,8,2,1,k);B(x+1,12,2,1,k);B(x,9,1,3,k);B(x+3,9,1,3,k)}B(12,10,1,1,k)}
   if(L.scar)B(14,7,1,3,"#b0605a");
+  if(L.bandage){B(14,12,3,2,"#f0d8b0");B(15,12,1,2,"#d8b890")}
   if(L.mole)B(15,12,1,1,"#4a2a1a");
   if(L.beard){B(7,13,10,4,L.beard);B(8,17,8,1,L.beard);B(11,14,3,1,"#8a4a40")}
   if(L.phones){B(6,2,12,1,L.phones);B(5,3,1,6,L.phones);B(18,3,1,6,L.phones);B(4,8,3,4,L.phones);B(17,8,3,4,L.phones)}
@@ -423,13 +429,15 @@ addEventListener("keydown",e=>{if(e.key===" "||e.key==="Enter"){if(advanceFn){e.
 
 async function ask(){
   const c=G.cur;let opts;
-  if(c.kind==="park")opts=[["Want some coffee before you go?","走之前来杯咖啡吗？","drink"],["How was the drive?","路上还好吗？","drive"]];
+  if(c.kind==="kev")opts=[["Hungry? What do you want to eat?","饿了吗？想吃什么？","food"],["Where have you been?","你去哪儿了？","where"]];
+  else if(c.kind==="park")opts=[["Want some coffee before you go?","走之前来杯咖啡吗？","drink"],["How was the drive?","路上还好吗？","drive"]];
   else if(c.kind==="reg")opts=[["The usual?","老样子？","order"],["How are you paying tonight?","今晚怎么付？","pay"],[REG[c.id].pq[0],REG[c.id].pq[1],"pa"]];
   else opts=[[SQ[0][0],SQ[0][1],0],[SQ[1][0],SQ[1][1],1]];
   opts=opts.filter(o=>!(c.asked||[]).includes(o[2]));opts.push(["（算了）","不问了",null]);
   const q=await choose(opts);if(q===null)return;
   (c.asked=c.asked||[]).push(q);G.asks--;const o=opts.find(x=>x[2]===q);
   await say("mia",o[0],o[1]);
+  if(c.kind==="kev"){if(q==="food"){if(c.fake&&G.kWrong==="food")await say("cust","Food? Anything. Bread. Milk. Anything is fine.","吃的？什么都行。面包。牛奶。什么都行。");else await say("cust","Spicy noodles. Extra hot. I dream about them.","辣味杯面，特辣。我做梦都在想。")}else await say("cust","I don't know. It was dark. So dark. I could hear the door chime, but I couldn't find the door.","我不知道。很黑。特别黑。我能听见门铃声，可就是找不到门。");return}
   if(c.kind==="park"){if(q==="drink"){if(c.fake&&G.parkWrong==="drink")await say("cust","Coffee? Sure. Coffee sounds great.","咖啡？好啊，来杯咖啡不错。");else await say("cust","Coffee? No thanks, kid. Never touch the stuff. Got any barley tea?","咖啡？不了，小家伙。我从来不碰那玩意儿。有大麦茶吗？")}else await say("cust","Rainy. The roads are empty tonight.","下雨。今晚路上一个人都没有。");return}
   if(c.kind==="reg"){const a=c[q];await say("cust",a[0],a[1])}else{const a=c.h[q];await say("cust",a[0],a[1])}
   if(G.asks<=0)await say("think","They look impatient. No more questions.","对方看起来不耐烦了。不能再问了。");
@@ -440,12 +448,12 @@ function portrait(cvs,L){const sg=g,cx=CX;g=cvs.getContext("2d");CX=0;g.fillStyl
 function book(){
   let tab=G.lastTab||"tom";
   const pg=()=>{
-    if(tab==="park"){const k=G.notes;return`<h3 style="margin:0">Mr. Park</h3><p class="hint" style="margin:2px 0 8px">Owner · 店长（你还没见过他本人）</p><ul class="facts">${PARK.facts.map((f,i)=>i<k?`<li>${markWords(f[0])}<small>${f[1]}</small></li>`:`<li style="color:#555">??? <small>（还没查到）</small></li>`).join("")}</ul>`}
-    if(tab==="notes"){const r=RIDDLE[G.night-1];return`<h3 style="margin:0">Notes · 笔记</h3><div class="nt">Scribbled inside the cover, in pencil:<br><b>"${r[1]}"</b> — K<small>封面内侧有一行铅笔字：“${r[2]}”—— K</small></div>${G.updates.map(u=>`<div class="nt">Mr. Park: ${markWords(u[0])}<small>${u[1]}</small></div>`).join("")}${KNOTE.slice(0,G.notes).map((n,i)=>`<div class="nt"><b>Kevin's note ${i+1}</b>${n.map(l=>`<br>${markWords(l[0])}<small>${l[1]}</small>`).join("")}</div>`).join("")}`}
+    if(tab==="park"||tab==="kev"){const k=G.notes,P=tab==="park"?PARK:KEV;return`<h3 style="margin:0">${tab==="park"?"Mr. Park":"Kevin"}</h3><p class="hint" style="margin:2px 0 8px">${tab==="park"?"Owner · 店长（你还没见过他本人）":"Night shift (before you) · 你之前的夜班店员"}</p><ul class="facts">${P.facts.map((f,i)=>i<k?`<li>${markWords(f[0])}<small>${f[1]}</small></li>`:`<li style="color:#555">??? <small>（还没查到）</small></li>`).join("")}</ul>`}
+    if(tab==="notes"){const r=G.rid[G.night-1];return`<h3 style="margin:0">Notes · 笔记</h3><div class="nt">Scribbled inside the cover, in pencil:<br><b>"${r[1]}"</b> — K<small>封面内侧有一行铅笔字：“${r[2]}”—— K</small></div>${G.updates.map(u=>`<div class="nt">Mr. Park: ${markWords(u[0])}<small>${u[1]}</small></div>`).join("")}${KNOTE.slice(0,G.notes).map((n,i)=>`<div class="nt"><b>Kevin's note ${i+1}</b>${n.map(l=>`<br>${markWords(l[0])}<small>${l[1]}</small>`).join("")}</div>`).join("")}`}
     const r=REG[tab];const f=[[r.lookTxt[0],r.lookTxt[1]],["Always says: \""+r.greet[0]+"\"","招呼语："+r.greet[1]],["Usual order: "+r.orderTxt[0],"常点："+r.orderTxt[1]],[r.payTxt[0],r.payTxt[1]],[r.paTxt[0],r.paTxt[1]]];
     return`<div class="pg"><canvas width="96" height="120" id="pc"></canvas><div style="flex:1"><h3 style="margin:0">${r.n}</h3><p class="hint" style="margin:0 0 6px">${r.role[0]} · ${r.role[1]}</p>${G.missing[tab]?'<div class="stamp">MISSING</div>':""}<ul class="facts">${f.map(x=>`<li>${markWords(x[0])}<small>${x[1]}</small></li>`).join("")}</ul></div></div>`;
   };
-  const tabs=()=>Object.keys(REG).map(k=>`<button data-t="${k}" class="${tab===k?"on":""}">${REG[k].n}${G.missing[k]?" ✕":""}</button>`).join("")+`<button data-t="park" class="${tab==="park"?"on":""}">Mr. Park</button><button data-t="notes" class="${tab==="notes"?"on":""}">笔记</button>`;
+  const tabs=()=>Object.keys(REG).map(k=>`<button data-t="${k}" class="${tab===k?"on":""}">${REG[k].n}${G.missing[k]?" ✕":""}</button>`).join("")+`<button data-t="park" class="${tab==="park"?"on":""}">Mr. Park</button>${G.notes?`<button data-t="kev" class="${tab==="kev"?"on":""}">Kevin</button>`:""}<button data-t="notes" class="${tab==="notes"?"on":""}">笔记</button>`;
   return modal(`<h2>THE REGULARS BOOK · 常客名册</h2><div class="tabs" id="tb"></div><div id="pgb"></div><div class="row"><button class="btn pri" data-close>合上</button></div>`,m=>{
     const ren=()=>{G.lastTab=tab;m.querySelector("#tb").innerHTML=tabs();m.querySelector("#pgb").innerHTML=pg();const pc=m.querySelector("#pc");if(pc)portrait(pc,REG[tab].look);
       m.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{sfx("click");tab=b.dataset.t;ren()})};ren();
@@ -455,7 +463,7 @@ function book(){
 /* ================= camera ================= */
 function camera(){
   G.cam--;refresh();sfx("click");const c=G.cur;
-  return modal(`<h2>Security camera · 监控</h2><canvas id="camc" width="128" height="80"></canvas><p class="hint">电池很旧，每晚只能看两次。</p><div class="row"><button class="btn pri" data-close>关闭</button></div>`,m=>{
+  return modal(`<h2>Security camera · 监控</h2><canvas id="camc" width="128" height="80"></canvas><p class="hint">电池快没电了，要撑到周五。</p><div class="row"><button class="btn pri" data-close>关闭</button></div>`,m=>{
     const cc=m.querySelector("#camc"),cg=cc.getContext("2d"),sg=g;
     const loop=()=>{if(!m.contains(cc))return;g=cg;CX=0;R(0,0,128,80,"#2a3434");R(40,6,48,56,"#0b1015");R(0,62,128,18,"#4a3420");
       if(c.mimic){const L={skin:"#222",hair:"#111",style:"long",top:"#151515",faceless:1};bust(40,8+Math.sin(G.t*9)*.6,2,L)}else bust(40,8,2,c.look);
@@ -467,12 +475,12 @@ function camera(){
 
 /* ================= flow ================= */
 async function encounter(c){
-  G.cur=c;c.vis=0;c.tv=1;G.asks=2;sfx("chime");setAmb("rain",.16);await wait(1100);setAmb("rain",.06);
+  G.cur=c;c.vis=0;c.tv=1;G.asks=c.pat||2;sfx("chime");setAmb("rain",.16);await wait(1100);setAmb("rain",.06);
   WHO.cust={n:c.n,c:c.kind==="park"?"#ffb36b":"#9fc3ff",v:c.v};
   await say("cust",c.greet[0],c.greet[1]);
   const res=await new Promise(r=>{G.decide=r;G.deciding=true;refresh();showIdle()});
   G.deciding=false;G.decide=null;refresh();
-  if(c.kind==="park")return res;
+  if(c.kind==="park"||c.kind==="kev")return res;
   if(c.mimic)G.mSeen++;
   if(res==="serve"){
     await say("mia","Okay, here you go.","好的，给你。");
@@ -488,7 +496,7 @@ async function encounter(c){
 }
 async function breakTime(){
   await say("think","The store is quiet. I have a few minutes. Should I look around?","店里没人。我有几分钟空。要不要四处看看？");
-  const r=RIDDLE[G.night-1];
+  const r=G.rid[G.night-1];
   const v=await choose(SPOTS.map(s=>[s[1],s[2],s[0]]).concat([["Just wait at the counter","待在柜台就好",null]]));
   if(!v)return;sfx("step");await wait(400);
   if(v===r[0]){sfx("box");G.notes++;await modal(`<div class="paper old"><h3>Folded paper</h3>${KNOTE[G.notes-1].map(l=>`<div class="rule on"><div>${l[0]}</div><div class="z">${l[1]}</div></div>`).join("")}</div><p class="hint">这张纸条已经收进名册的「笔记」页。</p><div class="row"><button class="btn pri" data-close>收好</button></div>`);
@@ -501,19 +509,19 @@ async function card(n){
 }
 function parkNote(n){
   const L=[];const b=(e,z)=>L.push([e,z]);
-  if(n===1){b("Mia — welcome to the night shift.","Mia——欢迎来上夜班。");b("Lately, some things come in wearing our regulars' faces. They look the same. They talk the same. But they always get one small thing wrong.","最近，有些东西会顶着常客的脸进店。长得一样，说话也一样。但它们总会弄错一个小地方。");b("Before you sell anything, check THE REGULARS BOOK under the counter.","卖东西之前，先查柜台下面的《常客名册》。");b("If something is wrong, say \"Sorry, we're closed.\" Don't sell them anything.","如果哪里不对，就说“抱歉，我们打烊了。”什么都别卖给它们。");b("But our real regulars are good people. Don't turn them away.","但真正的常客都是好人。别把他们赶走。");b("I'll come by on Friday at 1 a.m. for the money and the keys. — Park","周五凌晨 1 点我会过来拿钱和钥匙。——朴")}
+  if(n===1){b("Mia — welcome to the night shift.","Mia——欢迎来上夜班。");b("Lately, some things come in wearing our regulars' faces. They look the same. They talk the same. But they always get one small thing wrong.","最近，有些东西会顶着常客的脸进店。长得一样，说话也一样。但它们总会弄错一个小地方。");b("Before you sell anything, check THE REGULARS BOOK under the counter.","卖东西之前，先查柜台下面的《常客名册》。");b("If something is wrong, say \"Sorry, we're closed.\" Don't sell them anything.","如果哪里不对，就说“抱歉，我们打烊了。”什么都别卖给它们。");b("But our real regulars are good people, and everyone has bad days. Don't turn them away.","但真正的常客都是好人，谁都有状态不好的时候。别把他们赶走。");b("I'll come by on Friday at 1 a.m. for the money and the keys. — Park","周五凌晨 1 点我会过来拿钱和钥匙。——朴")}
   else{
-    b("Morning, Mia. I checked last night's camera.","早，Mia。我看了昨晚的监控。");
-    b(G.nightM?`It caught ${G.nightM===1?"one strange customer":G.nightM+" strange customers"} at the counter. And you sold them something.`:"Nothing strange at the counter. Good job.",G.nightM?`拍到柜台前有 ${G.nightM} 个奇怪的顾客。而且你卖了东西给它们。`:"柜台前没什么奇怪的。干得好。");
+    b("Morning, Mia. Thanks for last night.","早，Mia。昨晚辛苦了。");
+
     for(const id of G.pendShown||[])b(`${REG[id].n} didn't come home last night. The family is looking everywhere.`,`${REG[id].n} 昨晚没有回家。家里人到处在找。`);
     for(const id of G.newRef||[])b(`${REG[id].n} says you wouldn't serve them. Be careful, okay?`,`${REG[id].n} 说你不肯卖东西给他们。小心点，好吗？`);
-    if(n===2){const u=REG[G.chgA].chgLook;G.updates.push([u[1],u[2]]);b("Update for the book: "+u[1],"名册更新："+u[2]);b("Also, the camera under the counter works again. The battery is old. Two looks a night, that's it.","另外，柜台下面的监控又能用了。电池很旧，一晚只能看两次。")}
+    if(n===2){const u=REG[G.chgA].chgLook;G.updates.push([u[1],u[2]]);b("Update for the book: "+u[1],"名册更新："+u[2]);b("Also, the camera under the counter works again. The battery is almost dead, so use it carefully. It has to last until Friday.","另外，柜台下面的监控又能用了。电池快没电了，省着点用，要撑到周五。")}
     if(n===3){const u=REG[G.chgB].chgPa;G.updates.push([u[1],u[2]]);b("Update for the book: "+u[1],"名册更新："+u[2]);b("Tonight is Friday. I'll be there at 1 a.m. Have the keys ready. — Park","今晚是周五。我凌晨 1 点到。把钥匙准备好。——朴")}
   }
   return modal(`<div class="paper"><h3>${n===1?"Note from Mr. Park":"Text from Mr. Park"}</h3>${L.map(l=>`<div class="rule"><div>${markWords(l[0])}</div><div class="z">${l[1]}</div></div>`).join("")}</div><p class="hint">点一句可以看中文。更新内容会记在名册的「笔记」页。</p><div class="row"><button class="btn" id="allz">全部显示中文</button><button class="btn pri" data-close>好</button></div>`,m=>{m.querySelectorAll(".rule").forEach(r=>r.onclick=()=>r.classList.toggle("on"));m.querySelector("#allz").onclick=()=>m.querySelector(".paper").classList.toggle("allz")});
 }
 async function night(n){
-  G.night=n;G.nightM=0;G.cam=n===1?0:2;G.clock=22*60+30;G.flick=0;refresh();
+  G.night=n;G.nightM=0;G.cam=n===1?0:n===2?3:G.cam;G.clock=22*60+30;G.flick=0;refresh();
   if(n===2){const c=shuf(Object.keys(REG).filter(i=>REG[i].chgLook&&!G.missing[i]));G.chgA=c[0]||"tom"}
   if(n===3){const c=shuf(Object.keys(REG).filter(i=>REG[i].chgPa&&!G.missing[i]&&i!==G.chgA));G.chgB=c[0]||"grace"}
   await card(n);setAmb("rain",.06);setAmb("hum",.05);setAmb("drone",[0,.03,.07][n-1]);
@@ -530,48 +538,62 @@ async function night(n){
   await say("think","Almost one o'clock. Time to count the register.","快一点了。该点算收银机了。");await countGame();
   G.pendShown=G.pend.filter(id=>!G.missing[id]);G.pendShown.forEach(id=>G.missing[id]=1);G.pend=[];
   G.newRef=Object.keys(G.refused).filter(id=>!G.refSeen||!G.refSeen[id]);G.refSeen=Object.assign({},G.refused);
-  if(G.mimicsIn>=3)return ending("replaced");
+  if(Object.keys(G.missing).length>=3)return ending("replaced");
   if(n<3){G.clock=25*60;refresh();sfx("lock");await say("think","One o'clock. Lock up and go home.","一点了。锁门回家。");return night(n+1)}
   return finale();
 }
 async function finale(){
   G.clock=24*60+56;refresh();
+  const pf=G.pf,kf=G.kf;
   const allies=Object.keys(G.served).filter(id=>!G.missing[id]&&!G.refused[id]);
   if(allies.length>=4){const a=REG[allies[0]];sfx("ring");await wait(900);WHO.phone.n="📞 "+a.n;
     await say("think","The store phone is ringing.","店里的电话响了。");
-    if(G.park==="fake")await say("phone",`Mia? It's ${a.n}. Listen. I just saw Mr. Park across town. He's in the hospital. He can't be coming to the store.`,`Mia？我是 ${a.n}。听着，我刚在城另一头看到朴店长了。他在医院。他不可能去店里。`);
-    else await say("phone",`Mia? It's ${a.n}. I just saw Mr. Park walking to the store. He looks tired. Be nice to him, okay?`,`Mia？我是 ${a.n}。我刚看见朴店长往店里走。他看起来很累。对他好点，好吗？`);
+    if(pf)await say("phone",`Mia? It's ${a.n}. Listen. I just saw Mr. Park across town. He's in the hospital. He can't be coming to the store.`,`Mia？我是 ${a.n}。听着，我刚在城另一头看到朴店长了。他在医院。他不可能去店里。`);
+    else await say("phone",`Mia? It's ${a.n}. Kevin's mom was at the bus stop again tonight, with his poster. Nobody has seen him in a year. Be careful.`,`Mia？我是 ${a.n}。Kevin 的妈妈今晚又拿着寻人海报在公交站。一年了，没人见过他。小心点。`);
     await say("think","Thank you.","谢谢你。");}
   G.clock=25*60;refresh();sfx("buzz");G.flick=1;await wait(500);G.flick=0;
   G.noCam=1;await say("think","One o'clock. The camera screen just went black.","一点了。监控屏幕突然黑了。");
-  const fake=G.park==="fake",w=G.parkWrong;const L=Object.assign({},PARK.look);if(fake&&w==="look")L.scar=0;
-  const greet=fake&&w==="greet"?["Hello, Mia. Long week?","你好，Mia。这周很累吧？"]:["Hey, kid. Long week?","嘿，小家伙。这周很累吧？"];
-  const c={kind:"park",n:"Mr. Park",v:[.7,.85,3],look:L,greet,fake};
-  await say("think","Someone is at the door. A man in a brown coat.","门口有人。一个穿棕色外套的男人。");
+  sfx("knock");await say("think","Someone is knocking. A young man in a yellow raincoat. Green vest under it... a name tag?","有人在敲门。一个穿黄雨衣的年轻人。雨衣下面是绿背心……别着名牌？");
+  const KL=Object.assign({},KEV.look);if(kf&&G.kWrong==="look")KL.bandage=0;
+  const kc={kind:"kev",n:"Kevin?",v:[1,.9,2],look:KL,fake:kf,greet:kf&&G.kWrong==="greet"?["Hello. I am Kevin. I work here. Let me in.","你好。我是 Kevin。我在这里上班。让我进去。"]:["Yo. ...Is it really you? The new night person? Please. Let me in.","哟。……你就是新来的夜班吗？求你了，让我进去。"]};
+  await say("think","✅ means I open the door. ⛔ means it stays locked.","✅ 就是开门。⛔ 就是继续锁着。");
+  const r1=await encounter(kc);
+  let bad=null,kevIn=false;
+  if(r1==="serve"){await say("mia","Okay. Come in, quick.","好，快进来。");if(kf)bad="kevin";else{kevIn=true;await say("cust","Thank you. Thank you. It's so cold out there.","谢谢。谢谢。外面好冷。")}}
+  else{await say("mia","Sorry. I can't.","对不起。我不能开。");await say("cust",kf?"...Okay.":"Please... I just want to go home.",kf?"……好吧。":"求你了……我只想回家。");}
+  kc.tv=0;await wait(900);G.cur=null;
+  if(bad)return ending("last",bad);
+  await say("think","Headlights. A man in a brown coat gets out of a car.","车灯。一个穿棕色外套的男人从车上下来。");
+  const L=Object.assign({},PARK.look);if(pf&&G.parkWrong==="look")L.scar=0;
+  const greet=pf&&G.parkWrong==="greet"?["Hello, Mia. Long week?","你好，Mia。这周很累吧？"]:["Hey, kid. Long week?","嘿，小家伙。这周很累吧？"];
+  const c={kind:"park",n:"Mr. Park",v:[.7,.85,3],look:L,greet,fake:pf};
   const res=await encounter(c);
-  if(res==="serve"){await say("mia","Here are the keys, Mr. Park.","钥匙给你，店长。");return ending(fake?"last":(G.notes>=3&&G.mimicsIn<=1?"true":"dawn"),"keys")}
-  await say("mia","Sorry. We're closed.","抱歉。我们打烊了。");
-  if(fake){await say("cust","...","……");await say("cust","Smart kid.","聪明的小家伙。",{slow:1});c.tv=0;await wait(1000);G.cur=null;return ending(G.notes>=3&&G.mimicsIn<=1?"true":"dawn","refused")}
-  await say("cust","Kid? It's me. Open the door. It's not safe out here.","小家伙？是我。开门。外面不安全。");return ending("last","locked");
+  if(res==="serve"){await say("mia","Here are the keys, Mr. Park.","钥匙给你，店长。");if(pf)return ending("last","keys")}
+  else{await say("mia","Sorry. We're closed.","抱歉。我们打烊了。");
+    if(!pf){await say("cust","Kid? It's me. Open the door. It's not safe out here.","小家伙？是我。开门。外面不安全。");return ending("last","locked")}
+    await say("cust","...","……");await say("cust","Smart kid.","聪明的小家伙。",{slow:1});c.tv=0;await wait(1000);G.cur=null}
+  const good=(kf||kevIn)&&G.notes>=2&&Object.keys(G.missing).length<=1;
+  return ending(good?"true":"dawn",kf?"kf":"kr");
 }
 
 /* ================= endings ================= */
 const END={
- replaced:{t:"Everyone Is Here",z:"大家都来了",L:[["The next night, the store is full when you arrive.","第二天晚上，你到店里时，店里已经挤满了人。"],["Tom. Lily. Grace. Everyone you know.","Tom、Lily、Grace。所有你认识的人。"],["They turn to you at the same time.","他们同时转过头来看你。"],["\"Long day, huh?\" they all say. Together.","“今天好漫长啊，是吧？”他们一起说。"],["Under the counter, the book has a new page.","柜台下面，名册多了一页。"],["It has your face on it.","上面是你的脸。"]]},
- last:{t:"The Last Customer",z:"最后一位客人",L:[]},
- dawn:{t:"See You Next Week",z:"下周见",L:[["The sun comes up. The rain stops.","太阳升起来了。雨停了。"],["Mr. Park counts the money twice. Then he hands you an envelope.","朴店长把钱数了两遍，然后递给你一个信封。"],["\"You're good at this, kid. Same time next week?\"","“你干得不错，小家伙。下周同一时间？”"],["On your way out, you look back at the window.","出门时，你回头看了一眼橱窗。"],["For a second, you see a young man in a green vest behind the counter. He waves.","有那么一瞬间，你看到柜台后面站着一个穿绿背心的年轻男人。他朝你挥了挥手。"],["Then he's gone.","然后他就不见了。"]]},
- true:{t:"Kevin Comes Home",z:"Kevin 回家了",L:[["At 5 a.m., the door chime rings.","凌晨五点，门铃响了。"],["A young man in a green vest stands in the doorway. Wet. Confused.","一个穿绿背心的年轻人站在门口。浑身湿透，一脸茫然。"],["\"What day is it?\" he asks. \"I... I think I work here.\"","“今天几号？”他问，“我……我好像在这里上班。”"],["Mr. Park drops his barley tea.","朴店长手里的大麦茶掉在了地上。"],["\"Kevin?\"","“Kevin？”"],["You didn't let them take one more face. So they had to give one back.","你没让它们再拿走一张脸。所以它们只好还回来一张。"],["You add a new page to the book. KEVIN — night shift. Always comes back.","你在名册上加了新的一页：KEVIN——夜班。总会回来。"]]}
+ replaced:{t:"Full House",z:"满座",L:[["The next night, the store is full when you arrive.","第二天晚上，你到店里时，店里已经挤满了人。"],["Tom. Lily. Grace. Everyone you know.","Tom、Lily、Grace。所有你认识的人。"],["They turn to you at the same time.","他们同时转过头来看你。"],["\"Long day, huh?\" they all say. Together.","“今天好漫长啊，是吧？”他们一起说。"],["Under the counter, the book has a new page.","柜台下面，名册多了一页。"],["It has your face on it.","上面是你的脸。"]]},
+ last:{t:"Open 24 Hours",z:"二十四小时营业",L:[]},
+ dawn:{t:"Morning Shift",z:"早班",L:[["The sun comes up. The rain stops.","太阳升起来了。雨停了。"],["Mr. Park counts the money twice. Then he hands you an envelope.","朴店长把钱数了两遍，然后递给你一个信封。"],["\"You're good at this, kid. Same time next week?\"","“你干得不错，小家伙。下周同一时间？”"],["On your way out, you look back at the window.","出门时，你回头看了一眼橱窗。"],["For a second, you see a young man in a green vest behind the counter. He waves.","有那么一瞬间，你看到柜台后面站着一个穿绿背心的年轻男人。他朝你挥了挥手。"],["Then he's gone.","然后他就不见了。"]]},
+ true:{t:"Two Names in the Book",z:"名册上的两个名字",L:[["At 5 a.m., the young man in the raincoat is still asleep by the heater.","凌晨五点，穿雨衣的年轻人还在暖气旁睡着。"],["He wakes up. Warm. Confused.","他醒了。暖和了，但一脸茫然。"],["\"What day is it?\" Kevin asks again. \"I... I think I work here.\"","“今天几号？”他问，“我……我好像在这里上班。”"],["Behind him, Mr. Park drops his barley tea.","他身后，朴店长手里的大麦茶掉在了地上。"],["\"Kevin?\"","“Kevin？”"],["You didn't let them take one more face. So they had to give one back.","你没让它们再拿走一张脸。所以它们只好还回来一张。"],["You add a new page to the book. KEVIN — night shift. Always comes back.","你在名册上加了新的一页：KEVIN——夜班。总会回来。"]]}
 };
-const LASTV={keys:[["He takes the keys. His smile is a little too wide.","他接过钥匙。笑容咧得有点太开了。"],["\"Thanks, kid,\" it says, in Mr. Park's voice.","“谢了，小家伙。”它用朴店长的声音说。"],["The lights go out, one by one.","灯一盏一盏地灭了。"],["The next night, CORNER STOP is open 24 hours.","第二天晚上，街角便利店变成了 24 小时营业。"],["Mr. Park is behind the counter. So are you.","朴店长在柜台后面。你也在。"],["Neither of you blinks.","你们俩都没有眨眼。"]],locked:[["\"Kid. Please.\"","“小家伙。求你了。”"],["You don't open the door.","你没有开门。"],["At 3 a.m., something else starts knocking. Then the knocking stops.","凌晨三点，有别的东西开始敲门。然后，敲门声停了。"],["In the morning, Mr. Park's car is still outside. The door is open. Nobody is in it.","早上，朴店长的车还停在外面。车门开着，里面没有人。"],["The next Friday, a man in a brown coat comes to pick up the keys.","下个周五，一个穿棕色外套的男人来拿钥匙。"],["\"Hello, Mia,\" he says.","“你好，Mia。”他说。"]]};
+const LASTV={kevin:[["He steps inside and shakes the rain off his coat.","他走进来，抖了抖雨衣上的水。"],["\"Thanks,\" he says. Then he walks behind the counter. Next to you.","“谢了。”他说。然后他走到柜台后面。站在你旁边。"],["\"I'll take it from here.\"","“接下来交给我吧。”"],["When Mr. Park arrives, there are two night clerks smiling at him.","朴店长到的时候，有两个夜班店员对着他微笑。"],["One of them is wearing your name tag.","其中一个别着你的名牌。"]],keys:[["He takes the keys. His smile is a little too wide.","他接过钥匙。笑容咧得有点太开了。"],["\"Thanks, kid,\" it says, in Mr. Park's voice.","“谢了，小家伙。”它用朴店长的声音说。"],["The lights go out, one by one.","灯一盏一盏地灭了。"],["The next night, CORNER STOP is open 24 hours.","第二天晚上，街角便利店变成了 24 小时营业。"],["Mr. Park is behind the counter. So are you.","朴店长在柜台后面。你也在。"],["Neither of you blinks.","你们俩都没有眨眼。"]],locked:[["\"Kid. Please.\"","“小家伙。求你了。”"],["You don't open the door.","你没有开门。"],["At 3 a.m., something else starts knocking. Then the knocking stops.","凌晨三点，有别的东西开始敲门。然后，敲门声停了。"],["In the morning, Mr. Park's car is still outside. The door is open. Nobody is in it.","早上，朴店长的车还停在外面。车门开着，里面没有人。"],["The next Friday, a man in a brown coat comes to pick up the keys.","下个周五，一个穿棕色外套的男人来拿钥匙。"],["\"Hello, Mia,\" he says.","“你好，Mia。”他说。"]]};
 const ORDER=["replaced","last","dawn","true"];
+const TRUEF=[["Mr. Park looks at the empty street for a long time.","朴店长盯着空荡荡的街道看了很久。"],["\"That wasn't Kevin,\" he says quietly. \"Kevin would have said yo.\"","“那不是 Kevin，”他轻声说，“Kevin 会先说一声 yo。”"],["At 5 a.m., a phone rings in the lost-and-found box. Kevin's phone. Missing for a year.","凌晨五点，失物招领箱里有部手机响了。是 Kevin 的手机，丢了整整一年。"],["One text message: \"thank you. i'm walking home now.\"","一条短信：“谢谢你。我在走回家的路上了。”"],["You add a new page to the book. KEVIN — night shift. On his way home.","你在名册上加了一页：KEVIN——夜班。在回家的路上。"]];
 async function ending(id,v){
   G.over=true;G.busy=true;G.deciding=false;advanceFn=null;refresh();setAmb("drone",id==="dawn"||id==="true"?0:.1);
   if(id==="last"||id==="replaced"){sfx("sting");G.flick=1}
   await wait(1200);
   const got=LS.get("end2",[]);if(!got.includes(id)){got.push(id);LS.set("end2",got)}
-  const e=END[id],L=id==="last"?LASTV[v]:e.L,words=[...G.words].slice(0,24);
+  const e=END[id],L=id==="last"?LASTV[v]:id==="true"&&v==="kf"?TRUEF:e.L,words=[...G.words].slice(0,24);
   SUB.innerHTML="";setAmb("rain",0);setAmb("hum",0);
-  const why=id==="dawn"?`<p class="hint">${G.mSeen} 个冒牌货里，你拦下了 ${G.mSeen-G.mimicsIn} 个；找到了 ${G.notes} / 3 张 Kevin 的纸条。好像还有一个更完整的结局。</p>`:id==="replaced"?`<p class="hint">你一共把东西卖给了 ${G.mimicsIn} 个冒牌货。</p>`:"";
+  const why=id==="dawn"?`<p class="hint">好像还有一个更完整的结局。</p>`:id==="replaced"?"":"";
   modal(`<div class="end"><p style="color:var(--dim);margin:0">ENDING ${ORDER.indexOf(id)+1} / 4</p><h2 style="font-family:VT323,monospace;font-size:34px;font-weight:400;margin:2px 0">${e.t}</h2><p style="color:var(--dim);margin-top:0">${e.z}</p>
     ${L.map(l=>`<p class="e">${l[0]}</p><p class="z">${l[1]}</p>`).join("")}${why}
     <h3 style="margin:18px 0 0;font-size:15px">这次遇到的词</h3><div class="wl">${words.map(w=>`<span>${w}<i>${WORDS[w]}</i></span>`).join("")||"<span>—</span>"}</div>
@@ -596,7 +618,7 @@ function title(){
   modal(`<div style="text-align:center"><div class="title">CLOSING TIME</div><p style="color:var(--dim);margin:6px 0 2px">便利店夜班 · 微恐 · 英文字幕</p></div>
   <p style="margin-top:14px">你是 Mia，刚接手街角便利店的夜班。店长说，最近有些东西会顶着常客的脸进店。</p>
   <p>三个夜晚。每位客人走到柜台前，你都要决定：卖，还是不卖。</p>
-  <p class="hint">玩法：对照「名册」里的照片和资料，看外表、听招呼、有限次数地提问；第二晚起可以看监控。字幕点「中文」看翻译，点「听」朗读。大约 20–30 分钟，建议戴耳机。</p>
+  <p class="hint">玩法：对照「名册」，看外表、听对话、提问（客人的耐心有限）；之后会有更多工具。字幕点「中文」看翻译，点「听」朗读。大约 20–30 分钟，建议戴耳机。</p>
   <div class="gal">${ORDER.map((id,i)=>got.includes(id)?`<div><b>${END[id].t}</b>${END[id].z}</div>`:`<div class="lock"><b>???</b>结局 ${i+1}</div>`).join("")}</div>
   <div class="row"><button class="btn pri" data-close="go" style="flex:1;font-size:17px">开始上班</button><button class="btn" id="tset">设置</button></div>
   <p class="hint" style="text-align:center"><a href="../" style="color:var(--dim)">← 回到游戏大厅</a></p>`,m=>{m.querySelector("#tset").onclick=()=>{settings().then(title)}}).then(v=>{if(v==="go")startGame()});
