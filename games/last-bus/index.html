@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#050506">
+<title>Last Bus</title>
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Special+Elite&display=swap" media="print" onload="this.media='all'">
+<style>
+:root{--ink:#e9e7e1;--dim:#8a8984;--line:#2a2a2c;--panel:#0f0f10;--red:#d2342c}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#050506;color:var(--ink);font:15px/1.5 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;overflow:hidden;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation;-webkit-user-select:none;user-select:none}
+#app{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center}
+body.land #app{flex-direction:row;justify-content:center;gap:10px}
+#stage{position:relative;flex:none;background:#000;overflow:hidden}
+#cv{display:block;width:100%;height:100%}
+#hud{position:absolute;inset:8px 8px auto 8px;display:flex;justify-content:space-between;pointer-events:none;font-family:"Special Elite",Georgia,serif}
+#hud .t{background:rgba(0,0,0,.55);border-radius:4px;padding:1px 8px;font-size:15px;letter-spacing:1px}
+#hud button{pointer-events:auto;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:0 9px;font-size:13px;line-height:22px}
+#panel{flex:1;width:100%;max-width:760px;display:flex;flex-direction:column;gap:8px;padding:8px 12px calc(10px + env(safe-area-inset-bottom));min-height:0}
+body.land #panel{width:330px;flex:none;max-width:none;height:100%;justify-content:flex-end;padding:10px 10px calc(10px + env(safe-area-inset-bottom)) 0}
+#sub{flex:1;min-height:92px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow:auto;cursor:pointer}
+#sub .who{font-size:12px;font-weight:700;color:var(--dim);letter-spacing:.5px}
+#sub .en{font-family:"Special Elite",Georgia,serif;font-size:18px;line-height:1.45}
+#sub .zh{color:var(--dim);font-size:14px;margin-top:3px}
+#sub .tools{display:flex;gap:6px;margin-top:8px;align-items:center}
+.tb{background:#1a1a1c;border:1px solid var(--line);border-radius:6px;padding:1px 9px;font-size:13px}
+.nx{margin-left:auto;color:var(--dim);font-size:12px}
+.idle{color:var(--dim);font-size:14px}
+.kw{border-bottom:1px dashed rgba(255,255,255,.45)}
+.choices{display:grid;gap:7px;margin-top:8px}
+.ch{text-align:left;background:#18181a;border:1px solid #333;border-radius:8px;padding:8px 11px}
+.ch small{display:block;color:var(--dim);font-size:12.5px}
+#pad{display:grid;grid-template-columns:76px 76px 1fr 1fr;gap:8px;flex:none}
+#pad button{height:62px;border-radius:12px;background:#141416;border:1px solid #2c2c30;font-size:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15}
+#pad button small{font-size:11.5px;color:var(--dim)}
+#pad button.on{background:#222226}
+#pad .dot{position:relative}#pad .dot::after{content:"";position:absolute;top:8px;right:14px;width:8px;height:8px;border-radius:50%;background:var(--red)}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.84);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+#modal.show{display:flex}
+.mbox{background:#121214;border:1px solid #2c2c30;border-radius:14px;padding:18px;max-width:540px;width:100%;max-height:100%;overflow:auto}
+.mbox h2{margin:0 0 6px;font-size:20px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{background:#1e1e22;border:1px solid #38383e;border-radius:9px;padding:9px 15px}
+.btn.pri{background:#e9e7e1;color:#111;border-color:#e9e7e1}
+.hint{color:var(--dim);font-size:12.5px}
+.title{font-family:"Special Elite",Georgia,serif;font-size:58px;line-height:1;letter-spacing:2px}
+.close{background:#e8e6df;color:#111;border-radius:6px;padding:16px;font-family:"Special Elite",Georgia,serif;font-size:22px;line-height:1.4;text-align:center}
+.close .zh{font-family:system-ui,"PingFang SC",sans-serif;font-size:14px;color:#555;margin-top:8px;display:none}
+.close.z .zh{display:block}
+.msg{background:#1a1a1d;border-radius:10px;padding:8px 10px;margin:6px 0;font-size:14.5px}
+.msg b{font-size:12px;color:var(--dim);display:block}
+.msg small{color:var(--dim);display:block}
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.gal div{background:#18181a;border:1px solid #2a2a2e;border-radius:8px;padding:8px 10px;font-size:13px}
+.gal b{display:block}.gal .lock{color:#555}
+.end p.e{font-family:"Special Elite",Georgia,serif;font-size:17px;margin:10px 0 0}
+.end p.z{color:var(--dim);font-size:13.5px;margin:2px 0 0}
+.tog{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #222}
+.sw{width:46px;height:26px;border-radius:13px;background:#333;border:0;position:relative}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#bbb;transition:.15s}
+.sw.on{background:#e9e7e1}.sw.on::after{left:23px;background:#111}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage"><canvas id="cv"></canvas>
+    <div id="hud"><span class="t" id="clk">23:21</span><span><span class="t" id="bat">🔋18%</span> <button id="hSet">⚙</button></span></div>
+  </div>
+  <div id="panel">
+    <div id="sub"></div>
+    <div id="pad">
+      <button id="bL">◀</button><button id="bR">▶</button>
+      <button id="bLook">🔍<small>看近一点</small></button>
+      <button id="bPh">📱<small>手机</small></button>
+    </div>
+  </div>
+</div>
+<div id="modal"></div>
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const cv=$("#cv"),ctx=cv.getContext("2d");
+const VH=360,GY=300,LEN=900;let VW=640,SC=1;
+const LS={get(k,d){try{const v=localStorage.getItem("lb_"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("lb_"+k,JSON.stringify(v))}catch(e){}}};
+const SET=Object.assign({sfx:true,voice:true,zh:false},LS.get("set",{}));
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const rnd=a=>a[Math.random()*a.length|0];
+
+/* ===== audio ===== */
+let AC=null,master=null,NB=null;const amb={};
+function ac(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();master=AC.createGain();master.gain.value=SET.sfx?.9:0;master.connect(AC.destination);
+  NB=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate);const d=NB.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  const s=AC.createBufferSource();s.buffer=NB;s.loop=true;const f=AC.createBiquadFilter();f.type="lowpass";f.frequency.value=1300;const gn=AC.createGain();gn.gain.value=0;s.connect(f).connect(gn).connect(master);s.start();amb.rain=gn;
+  const o=AC.createOscillator(),o2=AC.createOscillator();o.type=o2.type="sawtooth";o.frequency.value=48;o2.frequency.value=48.7;const lf=AC.createBiquadFilter();lf.type="lowpass";lf.frequency.value=150;const dg=AC.createGain();dg.gain.value=0;o.connect(lf);o2.connect(lf);lf.connect(dg).connect(master);o.start();o2.start();amb.drone=dg;
+ }catch(e){AC=null}}if(AC&&AC.state==="suspended")AC.resume();return AC}
+function setAmb(n,v){if(AC&&amb[n])amb[n].gain.setTargetAtTime(v,AC.currentTime,.6)}
+function tone(f,d,type="sine",v=.2,t0=0,sl){const t=AC.currentTime+t0,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(sl)o.frequency.exponentialRampToValueAtTime(sl,t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(master);o.start(t);o.stop(t+d+.05)}
+function noise(d,v=.2,fr=1000,type="lowpass",t0=0,q=1){const t=AC.currentTime+t0,s=AC.createBufferSource();s.buffer=NB;const f=AC.createBiquadFilter();f.type=type;f.frequency.value=fr;f.Q.value=q;const g=AC.createGain();g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(f).connect(g).connect(master);s.start(t,Math.random());s.stop(t+d+.05)}
+const SFX={step(){noise(.06,.09,700,"bandpass",0,1.5)},echo(){noise(.08,.07,380,"bandpass",0,2)},buzz(){[0,.25].forEach(t=>noise(.18,.12,160,"lowpass",t))},sting(){tone(92,1.8,"sawtooth",.09);tone(97,1.8,"sawtooth",.09);tone(1480,1.2,"sine",.03,0,1390)},ok(){tone(660,.3,"sine",.06);tone(990,.4,"sine",.05,.12)},bad(){tone(140,.8,"triangle",.12,0,90)},bus(){noise(3,.16,220);tone(55,3,"sawtooth",.05)},door(){noise(.6,.12,900,"bandpass",0,3)},click(){tone(2200,.03,"square",.03)}};
+function sfx(n){if(!SET.sfx||!ac())return;try{SFX[n]()}catch(e){}}
+const tts=window.speechSynthesis,NOV=/Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Kathy|Fred|Princess|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley/i;
+function speak(t,p=1,r=.9){if(!tts||!SET.voice)return;try{tts.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[*"“”]/g,""));u.lang="en-US";u.rate=r;u.pitch=p;const vs=tts.getVoices().filter(v=>/^en[-_]US/i.test(v.lang)&&!NOV.test(v.name));if(vs.length)u.voice=vs[0];tts.speak(u)}catch(e){}}
+
+/* ===== words ===== */
+const WORDS={"missing":"失踪","last seen":"最后一次被看到","timetable":"时刻表","block":"街区","blocks":"街区","bus stop":"公交站","weird":"奇怪的","location":"位置","circles":"圆圈；兜圈子","behind":"在……后面","footsteps":"脚步声","turn back":"往回走","shadow":"影子","alone":"独自","picking up":"接电话","forever":"永远","drop":"掉落","dropped":"掉了","slow":"慢行","headline":"标题","vending machine":"自动售货机","wrong":"不对的","again":"又；再","driver":"司机","passengers":"乘客","street":"街道"};
+const WRE=new RegExp("\\b("+Object.keys(WORDS).sort((a,b)=>b.length-a.length).map(k=>k.replace(/ /g,"\\s")).join("|")+")\\b","gi");
+const mark=en=>en.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(WRE,m=>`<span class="kw" title="${WORDS[m.toLowerCase()]}">${m}</span>`);
+
+/* ===== anomalies ===== */
+const AN={
+ street:["The street sign said \"Elm Streat\". That's not how you spell it.","路牌上写的是“Elm Streat”。拼写不对。"],
+ time:["The timetable said the last bus is at 23:04, not 23:40.","时刻表上写末班车是 23:04，不是 23:40。"],
+ poster:["The poster said: \"Last seen: behind you.\"","海报上写着：“最后一次被看到：在你身后。”"],
+ eyes:["The face on the poster... its eyes were following me.","海报上那张脸……眼睛一直在跟着我转。"],
+ lamp5:["There were five street lamps. There are always four.","路灯有五盏。明明一直都是四盏。"],
+ lampred:["One street lamp was red.","有一盏路灯是红色的。"],
+ steps:["When I stopped walking, the footsteps didn't stop.","我停下来的时候，脚步声没有停。"],
+ shadow:["My shadow was on the wrong side. And it was late.","我的影子在反方向，而且慢了半拍。"],
+ open:["The shop sign said OPEN 25H. There are only 24 hours in a day.","店门口写着 OPEN 25H。一天只有 24 小时。"],
+ news:["The newspaper headline said: WOMAN WALKS SAME STREET FOREVER.","报纸标题写着：女子永远走在同一条街上。"],
+ bench:["The man on the bench was gone. Only his newspaper was there.","长椅上的男人不见了，只剩下他的报纸。"],
+ vend:["The vending machine buttons spelled H-E-L-P.","自动售货机的按钮拼出了 H-E-L-P。"],
+ sign:["The road sign said: SLOW, CHILDREN WATCHING.","路牌写着：慢行，孩子们在看着。"],
+ moon:["There were two moons.","天上有两个月亮。"],
+ window:["Someone was standing in every window.","每一扇窗户里都站着一个人。"],
+ rainup:["The rain was falling up.","雨在往上落。"],
+ car:["Someone was sitting in the parked car. Lights on. Watching.","停着的车里坐着人。车灯开着。在看。"],
+ cat:["The cat was standing on two legs.","那只猫是用两条腿站着的。"],
+ phone:["I got a text from an unknown number: \"you dropped something. come back.\"","我收到一条陌生号码的短信：“你掉东西了。回来。”"]
+};
+const AKEYS=Object.keys(AN);
+const STORY={1:["Jess","Did you make the last bus? N8 at 23:40, to Maple Ave. Don't miss it lol","赶上末班车了吗？N8，23:40，开往 Maple Ave。别错过了哈哈"],3:["Jess","btw don't walk down Elm St alone. That woman who went missing last month? Anna something. They never found her.","对了，别一个人走 Elm 街。上个月失踪的那个女的？叫 Anna 什么的。一直没找到。"],5:["Jess","hey your location is weird. The map says you're walking in circles??","喂，你的位置好奇怪。地图上显示你在兜圈子？？"],7:["Jess","Call me when you're on the bus ok","上车了给我打电话，好吗"],10:["Jess","I'm calling you. Why aren't you picking up","我在给你打电话。你怎么不接"],13:["Jess","it says you're on Elm St. It has said that for an hour.","上面显示你在 Elm 街。已经显示一个小时了。"],17:["Jess","please just keep walking. don't look back","求你了，一直走。别回头"]};
+
+/* ===== state ===== */
+let G=null;
+function newGame(){G={x:90,face:1,walk:0,count:0,mist:0,loop:0,an:null,last:[],t:0,still:0,echoN:0,bat:18,min:23*60+21,msgs:[],unread:0,phoneDone:false,keys:{},busy:false,over:false,mode:"walk",cap:null,bus:null,busFake:null,ph:0,sh:0}}
+function pickAn(){
+  if(G.loop===0)return null;
+  if(Math.random()>.58)return null;
+  let pool=AKEYS.filter(k=>!G.last.includes(k));const k=rnd(pool);G.last.push(k);if(G.last.length>8)G.last.shift();return k;
+}
+
+/* ===== captions ===== */
+const SUB=$("#sub");let adv=null,lastLine=null;
+function lineHTML(who,en,zh,tap){return`${who?`<div class="who">${who}</div>`:""}<div class="en">${mark(en)}</div><div class="zh"${SET.zh?"":" hidden"}>${zh}</div><div class="tools"><button class="tb" data-a="spk">🔊 听</button><button class="tb" data-a="zh">中文</button>${tap?'<span class="nx">点击继续 ▼</span>':""}</div>`}
+function cap(en,zh,who=""){lastLine=en;SUB.innerHTML=lineHTML(who,en,zh,false);speak(en,1.05,.92)}
+function say(en,zh,who=""){return new Promise(r=>{lastLine=en;SUB.innerHTML=lineHTML(who,en,zh,true);speak(en,1.05,.92);adv=()=>{adv=null;r()}})}
+function choose(opts){return new Promise(r=>{SUB.innerHTML=(lastLine?`<div class="idle">${mark(lastLine)}</div>`:"")+`<div class="choices">${opts.map((o,i)=>`<button class="ch" data-i="${i}">${o[0]}<small>${o[1]}</small></button>`).join("")}</div>`;
+  SUB.querySelectorAll(".ch").forEach(b=>b.onclick=e=>{e.stopPropagation();sfx("click");r(opts[+b.dataset.i][2])})})}
+function idle(){if(!G||G.over||G.mode!=="walk")return;SUB.innerHTML=`<div class="idle">◀ ▶ 走路。觉得哪里不对劲，就<b>往回走</b>；一切正常，就<b>继续往前</b>。<br>🔍 可以凑近看招牌和文字。</div>`}
+SUB.addEventListener("click",e=>{ac();const a=e.target.dataset&&e.target.dataset.a;
+  if(a==="spk"){e.stopPropagation();if(lastLine)speak(lastLine,1.05,.85);return}
+  if(a==="zh"){e.stopPropagation();const z=SUB.querySelector(".zh");if(z)z.hidden=!z.hidden;return}
+  if(adv)adv()});
+
+/* ===== modal ===== */
+const MOD=$("#modal");let mseq=0;
+function modal(html,setup){return new Promise(res=>{const id=++mseq;let done=0;MOD.className="show";MOD.innerHTML=`<div class="mbox">${html}</div>`;if(G)G.modal=true;
+  const close=v=>{if(done)return;done=1;if(id===mseq){MOD.className="";MOD.innerHTML="";if(G)G.modal=false}res(v)};
+  MOD.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>{sfx("click");close(b.dataset.close)});setup&&setup(MOD,close)})}
+
+/* ===== drawing helpers ===== */
+let CX=0;const g=ctx;
+const rect=(x,y,w,h,c)=>{g.fillStyle=c;g.fillRect(x-CX,y,w,h)};
+const txt=(s,x,y,size,c,al="center",f="bold")=>{g.fillStyle=c;g.font=`${f} ${size}px Georgia,"Times New Roman",serif`;g.textAlign=al;g.textBaseline="middle";g.fillText(s,x-CX,y)};
+const K="#09090b";
+function human(x,y,face,ph,o={}){
+  const X=x-CX,s=o.s||1;g.save();g.translate(X,y);g.scale(face*s,s);g.strokeStyle=o.c||K;g.fillStyle=o.c||K;g.lineCap="round";g.lineJoin="round";
+  const sw=Math.sin(ph)*.55,lift=Math.abs(Math.cos(ph))*1.5;
+  if(o.sit){g.lineWidth=6;g.beginPath();g.moveTo(0,-28);g.lineTo(14,-28);g.lineTo(14,-4);g.moveTo(-2,-28);g.lineTo(12,-30);g.lineTo(12,-4);g.stroke();g.beginPath();g.ellipse(0,-42,8,15,0,0,7);g.fill();g.beginPath();g.arc(1,-63,7,0,7);g.fill();g.restore();return}
+  g.lineWidth=6;
+  g.beginPath();g.moveTo(0,-30);g.lineTo(Math.sin(sw)*16,-1);g.moveTo(0,-30);g.lineTo(-Math.sin(sw)*16,-1);g.stroke();
+  if(o.coat){g.beginPath();g.moveTo(-8,-56);g.lineTo(8,-56);g.lineTo(11,-18);g.lineTo(-11,-18);g.fill()}
+  else{g.beginPath();g.ellipse(0,-43,8,15,0,0,7);g.fill()}
+  if(o.pack){g.beginPath();g.roundRect?g.roundRect(-15,-54,9,20,3):g.rect(-15,-54,9,20);g.fill()}
+  g.lineWidth=5;g.beginPath();g.moveTo(0,-53);g.lineTo(-Math.sin(sw)*12,-30);g.moveTo(0,-53);g.lineTo(Math.sin(sw)*12+2,-30);g.stroke();
+  g.beginPath();g.arc(1,-64-lift*.3,7.5,0,7);g.fill();
+  g.restore();
+}
+const grain=document.createElement("canvas");grain.width=grain.height=128;{const gg=grain.getContext("2d"),im=gg.createImageData(128,128);for(let i=0;i<im.data.length;i+=4){const v=Math.random()*255;im.data[i]=im.data[i+1]=im.data[i+2]=v;im.data[i+3]=255}gg.putImageData(im,0,0)}
+let grainPat=null;
+
+/* ===== scene ===== */
+function A(k){return G.an===k}
+function bgLayer(){
+  const sk=g.createLinearGradient(0,0,0,GY);sk.addColorStop(0,"#121318");sk.addColorStop(.75,"#34363d");sk.addColorStop(1,"#4a4c52");g.fillStyle=sk;g.fillRect(0,0,VW,GY);
+  const mx=VW*.78-CX*.05;g.fillStyle="#d8d6cf";g.beginPath();g.arc(mx,54,15,0,7);g.fill();g.fillStyle="#1a1b20";g.beginPath();g.arc(mx+7,50,13,0,7);g.fill();
+  if(A("moon")){g.fillStyle="#d8d6cf";g.beginPath();g.arc(mx-120,78,13,0,7);g.fill();g.fillStyle="#22232a";g.beginPath();g.arc(mx-126,74,11,0,7);g.fill()}
+  const off=CX*.35;g.fillStyle="#1d1e23";
+  const B=[[0,120],[70,170],[140,100],[230,190],[300,140],[390,160],[470,110],[560,180],[640,130],[720,170],[800,120],[880,150]];
+  for(const[bx,bh]of B){const x=bx-off;g.fillRect(x,GY-bh,66,bh);
+    for(let wy=GY-bh+14;wy<GY-30;wy+=22)for(let wx=x+10;wx<x+60;wx+=18){const lit=A("window")||(bx===230&&wy===GY-bh+36&&wx===x+28);if(lit){g.fillStyle="#cfc8b4";g.fillRect(wx,wy,8,11);g.fillStyle=K;g.fillRect(wx+2,wy+3,4,8);g.beginPath();g.arc(wx+4,wy+3,2.2,0,7);g.fill();g.fillStyle="#1d1e23"}}}
+  const fog=g.createLinearGradient(0,GY-90,0,GY);fog.addColorStop(0,"rgba(80,82,88,0)");fog.addColorStop(1,"rgba(80,82,88,.55)");g.fillStyle=fog;g.fillRect(0,GY-90,VW,90);
+}
+function lamp(x,red){rect(x-2,140,4,GY-140,K);rect(x-2,140,22,3,K);rect(x+12,141,14,6,K);
+  const lx=x+19-CX,gr=g.createLinearGradient(0,147,0,GY);const c=red?"210,52,44":"235,232,220";gr.addColorStop(0,`rgba(${c},.42)`);gr.addColorStop(1,`rgba(${c},0)`);g.fillStyle=gr;g.beginPath();g.moveTo(lx-6,147);g.lineTo(lx+6,147);g.lineTo(lx+52,GY);g.lineTo(lx-52,GY);g.fill();
+  g.fillStyle=red?"#e04a3c":"#f2efe4";g.fillRect(lx-6,146,12,2)}
+function street(){
+  // ground
+  rect(CX-50,GY,VW+100,VH-GY,K);rect(CX-50,GY,VW+100,2,"#3a3b40");
+  for(let x=Math.floor(CX/60)*60;x<CX+VW+60;x+=60)rect(x,GY+2,1,14,"#1c1c20");
+  // block sign
+  rect(42,200,4,100,K);rect(4,166,80,44,"#e3e1da");rect(4,166,80,3,"#b5b2aa");
+  txt(A("street")?"ELM STREAT":"ELM STREET",44,180,12,"#111");txt("BUS STOP ▸ "+(8-G.count)+(8-G.count===1?" BLOCK":" BLOCKS"),44,198,8.5,"#111","center","normal");
+  // wall + poster
+  rect(170,170,140,130,"#141418");
+  rect(196,192,72,92,"#d9d6cc");txt("MISSING",232,203,12,"#a8211b");rect(212,212,40,36,"#77766f");
+  g.fillStyle=K;g.beginPath();g.arc(232-CX,227,9,0,7);g.fill();g.fillRect(222-CX,236,20,12);
+  if(A("eyes")){const ex=Math.max(-2,Math.min(2,(G.x-232)/80));g.fillStyle="#fff";g.fillRect(228-CX+ex,226,2,2);g.fillRect(234-CX+ex,226,2,2)}
+  txt("ANNA LEE, 27",232,257,8,"#111");txt(A("poster")?"Last seen: behind you":"Last seen: Elm St, 11 p.m.",232,270,6.5,"#222","center","normal");
+  // vending machine
+  rect(276,214,38,86,"#0f1012");rect(280,220,30,40,"#c9c6bb");
+  const vc=A("vend")?["#a8211b","#a8211b","#a8211b","#a8211b","#a8211b","#a8211b"]:["#5a6a7a","#7a5a4a","#556b55","#8a7a5a","#6a5a7a","#4a5a6a"];
+  for(let i=0;i<6;i++)rect(283+(i%3)*9,224+(i/3|0)*16,6,11,vc[i]);
+  for(let i=0;i<4;i++){rect(282+i*7,266,5,5,"#2a2b30");if(A("vend"))txt("HELP"[i],284.5+i*7,268.6,5,"#e04a3c")}
+  // lamps
+  lamp(150);lamp(330,A("lampred"));lamp(510);lamp(690);if(A("lamp5"))lamp(605);
+  // bench
+  rect(370,268,66,5,K);rect(374,273,4,27,K);rect(428,273,4,27,K);rect(370,250,66,4,K);
+  if(!A("bench")){human(392,272,1,0,{sit:1});rect(398,230,26,22,"#cfccc2");txt(A("news")?"WOMAN WALKS":"RAIN AGAIN",411,237,4.6,"#111");txt(A("news")?"SAME STREET FOREVER":"TOMORROW",411,244,4,"#111")}
+  else{rect(400,262,22,6,"#cfccc2")}
+  // timetable
+  rect(476,214,3,86,K);rect(458,196,40,30,"#e3e1da");txt("N8 · Maple Ave",478,205,6,"#111");txt(A("time")?"Last bus 23:04":"Last bus 23:40",478,216,6.5,"#111");
+  // shop
+  rect(540,180,130,120,"#141418");const sh=g.createLinearGradient(0,214,0,300);sh.addColorStop(0,"#8f8b80");sh.addColorStop(1,"#4a4840");g.fillStyle=sh;g.fillRect(552-CX,214,62,86);rect(582,214,2,86,K);
+  rect(622,218,40,16,"#0b0b0d");txt(A("open")?"OPEN 25H":"OPEN 24H",642,226,8,(G.t*2|0)%9?"#e04a3c":"#5a1a16");
+  // cat on roof
+  if(A("cat")){g.fillStyle=K;g.beginPath();g.ellipse(612-CX,165,5,9,0,0,7);g.fill();g.beginPath();g.arc(612-CX,153,5,0,7);g.fill();g.beginPath();g.moveTo(608-CX,150);g.lineTo(609-CX,144);g.lineTo(611-CX,149);g.moveTo(613-CX,149);g.lineTo(615-CX,144);g.lineTo(616-CX,150);g.fill();rect(609,172,2,8,K);rect(614,172,2,8,K)}
+  else{g.fillStyle=K;g.beginPath();g.ellipse(612-CX,175,9,5,0,0,7);g.fill();g.beginPath();g.arc(620-CX,169,4,0,7);g.fill();g.beginPath();g.moveTo(617-CX,167);g.lineTo(618-CX,162);g.lineTo(620-CX,166);g.moveTo(621-CX,166);g.lineTo(623-CX,162);g.lineTo(623-CX,167);g.fill();g.lineWidth=2;g.strokeStyle=K;g.beginPath();g.moveTo(604-CX,176);g.quadraticCurveTo(598-CX,168,602-CX,162);g.stroke()}
+  // road sign
+  rect(748,214,3,86,K);rect(712,190,76,26,"#e3e1da");txt("SLOW",750,198,8,"#111");txt(A("sign")?"CHILDREN WATCHING":"CHILDREN",750,209,6.5,"#111");
+  // car
+  g.fillStyle=K;g.beginPath();g.moveTo(790-CX,296);g.lineTo(790-CX,276);g.lineTo(812-CX,274);g.lineTo(826-CX,258);g.lineTo(862-CX,258);g.lineTo(876-CX,274);g.lineTo(890-CX,278);g.lineTo(890-CX,296);g.fill();
+  g.fillStyle="#2e3036";g.fillRect(830-CX,262,14,11);g.fillRect(848-CX,262,12,11);g.fillStyle=K;g.beginPath();g.arc(806-CX,296,8,0,7);g.arc(872-CX,296,8,0,7);g.fill();
+  if(A("car")){g.fillStyle=K;g.beginPath();g.arc(838-CX,266,4,0,7);g.fill();const hg=g.createLinearGradient(790-CX,0,700-CX,0);hg.addColorStop(0,"rgba(240,236,220,.55)");hg.addColorStop(1,"rgba(240,236,220,0)");g.fillStyle=hg;g.beginPath();g.moveTo(792-CX,280);g.lineTo(690-CX,262);g.lineTo(690-CX,300);g.fill()}
+}
+function rain(){g.strokeStyle="rgba(200,200,205,.28)";g.lineWidth=1;g.beginPath();const up=A("rainup")?-1:1;
+  for(let i=0;i<90;i++){const x=(i*71.3+G.t*30)%(VW+40)-20;let y=(i*131.7+G.t*420*up)%VH;if(y<0)y+=VH;g.moveTo(x,y);g.lineTo(x-2,y+9)}g.stroke()}
+function shadowOf(){const wrong=A("shadow");const sx=wrong?G.x-26-G.sh:G.x+20;g.fillStyle="rgba(0,0,0,.55)";g.beginPath();g.ellipse(sx-CX,GY+5,22,3.5,0,0,7);g.fill()}
+function draw(){
+  g.setTransform(SC*devicePixelRatio,0,0,SC*devicePixelRatio,0,0);
+  if(!G){g.fillStyle="#000";g.fillRect(0,0,VW,VH);return}
+  CX=Math.max(-30,Math.min(LEN-VW+30,G.x-VW*.45));
+  if(G.mode==="bus")return drawBus();
+  bgLayer();street();
+  if(G.mist>0){const fx=30-G.mist*10;human(fx,GY,1,0,{coat:1,s:1.12})}
+  shadowOf();human(G.x,GY,G.face,G.walk,{pack:1});
+  if(A("steps")&&G.still>.6){const a=Math.min(.6,(G.still-.6)*.4);const gr=g.createLinearGradient(-CX+CX,0,140,0);gr.addColorStop(0,`rgba(0,0,0,${a})`);gr.addColorStop(1,"rgba(0,0,0,0)");g.fillStyle=gr;g.fillRect(0,GY+2,160,10)}
+  rain();post();
+}
+function post(){if(!grainPat)grainPat=g.createPattern(grain,"repeat");g.save();g.globalAlpha=.07;g.translate(Math.random()*128,Math.random()*128);g.fillStyle=grainPat;g.fillRect(-128,-128,VW+256,VH+256);g.restore();
+  const v=g.createRadialGradient(VW/2,VH/2,VH*.3,VW/2,VH/2,VW*.75);v.addColorStop(0,"rgba(0,0,0,0)");v.addColorStop(1,"rgba(0,0,0,.7)");g.fillStyle=v;g.fillRect(0,0,VW,VH)}
+
+/* ===== bus stop finale ===== */
+const BUSV={num:["The bus number was N6. My bus is N8.","车号是 N6。我的车是 N8。"],dest:["The sign said HOME. The N8 goes to Maple Ave.","牌子上写的是 HOME。N8 开往 Maple Ave。"],faces:["Every passenger was the same person. Looking at me.","每个乘客都是同一个人。都在看着我。"],driver:["There was no driver.","车上没有司机。"]};
+function drawBus(){
+  bgLayer();rect(CX-50,GY,VW+100,VH-GY,K);rect(CX-50,GY,VW+100,2,"#3a3b40");
+  rect(300,200,90,6,K);rect(304,206,4,94,K);rect(382,206,4,94,K);rect(330,214,40,30,"#e3e1da");txt("N8 · Maple Ave",350,224,6,"#111");txt("Last bus 23:40",350,235,6.5,"#111");
+  lamp(250);
+  const b=G.bus;if(b){const bx=b.x;g.fillStyle=K;g.beginPath();g.moveTo(bx-CX,GY-6);g.lineTo(bx-CX,GY-96);g.quadraticCurveTo(bx-CX,GY-104,bx+10-CX,GY-104);g.lineTo(bx+260-CX,GY-104);g.lineTo(bx+260-CX,GY-6);g.fill();
+    const f=G.busFake;rect(bx+6,GY-100,64,14,"#0b0b0d");txt(f==="num"?"N6":"N8",bx+18,GY-93,9,"#f0b030");txt(f==="dest"?"HOME":"MAPLE AVE",bx+48,GY-93,6.5,"#f0b030");
+    for(let i=0;i<6;i++){const wx=bx+8+i*40;rect(wx,GY-80,32,30,"#c9c4b2");const show=f==="faces"||[0,2,3,5].includes(i);if(i===0){if(f!=="driver"){g.fillStyle=K;g.beginPath();g.arc(wx+16-CX,GY-62,6,0,7);g.fill();g.fillRect(wx+9-CX,GY-56,14,6)}}else if(show){g.fillStyle=K;g.beginPath();g.arc(wx+16-CX,GY-64,6,0,7);g.fill();g.fillRect(wx+9-CX,GY-58,14,8);if(f==="faces"){g.fillStyle="#fff";g.fillRect(wx+13-CX,GY-65,2,2);g.fillRect(wx+18-CX,GY-65,2,2)}}}
+    g.fillStyle=K;g.beginPath();g.arc(bx+50-CX,GY-4,11,0,7);g.arc(bx+210-CX,GY-4,11,0,7);g.fill();
+    const hg=g.createLinearGradient(bx-CX,0,bx-140-CX,0);hg.addColorStop(0,"rgba(240,236,220,.5)");hg.addColorStop(1,"rgba(240,236,220,0)");g.fillStyle=hg;g.beginPath();g.moveTo(bx-CX,GY-30);g.lineTo(bx-150-CX,GY-50);g.lineTo(bx-150-CX,GY);g.fill()}
+  shadowOf();human(G.x,GY,G.face,G.walk,{pack:1});rain();post();
+}
+
+/* ===== loop logic ===== */
+function hud(){$("#clk").textContent=String(G.min/60|0).padStart(2,"0")+":"+String(G.min%60).padStart(2,"0");$("#bat").textContent="🔋"+G.bat+"%";$("#bPh").classList.toggle("dot",G.unread>0)}
+function text(from,en,zh){G.msgs.push([from,en,zh]);G.unread++;sfx("buzz");hud();cap(`📱 ${from}: ${en}`,`${from}：${zh}`)}
+async function leave(dir){
+  if(G.busy)return;G.busy=true;
+  const ok=dir<0?!!G.an:!G.an,prev=G.an;
+  G.loop++;G.min+=2;if(G.loop%2===0&&G.bat>2)G.bat--;
+  if(ok){G.count++;sfx("ok")}else{G.mist++;G.count=0;sfx("bad")}
+  hud();await wait(250);
+  if(!ok){await say(dir<0?"Wait. Nothing was wrong back there. I turned back for nothing.":"Something was wrong back there. "+AN[prev][0],dir<0?"等等。刚才什么问题都没有。我白往回走了。":"刚才那里有不对劲的地方。"+AN[prev][1]);
+    if(G.mist===1)await say("Behind me, at the corner... someone is standing there.","我身后，街角那里……站着一个人。");
+    if(G.mist===3)await say("They're closer now. I can't make another mistake.","那个人更近了。我不能再出错了。");
+    if(G.mist>=4){G.busy=false;return ending("caught","walk")}}
+  if(G.count>=8){G.busy=false;return finale()}
+  G.an=pickAn();G.x=90;G.face=1;
+  G.still=0;G.echoN=0;G.phoneDone=false;G.sh=0;
+  const st=STORY[G.loop];G.busy=false;
+  if(st&&!A("phone"))setTimeout(()=>{if(G&&!G.over&&G.mode==="walk")text(st[0],st[1],st[2])},1200);
+  else idle();
+}
+function update(dt){
+  G.t+=dt;if(G.busy||G.modal||G.over)return;
+  const k=G.keys,v=(k.r?1:0)-(k.l?1:0);
+  if(G.mode==="bus"){if(G.bus&&G.bus.x>G.bus.tx)G.bus.x-=Math.max(30,(G.bus.x-G.bus.tx)*1.6)*dt;if(v&&!G.choosing){G.x=Math.max(60,Math.min(420,G.x+v*70*dt));G.face=v;G.walk+=dt*9}return}
+  if(v){G.x+=v*78*dt;G.face=v;const pw=G.walk;G.walk+=dt*9;if(Math.floor(pw/Math.PI)!==Math.floor(G.walk/Math.PI))sfx("step");G.still=0;G.sh=Math.max(0,G.sh-dt*30)}
+  else{G.still+=dt;G.sh=Math.min(20,G.sh+dt*20);if(A("steps")&&G.still>.6&&G.echoN<4&&G.still>.6+G.echoN*.5){G.echoN++;sfx("echo")}}
+  if(A("phone")&&!G.phoneDone&&G.x>380){G.phoneDone=true;text("Unknown","you dropped something. come back.","你掉东西了。回来。")}
+  if(G.x<-12)leave(-1);else if(G.x>LEN+12)leave(1);
+}
+
+/* ===== look closer ===== */
+function closeups(){const C=[[44,A("street")?"ELM STREAT":"ELM STREET","Elm 街（路牌）"],[232,`MISSING<br>ANNA LEE, 27<br><small>${A("poster")?"Last seen: behind you":"Last seen: Elm St, 11 p.m."}</small>`,A("poster")?"失踪：Anna Lee，27 岁。最后一次被看到：在你身后":"失踪：Anna Lee，27 岁。最后一次被看到：Elm 街，晚上 11 点"],[411,A("bench")?"(an empty bench / 空长椅)":(A("news")?"WOMAN WALKS SAME STREET FOREVER":"RAIN AGAIN TOMORROW"),A("bench")?"长椅上只有一份报纸。":(A("news")?"女子永远走在同一条街上":"明天还会下雨")],[478,`N8 · Maple Ave<br>${A("time")?"Last bus 23:04":"Last bus 23:40"}`,A("time")?"N8 路，开往 Maple Ave。末班车 23:04":"N8 路，开往 Maple Ave。末班车 23:40"],[642,A("open")?"OPEN 25H":"OPEN 24H",A("open")?"25 小时营业":"24 小时营业"],[750,`SLOW<br>${A("sign")?"CHILDREN WATCHING":"CHILDREN"}`,A("sign")?"慢行，孩子们在看着":"慢行，注意儿童"]];
+  if(G.mode==="bus"){const f=G.busFake;return[[350,"N8 · Maple Ave<br>Last bus 23:40","N8 路，开往 Maple Ave。末班车 23:40"],...(G.bus&&G.bus.x<=G.bus.tx+4?[[G.bus.x+40,`${f==="num"?"N6":"N8"} &nbsp; ${f==="dest"?"HOME":"MAPLE AVE"}`,f==="dest"?"终点站：家":f==="num"?"N6 路，开往 Maple Ave":"N8 路，开往 Maple Ave"]]:[])]}
+  return C}
+function look(){if(!G||G.busy||G.over)return;const c=closeups().map(o=>[Math.abs(o[0]-G.x),o]).sort((a,b)=>a[0]-b[0])[0];
+  if(!c||c[0]>90){cap("There's nothing to read here.","这附近没有可以读的字。");return}
+  const o=c[1];modal(`<div class="close" id="cl">${o[1]}<div class="zh">${o[2]}</div></div><div class="row"><button class="btn" id="zt">中文</button><button class="btn pri" data-close style="margin-left:auto">好</button></div>`,m=>{m.querySelector("#zt").onclick=()=>m.querySelector("#cl").classList.toggle("z")})}
+function phone(){if(!G)return;G.unread=0;hud();
+  modal(`<h2>📱 Messages</h2>${G.msgs.length?G.msgs.map(m=>`<div class="msg"><b>${m[0]}</b>${mark(m[1])}<small>${m[2]}</small></div>`).join(""):'<p class="hint">没有新消息。</p>'}<div class="row"><button class="btn pri" data-close>收起手机</button></div>`)}
+
+/* ===== finale ===== */
+async function finale(){
+  G.mode="bus";G.x=120;G.face=1;G.an=null;G.busy=true;G.min=23*60+39;hud();setAmb("drone",.06);
+  await say("The bus stop. Finally. It's 23:39.","公交站。终于到了。23:39。");
+  G.busFake=Math.random()<.5?rnd(Object.keys(BUSV)):null;
+  await say("Headlights. The last bus is coming.","车灯。末班车来了。");
+  sfx("bus");G.bus={x:CX+VW+40,tx:430};G.busy=false;idle();SUB.innerHTML='<div class="idle">车停下后可以走近看清楚（🔍 也能用）。准备好了就做决定。</div>';
+  await wait(3500);sfx("door");G.choosing=true;
+  const c=await choose([["Get on the bus","上车","on"],["Let it go","不上这辆车","off"]]);G.choosing=false;G.busy=true;
+  if(c==="on"){if(G.busFake)return ending("wrong");return ending(G.mist<=1?"true":"home")}
+  if(!G.busFake){await say("The doors close. The N8 drives away without me.","车门关上了。N8 开走了，没有等我。");return ending("caught","missed")}
+  await say("The doors close. The bus drives into the fog... and disappears.","车门关上了。那辆车开进雾里……消失了。");
+  await say("Two minutes later, another pair of headlights.","两分钟后，又一对车灯亮了起来。");
+  G.busFake=null;G.bus={x:CX+VW+40,tx:430};sfx("bus");G.busy=false;await wait(3500);G.busy=true;sfx("door");
+  await say("N8. Maple Ave. The driver nods at me.","N8，Maple Ave。司机朝我点了点头。");return ending(G.mist<=1?"true":"home");
+}
+
+/* ===== endings ===== */
+const END={
+ caught:{t:"Someone Walks With You",z:"有人陪你走",L:[]},
+ wrong:{t:"Next Stop: Elm Street",z:"下一站：Elm 街",L:[["You get on. The doors close behind you.","你上了车。车门在身后关上。"],["Every passenger turns to look at you.","每一个乘客都转过头来看你。"],["\"Next stop: Elm Street,\" says the speaker.","“下一站：Elm 街。”喇叭里说。"],["The bus stops. The doors open. You see a street sign, a poster, four lamps.","车停了。门开了。你看见一块路牌、一张海报、四盏路灯。"],["\"Next stop: Elm Street.\"","“下一站：Elm 街。”"],["It never says anything else.","它再也没说过别的。"]]},
+ home:{t:"Home, Late",z:"很晚才到家",L:[["The bus is warm. You almost fall asleep.","车里很暖和。你差点睡着。"],["At home, Jess is waiting at the door. \"Where WERE you?\"","到家时，Jess 在门口等着。“你到底去哪儿了？”"],["\"Elm Street. Just one street.\"","“Elm 街。就一条街而已。”"],["Jess shows you the map. Your location went around the same block for three hours.","Jess 给你看地图。你的位置在同一个街区绕了三个小时。"],["In your coat pocket, you find a folded poster. MISSING. ANNA LEE.","你在外套口袋里摸到一张折起来的海报。失踪：ANNA LEE。"],["You don't remember taking it.","你不记得自己拿过它。"]]},
+ true:{t:"You Didn't Miss a Thing",z:"你什么都没看漏",L:[["The bus is warm. A woman sits down next to you. Wet hair. A familiar face.","车里很暖和。一个女人在你旁边坐下。头发湿透，脸很眼熟。"],["The face from the poster.","是海报上的那张脸。"],["\"I walked that street for a month,\" she says. \"I always missed something.\"","“我在那条街上走了一个月，”她说，“我总是看漏点什么。”"],["\"Then I saw you. You didn't miss a thing. So I just followed you.\"","“后来我看到了你。你什么都没看漏。所以我就跟着你走了。”"],["She gets off at the next stop and waves.","她在下一站下了车，朝你挥手。"],["The next morning, the news says: MISSING WOMAN FOUND SAFE.","第二天早上，新闻标题是：失踪女子已平安找到。"]]}
+};
+const CAUGHT={walk:[["The footsteps stop. Right behind you.","脚步声停了。就在你身后。"],["A cold hand on your shoulder. A woman's voice:","一只冰凉的手搭上你的肩膀。一个女人的声音："],["\"You walk this street too? Let's walk it together.\"","“你也在走这条街吗？那我们一起走吧。”"],["\"Forever.\"","“一直走下去。”"],["A month later, there is a new poster on Elm Street.","一个月后，Elm 街上贴了一张新海报。"],["MISSING. It has your face on it.","失踪。上面是你的脸。"]],missed:[["The red lights of the bus get smaller and smaller.","公交车的尾灯越来越小。"],["Your phone dies. The street lamps go out, one by one.","手机没电了。路灯一盏一盏地灭了。"],["Footsteps behind you.","身后传来脚步声。"],["\"Missed it?\" a woman's voice asks. \"Me too.\"","“错过了？”一个女人的声音问，“我也是。”"],["\"Don't worry. There's always tomorrow night.\"","“别担心。明晚还有。”"],["\"And the night after that.\"","“后天晚上也有。”"]]};
+const ORDER=["caught","wrong","home","true"];
+async function ending(id,v){
+  G.over=true;G.busy=true;adv=null;setAmb("drone",id==="true"||id==="home"?0:.1);if(id==="caught"||id==="wrong")sfx("sting");await wait(1200);setAmb("rain",0);
+  const got=LS.get("end",[]);if(!got.includes(id)){got.push(id);LS.set("end",got)}
+  const e=END[id],L=id==="caught"?CAUGHT[v]:e.L;SUB.innerHTML="";
+  modal(`<div class="end"><p class="hint" style="margin:0">ENDING ${ORDER.indexOf(id)+1} / 4</p><h2 style="font-family:'Special Elite',Georgia,serif;font-weight:400;font-size:28px;margin:2px 0">${e.t}</h2><p class="hint" style="margin-top:0">${e.z}</p>${L.map(l=>`<p class="e">${l[0]}</p><p class="z">${l[1]}</p>`).join("")}<div class="row"><button class="btn pri" data-close="again">再走一次</button><button class="btn" data-close="title">回标题</button></div></div>`).then(r=>{newGame();hud();if(r==="again")start();else title()});
+}
+
+/* ===== input, loop, layout ===== */
+function hold(el,k){const on=e=>{e.preventDefault();ac();if(G)G.keys[k]=1;el.classList.add("on")},off=()=>{if(G)G.keys[k]=0;el.classList.remove("on")};el.addEventListener("pointerdown",on);["pointerup","pointerleave","pointercancel"].forEach(t=>el.addEventListener(t,off));el.addEventListener("contextmenu",e=>e.preventDefault())}
+hold($("#bL"),"l");hold($("#bR"),"r");
+$("#bLook").onclick=()=>{ac();look()};$("#bPh").onclick=()=>{ac();phone()};$("#hSet").onclick=()=>{ac();settings()};
+addEventListener("keydown",e=>{if(!G)return;if(e.key==="ArrowLeft"||e.key==="a")G.keys.l=1;if(e.key==="ArrowRight"||e.key==="d")G.keys.r=1;if(e.key===" "||e.key==="Enter"){if(adv){e.preventDefault();adv()}else if(!G.modal){e.preventDefault();look()}}});
+addEventListener("keyup",e=>{if(!G)return;if(e.key==="ArrowLeft"||e.key==="a")G.keys.l=0;if(e.key==="ArrowRight"||e.key==="d")G.keys.r=0});
+let lt=0;function frame(ts){const dt=Math.min(.05,(ts-lt)/1000||0);lt=ts;if(G&&G.started)update(dt);draw();requestAnimationFrame(frame)}
+function layout(){const vw=innerWidth,vh=innerHeight,land=vw>vh*1.2&&vh<640;document.body.classList.toggle("land",land);
+  VW=(!land&&vw<vh)?Math.max(300,Math.min(640,Math.round(VH*vw/(vh*.46)))):640;
+  const aw=land?vw-350:vw,ah=land?vh-12:vh-250;SC=Math.min(aw/VW,ah/VH);const w=Math.floor(VW*SC),h=Math.floor(VH*SC);
+  const st=$("#stage");st.style.width=w+"px";st.style.height=h+"px";cv.width=Math.round(w*devicePixelRatio);cv.height=Math.round(h*devicePixelRatio);grainPat=null}
+addEventListener("resize",layout);layout();
+function settings(){const row=(k,t)=>`<div class="tog"><span>${t}</span><button class="sw ${SET[k]?"on":""}" data-k="${k}"></button></div>`;
+  return modal(`<h2>设置</h2>${row("sfx","音效")}${row("voice","自动朗读英文")}${row("zh","字幕默认显示中文")}<p class="hint">这个游戏很依赖声音，建议戴耳机。</p><div class="row"><button class="btn pri" data-close>好</button></div>`,m=>m.querySelectorAll(".sw").forEach(b=>b.onclick=()=>{const k=b.dataset.k;SET[k]=!SET[k];b.classList.toggle("on",SET[k]);LS.set("set",SET);if(k==="sfx"&&master)master.gain.value=SET.sfx?.9:0;if(k==="voice"&&!SET.voice&&tts)tts.cancel()}))}
+function title(){const got=LS.get("end",[]);
+  modal(`<div style="text-align:center"><div class="title">LAST BUS</div><p class="hint" style="font-size:14px;margin:6px 0 0">末班车 · 微恐 · 英文字幕</p></div>
+  <p style="margin-top:14px">加班到深夜。末班车 23:40 发车，公交站就在 Elm 街的尽头，只隔几个街区。</p>
+  <p>可是这条街，好像怎么也走不完。</p>
+  <p class="hint">玩法：◀ ▶ 走路（电脑可用方向键）。留意街上的一切：招牌上的字、灯、人、声音。觉得哪里不对劲就往回走；一切正常就继续往前。🔍 凑近读文字，📱 看消息。大约 15–25 分钟，<b>一定要戴耳机</b>。</p>
+  <div class="gal">${ORDER.map((id,i)=>got.includes(id)?`<div><b>${END[id].t}</b>${END[id].z}</div>`:`<div class="lock"><b>???</b>结局 ${i+1}</div>`).join("")}</div>
+  <div class="row"><button class="btn pri" data-close="go" style="flex:1;font-size:17px">下班</button><button class="btn" id="ts">设置</button></div>
+  <p class="hint" style="text-align:center"><a href="../" style="color:var(--dim)">← 回到游戏大厅</a></p>`,m=>{m.querySelector("#ts").onclick=()=>settings().then(title)}).then(v=>{if(v==="go")start()})}
+async function start(){ac();G.started=true;G.busy=true;setAmb("rain",.12);setAmb("drone",.025);hud();
+  await say("23:21. If I hurry, I can still catch the last bus.","23:21。快点的话还能赶上末班车。");
+  await say("The bus stop is at the end of Elm Street. Just a few blocks.","公交站在 Elm 街的尽头，就几个街区。");
+  await say("Same street as every night. Same lamps, same signs, same shop. I know it by heart.","每天晚上都走这条街。一样的路灯、一样的招牌、一样的店。我闭着眼都认得。");
+  G.busy=false;idle()}
+newGame();hud();requestAnimationFrame(frame);title();
+</script>
+</body>
+</html>
