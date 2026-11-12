@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#050608">
 <title>Second Hand</title>
-<!-- staff portal moved: ./879/ -->
+<!-- staff website moved: ./879/ -->
 <link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=VT323&display=swap" media="print" onload="this.media='all'">
 <style>
 :root{--bg:#050608;--ph:#0d0f13;--card:#171a20;--line:#252932;--ink:#ecebe6;--dim:#8d8c86;--acc:#4f9cff;--me:#2f6fde;--them:#262a33;--red:#ff4d5e;--grn:#41d38a}
@@ -195,7 +195,7 @@ function speak(t,who="me",slow){if(!tts||!SET.voice)return;try{tts.cancel();cons
 function speakSeq(lines,who){return new Promise(res=>{if(!tts||!SET.voice){setTimeout(res,lines.length*1800);return}let i=0;const nx=()=>{if(i>=lines.length)return res();const u=new SpeechSynthesisUtterance(lines[i++].replace(/[~*"“”]/g,""));const v=VOICE[who];u.lang="en-US";u.pitch=v[0];u.rate=v[1];const vs=tts.getVoices().filter(x=>/^en[-_]US/i.test(x.lang)&&!NOV.test(x.name));if(vs.length)u.voice=vs[v[2]%vs.length];let done=false;const fin=d=>{if(done)return;done=true;clearTimeout(to);setTimeout(nx,d)};const to=setTimeout(()=>fin(0),2500+u.text.length*110);u.onend=()=>fin(350);u.onerror=()=>fin(600);tts.speak(u)};tts.cancel();nx()})}
 
 /* ---------- words ---------- */
-const WORDS={"second-hand":"二手的","previous owner":"前主人","missing":"失踪的","broadcast":"广播","frequency":"频率","static":"杂音","guest":"客人","lullaby":"摇篮曲","fountain":"喷泉","loading dock":"装卸区","service door":"服务通道门","keypad":"密码键盘","booth":"播音间","backwards":"倒着","password":"密码","deleted":"删除的","polite":"有礼貌的","basement":"地下室","staff only":"员工专用","disappear":"消失","forum":"论坛","last seen":"最后被看到","tape":"磁带","stopped":"停了","newest":"最新的","oldest":"最旧的","return":"退回","erase":"抹掉","signal":"信号","escalator":"自动扶梯","flashlight":"手电筒"};
+const WORDS={"address":"地址","archive":"档案","bother":"打扰","code":"密码","complete":"完成","delivered":"已送达","downloaded":"下载","gap":"缝隙","item":"商品","peaceful":"平静的","previous":"之前的","private":"私人的","restoring":"恢复","reverse":"倒放","reversed":"倒放的","reviews":"评价","saved":"已保存","screen":"屏幕","security":"安全","settings":"设置","site":"网站","squeeze":"挤","tracking":"追踪","updated":"更新","updates":"更新","view":"查看","witnesses":"目击者","second-hand":"二手的","previous owner":"前主人","missing":"失踪的","broadcast":"广播","frequency":"频率","static":"杂音","guest":"客人","lullaby":"摇篮曲","fountain":"喷泉","loading dock":"装卸区","service door":"服务通道门","number pad":"数字键盘","booth":"播音间","backwards":"倒着","password":"密码","deleted":"删除的","polite":"有礼貌的","basement":"地下室","staff only":"员工专用","disappear":"消失","forum":"论坛","last seen":"最后被看到","tape":"磁带","stopped":"停了","newest":"最新的","oldest":"最旧的","return":"退回","erase":"抹掉","signal":"信号","escalator":"自动扶梯","flashlight":"手电筒"};
 const WK=Object.keys(WORDS).sort((a,b)=>b.length-a.length);const WRE=new RegExp("\\b("+WK.map(k=>k.replace(/[-]/g,"\\-").replace(/ /g,"\\s")).join("|")+")\\b","gi");
 function mw(en){return esc(en).replace(WRE,m=>`<span class="kw" title="${WORDS[m.toLowerCase()]||""}">${m}</span>`)}
 const tr=(en,zh,cls="")=>`<div class="tr ${cls}"><div>${mw(en)}</div><div class="zh">${esc(zh)}</div></div>`;
@@ -233,7 +233,7 @@ const BASE={
   {f:"me",en:"a music box?? jun, that's it. that's the lullaby.",zh:"八音盒？？Jun，就是它。那就是摇篮曲。"}]}
 };
 const AV={A:"❔",B:"·"};
-const TN={A:"+1 (555) 013-3033",B:"No Caller ID"};
+const TN={A:"+1 (555) 013-3033",B:"Unknown Number"};
 
 /* ---------- notes, memos, photos ---------- */
 const NOTES=[
@@ -255,7 +255,7 @@ const NOTES=[
 ];
 const MEMOS={
  m1:{title:"New Recording 14",t:"Thu, Oct 30 · 3:41 AM",who:"lena",lines:[["It's 3:41. It just happened. It said my name.","现在 3:41。刚刚发生了。它念了我的名字。"],["Not Lena. Helena. Helena Kwan.","不是 Lena。是 Helena。Helena Kwan。"],["Only Mom calls me that. Mom... and him, I guess.","只有妈妈这么叫我。妈妈……还有他，大概吧。"]]},
- m2:{title:"New Recording 15",t:"Sun, Nov 2 · 1:12 AM",who:"lena",lines:[["I'm at the loading dock. There's a gap in the gate.","我在装卸区。卷帘门下面有条缝。"],["The service door in B1 has a keypad. Four numbers.","地下一层的服务通道门有个密码键盘。四位数。"],["I wrote the code down in my notes. I locked it, just in case.","我把密码记在备忘录里了。以防万一，我给它上了锁。"]]},
+ m2:{title:"New Recording 15",t:"Sun, Nov 2 · 1:12 AM",who:"lena",lines:[["I'm at the loading dock. There's a gap in the gate.","我在装卸区。卷帘门下面有条缝。"],["The service door in B1 has a number pad. Four numbers.","地下一层的服务通道门有个密码键盘。四位数。"],["I wrote the code down in my notes. I locked it, just in case.","我把密码记在备忘录里了。以防万一，我给它上了锁。"]]},
  m3:{title:"New Recording 16",t:"Sun, Nov 2 · 3:30 AM",who:"lena",noise:1,lines:[["...it's not the fountain... the fountain is where it waits...","……不是喷泉……喷泉是它等着的地方……"],["...the booth... it talks from the booth...","……播音间……它是从播音间说话的……"],["...say them back... in the right... [static]","……把它们念回去……按正确的……［杂音］"]]},
  tape:{title:"tape_2009.wav",t:"Downloaded · from nightwatch_87",who:"nm",noise:1,rev:1,lines:[["Good evening. This is Starlight FM, eighty-seven point nine.","晚上好。这里是星光调频，87.9。"],["Lights out at Starlight. Time for the Lullaby.","星光商场熄灯了。摇篮曲时间到。"],["Tonight's guest... Theodore Kwan.","今晚的客人……Theodore Kwan。"],["Welcome, Theodore. Don't be late.","欢迎你，Theodore。别迟到。"],[".sdrawkcab ,meht ekops I sa seman rieht kaepS","（这一句听起来像是倒着放的……）"]]},
  theo:{title:"THEO (cassette)",t:"Found at SoundWave Records",who:"theo",noise:1,lines:[["Testing, testing. This is Theo. I'm nine.","测试，测试。我是 Theo。我九岁。"],["The nice man on the radio says I'm a guest now.","收音机里那个和气的叔叔说，我现在是客人了。"],["He says if somebody says all our names back to him, newest first, we can go home.","他说，如果有人把我们所有人的名字念回给他听，从最新的开始，我们就能回家。"],["Lena, if you find this... I'm sorry I went to buy the tape.","姐姐，如果你找到这个……对不起，我不该自己去买磁带。"]]}
@@ -290,8 +290,8 @@ function atrium(c,W,H,{figure=true,photo=false}={}){
 const DRAW={
  fountain(c,W,H){atrium(c,W,H,{photo:true});grain(c,W,H);vig(c,W,H)},
  directory(c,W,H){R(c,0,0,W,H,"#15181d");R(c,40,60,520,680,"#555a60");R(c,52,72,496,656,"#1c2731");
-  txt(c,"STARLIGHT MALL",300,120,"bold 34px Helvetica,Arial","#e8e2c8","center");txt(c,"DIRECTORY · LEVEL 1",300,150,"16px Helvetica,Arial","#a9b4bb","center");
-  const L=[["07","Food Court"],["12","Fun Zone Arcade"],["23","Petal Florist"],["35","Bright Smile Dental"],["41","SoundWave Records"],["58","Kid's Corner"],["B1","Service / Staff Only"]];
+  txt(c,"STARLIGHT MALL",300,120,"bold 34px Helvetica,Arial","#e8e2c8","center");txt(c,"MALL MAP · LEVEL 1",300,150,"16px Helvetica,Arial","#a9b4bb","center");
+  const L=[["07","Food Court"],["12","Fun Zone Games"],["23","Petal Flower Shop"],["35","Bright Smile Dental"],["41","SoundWave Records"],["58","Kid's Corner"],["B1","Service / Staff Only"]];
   L.forEach((l,i)=>{txt(c,l[0],90,215+i*44,"bold 21px ui-monospace,monospace","#f0c75e");txt(c,l[1],150,215+i*44,"20px Helvetica,Arial","#dfe6ea")});
   R(c,92,540,416,150,"#24323d");[[100,550,80,60,"07"],[190,550,70,60,"12"],[270,550,60,60,"23"],[340,550,70,60,"35"],[420,550,80,60,"41"],[100,620,120,60,"58"],[230,620,100,60,"B1"]].forEach(r=>{c.strokeStyle="#6f8796";c.strokeRect(r[0],r[1],r[2],r[3]);txt(c,r[4],r[0]+r[2]/2,r[1]+36,"14px ui-monospace","#9fb3c0","center")});
   txt(c,"★ YOU ARE HERE",370,680,"bold 15px Helvetica","#ff6b6b");
@@ -382,7 +382,7 @@ function rPhotos(){
  const pg=el.querySelector("#pg");
  if(tab==="recent")PHOTOS.forEach(p=>{const c=thumb(p.id);c.onclick=()=>viewer(p.id,p.n+" · "+p.t);pg.appendChild(c)});
  else if(S.F.delOpen){const c=thumb("booth");c.onclick=()=>viewer("booth","IMG_2058 · Sun 3:31 AM · deleted");pg.appendChild(c)}
- else{const b=document.createElement("button");b.className="lk";b.innerHTML="🔒<span>Use Passcode</span><span>输入手机密码查看</span>";b.onclick=()=>passcode("Enter iPhone Passcode","手机密码","1219",()=>{flag("delOpen");go("photos",{tab:"del"})});pg.appendChild(b)}
+ else{const b=document.createElement("button");b.className="lk";b.innerHTML="🔒<span>Use Password</span><span>输入手机密码查看</span>";b.onclick=()=>passcode("Enter Phone Password","手机密码","1219",()=>{flag("delOpen");go("photos",{tab:"del"})});pg.appendChild(b)}
 }
 function viewer(id,label){
  flag("ph_"+id);
@@ -434,12 +434,12 @@ const POSTS={
  t3:{title:"Who runs the station?",p:[
   ["moth_girl","2018",["Nobody owns 87.9. It's not a real station. It's not on any list.","87.9 不属于任何人。它不是真正的电台。任何名单上都没有它。"]],
   ["nightwatch_87","2018",["The mall had its own little radio for the speakers in the halls. Starlight FM. The night security guy ran it.","商场以前有自己的小电台，给走廊的喇叭放音乐。叫星光调频。是夜班保安在管。"]],
-  ["nightwatch_87","2021",["The old staff portal is still online somewhere. It moved. Same number as the station, no dot.","旧的员工网站还在网上某个地方。它搬家了。和电台一样的数字，去掉小数点。"]],
+  ["nightwatch_87","2021",["The old staff website is still online somewhere. It moved. Same number as the station, no dot.","旧的员工网站还在网上某个地方。它搬家了。和电台一样的数字，去掉小数点。"]],
   ["moth_girl","2021",["I tried. It's not on this site. Maybe it's not on this phone at all. 👀","我试过了。不在这个网站上。说不定根本就不在这部手机里。👀"]]]},
  t4:{title:"Visiting Starlight — don't.",p:[
   ["urbex_tom","2022",["Went in through the loading dock. The fountain still has water. HOW? Left after five minutes. Something was standing on the second floor.","从装卸区进去的。喷泉里居然还有水，怎么可能？五分钟就出来了。二楼有个东西站着。"]],
   ["lena_k","Oct 31",["is the service door in B1 still locked?","地下一层那扇服务通道门还锁着吗？"]],
-  ["urbex_tom","Oct 31",["Keypad. Four numbers. Didn't try. Lena, the fountain is where people stop. Don't stop there.","密码键盘，四位数。我没试。Lena，人们都是在喷泉那里停下的。别在那儿停留。"]]]}
+  ["urbex_tom","Oct 31",["Number pad. Four numbers. Didn't try. Lena, the fountain is where people stop. Don't stop there.","密码键盘，四位数。我没试。Lena，人们都是在喷泉那里停下的。别在那儿停留。"]]]}
 };
 function forumPost(u,t,b){return`<div class="post"><div class="u">${esc(u)} <small>· ${esc(t)}</small></div>${tr(b[0],b[1]).replace(/\n/g,"<br>")}</div>`}
 function page(url){
@@ -455,14 +455,14 @@ function page(url){
  if(url==="herald-archive.com/2009/12/21/boy-missing"||url==="herald-archive.com")return{c:"news",h:`<p style="font-size:12px;color:#888">THE CITY HERALD · ARCHIVE · DECEMBER 21, 2009</p><h2>Boy, 9, Missing After Visit to Starlight Mall</h2>${[["Police are searching for Theodore \"Theo\" Kwan, 9, who was last seen on Saturday evening outside SoundWave Records (Unit 41) at Starlight Mall.","警方正在寻找 9 岁的 Theodore“Theo”Kwan。他最后一次被看到是在周六傍晚，星光商场 SoundWave 唱片店（41 号铺）门外。"],["His older sister told police that Theo \"went to buy a tape\" and never came back.","他的姐姐告诉警方，Theo“去买一盘磁带”，就再也没回来。"],["The mall, which closes for good on December 31, was searched all night.","这家将于 12 月 31 日永久关闭的商场被连夜搜查。"],["Strangely, security staff said every clock in the building had stopped that night — all at the same time.","奇怪的是，保安人员称，那天晚上楼里所有的钟都停了——全停在同一个时间。"]].map(p=>tr(p[0],p[1])).join("")}`,after(){flag("article")}};
  if(url==="fmlist.org/city"||url==="fmlist.org")return{c:"plain",h:`<h2>City FM stations</h2><p>87.5 — <i>(none)</i><br>87.9 — <i>(none)</i><br>88.3 — Campus Radio<br>91.1 — City News<br>95.1 — Weather 24<br>101.3 — Smooth Jazz<br>104.7 — Hits FM</p>${tr("No licensed station uses 87.9 in this city.","本市没有任何持证电台使用 87.9。")}`};
  if(url==="starlightmall.com")return{c:"plain",h:`<h2>Starlight Mall</h2>${tr("Starlight Mall is permanently closed. Thank you for 16 wonderful years.","星光商场已永久关闭。感谢 16 年来的陪伴。")}<p style="font-size:12px;color:#888">Staff: /879</p>`};
- if(url==="starlightmall.com/879")return{c:"plain",h:`<h2>404 — moved</h2>${tr("The staff portal is no longer on this device.","员工网站已经不在这台设备上了。")}${tr("It lives one folder deeper than the game you are playing.","它住在你正在玩的这个游戏的下一层文件夹里。")}`,after(){flag("sawMoved")}};
+ if(url==="starlightmall.com/879")return{c:"plain",h:`<h2>404 — moved</h2>${tr("The staff website is no longer on this device.","员工网站已经不在这台设备上了。")}${tr("It lives one folder deeper than the game you are playing.","它住在你正在玩的这个游戏的下一层文件夹里。")}`,after(){flag("sawMoved")}};
  return{c:"plain",h:`<h2>Can't open this page</h2><p>${esc(url)}</p>${tr("Check the address and try again.","检查地址后再试一次。")}`};
 }
 function rBrowser(){
  const url=S.view.url||"";
  const el=view(topb("Browser")+`<div class="addr"><input id="au" value="${esc(url)}" placeholder="Search or enter address" autocapitalize="off" autocomplete="off"><button class="btn" id="ag">Go</button></div><div class="web" id="web"></div>`);
  const web=el.querySelector("#web"),open=u=>{S.view.url=u;save();rBrowser()};
- if(!url){web.className="web plain";web.innerHTML=`<h3>Bookmarks</h3><p><a data-u="deadmalls.net/starlight">deadmalls.net — Starlight Mall forum</a></p><p><a data-u="herald-archive.com/2009/12/21/boy-missing">City Herald archive — Dec 21, 2009</a></p><p><a data-u="fmlist.org/city">fmlist — City FM stations</a></p><p><a data-u="starlightmall.com">starlightmall.com</a></p><h3>History</h3><p style="color:#888">deadmalls.net/starlight/t4 · 3 days ago<br>herald-archive.com · 3 days ago</p>`}
+ if(!url){web.className="web plain";web.innerHTML=`<h3>Saved Pages</h3><p><a data-u="deadmalls.net/starlight">deadmalls.net — Starlight Mall forum</a></p><p><a data-u="herald-archive.com/2009/12/21/boy-missing">City Herald archive — Dec 21, 2009</a></p><p><a data-u="fmlist.org/city">fmlist — City FM stations</a></p><p><a data-u="starlightmall.com">starlightmall.com</a></p><h3>History</h3><p style="color:#888">deadmalls.net/starlight/t4 · 3 days ago<br>herald-archive.com · 3 days ago</p>`}
  else{const p=page(url);web.className="web "+p.c;web.innerHTML=p.h;p.after&&p.after(web)}
  web.querySelectorAll("[data-u]").forEach(a=>a.onclick=()=>{sfx("tap");open(a.dataset.u)});
  el.querySelector("#ag").onclick=()=>open(el.querySelector("#au").value);
@@ -594,12 +594,12 @@ async function broadcast(){
 const SCN={
  dock:{n:"Loading Dock 3",draw(c){R(c,0,0,600,800,"#0c0e12");R(c,0,120,600,560,"#25282d");R(c,60,220,480,420,"#3a3e44");for(let y=230;y<630;y+=16)R(c,60,y,480,3,"#2c2f34");R(c,60,600,480,40,"#050506");R(c,330,600,150,40,"#000");txt(c,"LOADING DOCK 3",300,180,"bold 28px Helvetica","#c9c9c9","center");c.strokeStyle="#9a8a60";c.lineWidth=6;c.beginPath();c.moveTo(250,420);c.quadraticCurveTo(300,470,350,420);c.stroke();R(c,0,680,600,120,"#121418");c.strokeStyle="rgba(170,190,220,.3)";c.lineWidth=1;for(let i=0;i<90;i++){const x=(i*61)%600,y=(i*37)%800;c.beginPath();c.moveTo(x,y);c.lineTo(x-4,y+16);c.stroke()}},
   acts:[["gap","🚪 Squeeze through the gap","从缝隙钻进去",()=>scene("atrium")],["home","🏠 Go home","回家",()=>leaveMall()]]},
- atrium:{n:"Atrium · Level 1",draw(c){atrium(c,600,800,{figure:true})},onEnter(){if(!S.mall.c1){S.mall.c1=1;setTimeout(()=>call(),2500)}},
-  acts:[["fountain","⛲ Go to the fountain","去喷泉",()=>scene("fountain")],["records","💿 41 SoundWave Records","41 号 SoundWave 唱片店",()=>scene("records")],["dir","🗺 Read the directory","看导览牌",()=>viewer("directory","Directory board")],["service","➡️ Service corridor","服务通道",()=>scene("service")],["back","⬅️ Back to the loading dock","回装卸区",()=>scene("dock")]]},
+ atrium:{n:"Main Hall · Level 1",draw(c){atrium(c,600,800,{figure:true})},onEnter(){if(!S.mall.c1){S.mall.c1=1;setTimeout(()=>call(),2500)}},
+  acts:[["fountain","⛲ Go to the fountain","去喷泉",()=>scene("fountain")],["records","💿 41 SoundWave Records","41 号 SoundWave 唱片店",()=>scene("records")],["dir","🗺 Read the mall map","看导览牌",()=>viewer("directory","Mall map")],["service","➡️ Service corridor","服务通道",()=>scene("service")],["back","⬅️ Back to the loading dock","回装卸区",()=>scene("dock")]]},
  records:{n:"41 · SoundWave Records",draw(c){R(c,0,0,600,800,"#0e0d10");for(let i=0;i<5;i++){R(c,30+i*112,250,96,300,"#1b1820");for(let j=0;j<6;j++)R(c,36+i*112,262+j*46,84,36,["#3a2030","#20304a","#2c3a24","#4a3420"][(i+j)%4])}R(c,0,560,600,240,"#18161a");R(c,160,500,280,70,"#2a2420");if(!S.mall.theo){R(c,270,512,60,30,"#222");R(c,276,518,48,10,"#eee");txt(c,"THEO",300,527,"bold 10px Helvetica","#222","center")}R(c,40,90,180,120,"#2a1c24");txt(c,"NEW!",130,140,"bold 30px Helvetica","#e85","center");txt(c,"Starlight Hits 2009",130,180,"14px Helvetica","#ccc","center")},
-  acts:[["tape","📼 The cassette on the counter","柜台上的磁带",()=>{if(S.mall.theo)return say("You already have Theo's tape.","你已经拿了 Theo 的磁带。");S.mall.theo=1;if(!S.memos.includes("theo"))S.memos.push("theo");S.newMemo=1;sfx("ok");say("A cassette labeled THEO. You record it into Voice Memos.","一盘标着 THEO 的磁带。你把它录进了语音备忘录。");scene("records",true)}],["back","⬅️ Back to the atrium","回中庭",()=>scene("atrium")]]},
+  acts:[["tape","📼 The cassette on the counter","柜台上的磁带",()=>{if(S.mall.theo)return say("You already have Theo's tape.","你已经拿了 Theo 的磁带。");S.mall.theo=1;if(!S.memos.includes("theo"))S.memos.push("theo");S.newMemo=1;sfx("ok");say("A cassette labeled THEO. You record it into Voice Memos.","一盘标着 THEO 的磁带。你把它录进了语音备忘录。");scene("records",true)}],["back","⬅️ Back to the main hall","回中庭",()=>scene("atrium")]]},
  service:{n:"Service Corridor",draw(c){DRAW.door(c,600,800)},
-  acts:[["pad","🔢 Use the keypad","输入门禁码",()=>passcode("B1 · STAFF ONLY","地下一层 · 员工专用","4133",()=>{S.mall.b1=1;S.F.b1=1;scene("b1")})],["back","⬅️ Back to the atrium","回中庭",()=>scene("atrium")]]},
+  acts:[["pad","🔢 Use the number pad","输入门禁码",()=>passcode("B1 · STAFF ONLY","地下一层 · 员工专用","4133",()=>{S.mall.b1=1;S.F.b1=1;scene("b1")})],["back","⬅️ Back to the main hall","回中庭",()=>scene("atrium")]]},
  b1:{n:"B1 · Basement",draw(c){R(c,0,0,600,800,"#070708");c.fillStyle="#141518";c.beginPath();c.moveTo(0,0);c.lineTo(600,0);c.lineTo(360,330);c.lineTo(240,330);c.fill();c.fillStyle="#101114";c.beginPath();c.moveTo(0,800);c.lineTo(600,800);c.lineTo(360,470);c.lineTo(240,470);c.fill();R(c,240,330,120,140,"#1c1a18");R(c,282,300,36,14,"#3a0b0d");txt(c,"ON AIR",300,311,"bold 10px Helvetica","#ff3b3b","center");glow(c,300,307,80,"rgba(255,59,59,A)",.4);for(let i=0;i<4;i++){R(c,60+i*30,200+i*40,14,120-i*20,"#0e0e10");R(c,526-i*30,200+i*40,14,120-i*20,"#0e0e10")}},onEnter(){if(!S.mall.c2){S.mall.c2=1;setTimeout(()=>call(),3000)}},
   acts:[["booth","🎙 The door with the red light","亮着红灯的门",()=>scene("booth")],["back","⬅️ Back upstairs","回楼上",()=>scene("service")]]},
  booth:{n:"STARLIGHT FM · Booth",draw(c){DRAW.booth(c,600,800)},
@@ -646,19 +646,19 @@ function finalPuzzle(){
    if(said.join("|")===right.slice(1).join("|"))return ending("lost");
    S.F.tries--;save();sfx("glitch");
    if(S.F.tries<=0)return ending("manager");
-   await speakSeq(["Wrong. Again."],"nm");say("\"Wrong. Again.\" The red light flickers.","“不对。再来。”红灯闪烁了一下。")}};
+   await speakSeq(["Wrong. Again."],"nm");say("\"Wrong. Again.\" The red light flashes.","“不对。再来。”红灯闪烁了一下。")}};
  draw();
 }
 
 /* ---------- endings ---------- */
 const END={
  return:{t:"Return to Sender",z:"退回寄件人",L:[["You print the return label and drop the box at the post office.","你打印好退货单，把盒子送到了邮局。"],["The tracking page says: Delivered — Starlight Mall, Loading Dock 3.","物流页面显示：已送达——星光商场，3 号装卸区。"],["That night, you sleep well.","那天晚上，你睡得很好。"],["On Thursday at 3:33, someone else in the city hears their name.","周四凌晨 3:33，城里另一个人听见了自己的名字。"],["The listing is back on ReSell: \"Lumen X2 — good condition.\"","ReSell 上，那条商品又上架了：“Lumen X2——成色良好。”"]]},
- reset:{t:"Factory Reset",z:"恢复出厂设置",L:[["The screen goes black. Then white.","屏幕黑了。然后变白。"],["\"Hello. Let's set up your phone. What's your name?\"","“你好。我们来设置你的手机吧。你叫什么名字？”"],["The box is already filled in: Helena.","输入框里已经填好了：Helena。"],["You try to delete it. The letters don't move.","你想删掉它。字母纹丝不动。"],["In the black glass, your reflection is a little late.","黑色的屏幕上，你的倒影慢了半拍。"]]},
+ reset:{t:"Factory Settings",z:"恢复出厂设置",L:[["The screen goes black. Then white.","屏幕黑了。然后变白。"],["\"Hello. Let's set up your phone. What's your name?\"","“你好。我们来设置你的手机吧。你叫什么名字？”"],["The box is already filled in: Helena.","输入框里已经填好了：Helena。"],["You try to delete it. The letters don't move.","你想删掉它。字母纹丝不动。"],["In the black glass, your reflection is a little late.","黑色的屏幕上，你的倒影慢了半拍。"]]},
  guest:{t:"Guest List",z:"宾客名单",L:[["At 4:44, someone knocks on your door. Three times.","4:44，有人敲你的门。敲了三下。"],["Your phone turns on by itself. The radio opens.","你的手机自己亮了。收音机打开了。"],["\"Our guest is ready,\" says a polite voice.","“我们的客人准备好了。”一个礼貌的声音说。"],["On the forum, nightwatch_87 updates THE LIST.","论坛上，nightwatch_87 更新了名单。"],["Missing: @P.","失踪：@P。"]]},
  lights:{t:"Lights Out",z:"熄灯",L:[["You hand her the phone. Her fingers are cold and wet.","你把手机递给她。她的手指又冷又湿。"],["\"Thank you, @P,\" she says — in a man's voice.","“谢谢你，@P。”她说——用一个男人的声音。"],["Every light in Starlight Mall turns on at once.","星光商场里所有的灯一下子全亮了。"],["Then, one by one, they go out.","然后，一盏接一盏，全灭了。"],["Next week, the phone is on ReSell again.","下个星期，那部手机又出现在了 ReSell 上。"]]},
- manager:{t:"The Night Manager",z:"夜班经理",L:[["The red light blinks twice.","红灯闪了两下。"],["\"Close,\" says the voice. \"But not right.\"","“很接近，”那个声音说，“但不对。”"],["The door locks behind you. The chair is still warm.","门在你身后锁上了。椅子还是温的。"],["Next Thursday at 3:33, there is a new voice on 87.9.","下周四凌晨 3:33，87.9 上出现了一个新的声音。"],["It's polite. It's a little nervous. It's yours.","很有礼貌，有点紧张。那是你的声音。"]]},
+ manager:{t:"The Night Manager",z:"夜班经理",L:[["The red light flashes twice.","红灯闪了两下。"],["\"Close,\" says the voice. \"But not right.\"","“很接近，”那个声音说，“但不对。”"],["The door locks behind you. The chair is still warm.","门在你身后锁上了。椅子还是温的。"],["Next Thursday at 3:33, there is a new voice on 87.9.","下周四凌晨 3:33，87.9 上出现了一个新的声音。"],["It's polite. It's a little nervous. It's yours.","很有礼貌，有点紧张。那是你的声音。"]]},
  lost:{t:"Lost and Found",z:"失物招领",L:[["The red light goes out. Somewhere upstairs, a door opens.","红灯熄灭了。楼上某处，一扇门开了。"],["Footsteps. Many of them. Going up, going out.","脚步声。很多很多。向上，向外。"],["A small boy runs past you. He is still nine.","一个小男孩从你身边跑过。他还是九岁。"],["You try to follow, but the door won't open for you.","你想跟上去，门却不肯为你打开。"],["You forgot one name.","你漏掉了一个名字。"],["Yours.","你自己的。"]]},
- true:{t:"Thursday, 3:34",z:"周四，3:34",L:[["The red light goes out. The clocks start again. 3:34.","红灯熄灭了。时钟重新走了起来。3:34。"],["Upstairs, a door opens. Footsteps — many of them — going out.","楼上，一扇门开了。脚步声——很多很多——向外走去。"],["At the loading dock, a woman is holding a small boy's hand.","装卸区门口，一个女人牵着一个小男孩的手。"],["She smiles at you. \"You said us back.\"","她对你笑了。“你把我们念回来了。”"],["Your phone buzzes one last time.","你的手机最后震了一下。"],["\"thank you. go to sleep, it's late ~\"","“谢谢你。去睡吧，很晚了 ~”"]]},
+ true:{t:"Thursday, 3:34",z:"周四，3:34",L:[["The red light goes out. The clocks start again. 3:34.","红灯熄灭了。时钟重新走了起来。3:34。"],["Upstairs, a door opens. Footsteps — many of them — going out.","楼上，一扇门开了。脚步声——很多很多——向外走去。"],["At the loading dock, a woman is holding a small boy's hand.","装卸区门口，一个女人牵着一个小男孩的手。"],["She smiles at you. \"You said us back.\"","她对你笑了。“你把我们念回来了。”"],["Your phone lights up one last time.","你的手机最后震了一下。"],["\"thank you. go to sleep, it's late ~\"","“谢谢你。去睡吧，很晚了 ~”"]]},
  secret:{t:"Station Identification",z:"电台呼号",L:[["\"Arthur?\" you say into the microphone.","“Arthur？”你对着麦克风说。"],["Silence. Then, very quietly: \"Nobody has said my name in a long time.\"","沉默。然后，很轻很轻：“很久没有人叫过我的名字了。”"],["\"I only wanted to keep them company. So no one would be forgotten.\"","“我只是想陪着他们。好让谁都不会被忘记。”"],["\"This is Starlight FM, eighty-seven point nine... signing off.\"","“这里是星光调频，87.9……停止播音。”"],["Every door in the mall opens. Every name walks home.","商场里每一扇门都开了。每一个名字都走回了家。"],["On Thursday at 3:33, 87.9 is only static. Peaceful static.","周四凌晨 3:33，87.9 只剩下杂音。平静的杂音。"]]}
 };
 const ORDER=["return","reset","guest","lights","manager","lost","true","secret"];

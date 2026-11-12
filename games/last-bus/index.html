@@ -104,14 +104,14 @@ const tts=window.speechSynthesis,NOV=/Albert|Bad News|Bahh|Bells|Boing|Bubbles|C
 function speak(t,p=1,r=.9){if(!tts||!SET.voice)return;try{tts.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[*"“”]/g,""));u.lang="en-US";u.rate=r;u.pitch=p;const vs=tts.getVoices().filter(v=>/^en[-_]US/i.test(v.lang)&&!NOV.test(v.name));if(vs.length)u.voice=vs[0];tts.speak(u)}catch(e){}}
 
 /* ===== words ===== */
-const WORDS={"missing":"失踪","last seen":"最后一次被看到","timetable":"时刻表","block":"街区","blocks":"街区","bus stop":"公交站","weird":"奇怪的","location":"位置","circles":"圆圈；兜圈子","behind":"在……后面","footsteps":"脚步声","turn back":"往回走","shadow":"影子","alone":"独自","picking up":"接电话","forever":"永远","drop":"掉落","dropped":"掉了","slow":"慢行","headline":"标题","vending machine":"自动售货机","wrong":"不对的","again":"又；再","driver":"司机","passengers":"乘客","street":"街道"};
+const WORDS={"detail":"细节","disappears":"消失","distant":"遥远的","familiar":"熟悉的","figure":"人影","signal":"信号","missing":"失踪","last seen":"最后一次被看到","schedule":"时刻表","block":"街区","blocks":"街区","bus stop":"公交站","weird":"奇怪的","location":"位置","circles":"圆圈；兜圈子","behind":"在……后面","footsteps":"脚步声","turn back":"往回走","shadow":"影子","alone":"独自","picking up":"接电话","forever":"永远","drop":"掉落","dropped":"掉了","slow":"慢行","headline":"标题","drink machine":"自动售货机","wrong":"不对的","again":"又；再","driver":"司机","passengers":"乘客","street":"街道"};
 const WRE=new RegExp("\\b("+Object.keys(WORDS).sort((a,b)=>b.length-a.length).map(k=>k.replace(/ /g,"\\s")).join("|")+")\\b","gi");
 const mark=en=>en.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(WRE,m=>`<span class="kw" title="${WORDS[m.toLowerCase()]}">${m}</span>`);
 
 /* ===== anomalies ===== */
 const AN={
  street:["The street sign said \"Elm Streat\". That's not how you spell it.","路牌上写的是“Elm Streat”。拼写不对。"],
- time:["The timetable said the last bus is at 23:04, not 23:40.","时刻表上写末班车是 23:04，不是 23:40。"],
+ time:["The bus schedule said the last bus is at 23:04, not 23:40.","时刻表上写末班车是 23:04，不是 23:40。"],
  poster:["The poster said: \"Last seen: behind you.\"","海报上写着：“最后一次被看到：在你身后。”"],
  eyes:["The face on the poster... its eyes were following me.","海报上那张脸……眼睛一直在跟着我转。"],
  lamp5:["There were five street lamps. There are always four.","路灯有五盏。明明一直都是四盏。"],
@@ -121,7 +121,7 @@ const AN={
  open:["The shop sign said OPEN 25H. There are only 24 hours in a day.","店门口写着 OPEN 25H。一天只有 24 小时。"],
  news:["The newspaper headline said: WOMAN WALKS SAME STREET FOREVER.","报纸标题写着：女子永远走在同一条街上。"],
  bench:["The man on the bench was gone. Only his newspaper was there.","长椅上的男人不见了，只剩下他的报纸。"],
- vend:["The vending machine buttons spelled H-E-L-P.","自动售货机的按钮拼出了 H-E-L-P。"],
+ vend:["The drink machine buttons spelled H-E-L-P.","自动售货机的按钮拼出了 H-E-L-P。"],
  sign:["The road sign said: SLOW, CHILDREN WATCHING.","路牌写着：慢行，孩子们在看着。"],
  moon:["There were two moons.","天上有两个月亮。"],
  window:["Someone was standing in every window.","每一扇窗户里都站着一个人。"],
@@ -131,7 +131,7 @@ const AN={
  phone:["I got a text from an unknown number: \"you dropped something. come back.\"","我收到一条陌生号码的短信：“你掉东西了。回来。”"]
 };
 const AKEYS=Object.keys(AN);
-const STORY={1:["Jess","Did you make the last bus? N8 at 23:40, to Maple Ave. Don't miss it lol","赶上末班车了吗？N8，23:40，开往 Maple Ave。别错过了哈哈"],3:["Jess","btw don't walk down Elm St alone. That woman who went missing last month? Anna something. They never found her.","对了，别一个人走 Elm 街。上个月失踪的那个女的？叫 Anna 什么的。一直没找到。"],5:["Jess","hey your location is weird. The map says you're walking in circles??","喂，你的位置好奇怪。地图上显示你在兜圈子？？"],7:["Jess","Call me when you're on the bus ok","上车了给我打电话，好吗"],10:["Jess","I'm calling you. Why aren't you picking up","我在给你打电话。你怎么不接"],13:["Jess","it says you're on Elm St. It has said that for an hour.","上面显示你在 Elm 街。已经显示一个小时了。"],17:["Jess","please just keep walking. don't look back","求你了，一直走。别回头"]};
+const STORY={1:["Jess","Did you make the last bus? N8 at 23:40, to Maple Ave. Don't miss it!","赶上末班车了吗？N8，23:40，开往 Maple Ave。别错过了哈哈"],3:["Jess","by the way, don't walk down Elm Street alone. That woman who went missing last month? Anna something. They never found her.","对了，别一个人走 Elm 街。上个月失踪的那个女的？叫 Anna 什么的。一直没找到。"],5:["Jess","wait, your location is weird. The map says you're walking in circles??","喂，你的位置好奇怪。地图上显示你在兜圈子？？"],7:["Jess","Call me when you're on the bus ok","上车了给我打电话，好吗"],10:["Jess","I'm calling you. Why aren't you picking up","我在给你打电话。你怎么不接"],13:["Jess","it says you're on Elm Street. The signal hasn't moved for an hour.","上面显示你在 Elm 街。信号一个小时都没动过。"],17:["Jess","please just keep walking. don't look back","求你了，一直走。别回头"]};
 
 /* ===== state ===== */
 let G=null;
@@ -209,8 +209,8 @@ function street(){
   rect(196,192,72,92,"#d9d6cc");txt("MISSING",232,203,12,"#a8211b");rect(212,212,40,36,"#77766f");
   g.fillStyle=K;g.beginPath();g.arc(232-CX,227,9,0,7);g.fill();g.fillRect(222-CX,236,20,12);
   if(A("eyes")){const ex=Math.max(-2,Math.min(2,(G.x-232)/80));g.fillStyle="#fff";g.fillRect(228-CX+ex,226,2,2);g.fillRect(234-CX+ex,226,2,2)}
-  txt("ANNA LEE, 27",232,257,8,"#111");txt(A("poster")?"Last seen: behind you":"Last seen: Elm St, 11 p.m.",232,270,6.5,"#222","center","normal");
-  // vending machine
+  txt("ANNA LEE, 27",232,257,8,"#111");txt(A("poster")?"Last seen: behind you":"Last seen here, 11 p.m.",232,270,6.5,"#222","center","normal");
+  // drink machine
   rect(276,214,38,86,"#0f1012");rect(280,220,30,40,"#c9c6bb");
   const vc=A("vend")?["#a8211b","#a8211b","#a8211b","#a8211b","#a8211b","#a8211b"]:["#5a6a7a","#7a5a4a","#556b55","#8a7a5a","#6a5a7a","#4a5a6a"];
   for(let i=0;i<6;i++)rect(283+(i%3)*9,224+(i/3|0)*16,6,11,vc[i]);
@@ -277,7 +277,7 @@ async function leave(dir){
   if(ok){G.count++;sfx("ok")}else{G.mist++;G.count=0;sfx("bad")}
   hud();await wait(250);
   if(!ok){await say(dir<0?"Wait. Nothing was wrong back there. I turned back for nothing.":"Something was wrong back there. "+AN[prev][0],dir<0?"等等。刚才什么问题都没有。我白往回走了。":"刚才那里有不对劲的地方。"+AN[prev][1]);
-    if(G.mist===1)await say("Behind me, at the corner... someone is standing there.","我身后，街角那里……站着一个人。");
+    if(G.mist===1)await say("Behind me, at the corner... a distant figure is standing there.","我身后，远远的街角那里……站着一个人影。");
     if(G.mist===3)await say("They're closer now. I can't make another mistake.","那个人更近了。我不能再出错了。");
     if(G.mist>=4){G.busy=false;return ending("caught","walk")}}
   if(G.count>=8){G.busy=false;return finale()}
@@ -298,7 +298,7 @@ function update(dt){
 }
 
 /* ===== look closer ===== */
-function closeups(){const C=[[44,A("street")?"ELM STREAT":"ELM STREET","Elm 街（路牌）"],[232,`MISSING<br>ANNA LEE, 27<br><small>${A("poster")?"Last seen: behind you":"Last seen: Elm St, 11 p.m."}</small>`,A("poster")?"失踪：Anna Lee，27 岁。最后一次被看到：在你身后":"失踪：Anna Lee，27 岁。最后一次被看到：Elm 街，晚上 11 点"],[411,A("bench")?"(an empty bench / 空长椅)":(A("news")?"WOMAN WALKS SAME STREET FOREVER":"RAIN AGAIN TOMORROW"),A("bench")?"长椅上只有一份报纸。":(A("news")?"女子永远走在同一条街上":"明天还会下雨")],[478,`N8 · Maple Ave<br>${A("time")?"Last bus 23:04":"Last bus 23:40"}`,A("time")?"N8 路，开往 Maple Ave。末班车 23:04":"N8 路，开往 Maple Ave。末班车 23:40"],[642,A("open")?"OPEN 25H":"OPEN 24H",A("open")?"25 小时营业":"24 小时营业"],[750,`SLOW<br>${A("sign")?"CHILDREN WATCHING":"CHILDREN"}`,A("sign")?"慢行，孩子们在看着":"慢行，注意儿童"]];
+function closeups(){const C=[[44,A("street")?"ELM STREAT":"ELM STREET","Elm 街（路牌）"],[232,`MISSING<br>ANNA LEE, 27<br><small>${A("poster")?"Last seen: behind you":"Last seen here, 11 p.m."}</small>`,A("poster")?"失踪：Anna Lee，27 岁。最后一次被看到：在你身后":"失踪：Anna Lee，27 岁。最后一次被看到：就在这里，晚上 11 点"],[411,A("bench")?"(an empty bench / 空长椅)":(A("news")?"WOMAN WALKS SAME STREET FOREVER":"RAIN AGAIN TOMORROW"),A("bench")?"长椅上只有一份报纸。":(A("news")?"女子永远走在同一条街上":"明天还会下雨")],[478,`N8 · Maple Ave<br>${A("time")?"Last bus 23:04":"Last bus 23:40"}`,A("time")?"N8 路，开往 Maple Ave。末班车 23:04":"N8 路，开往 Maple Ave。末班车 23:40"],[642,A("open")?"OPEN 25H":"OPEN 24H",A("open")?"25 小时营业":"24 小时营业"],[750,`SLOW<br>${A("sign")?"CHILDREN WATCHING":"CHILDREN"}`,A("sign")?"慢行，孩子们在看着":"慢行，注意儿童"]];
   if(G.mode==="bus"){const f=G.busFake;return[[350,"N8 · Maple Ave<br>Last bus 23:40","N8 路，开往 Maple Ave。末班车 23:40"],...(G.bus&&G.bus.x<=G.bus.tx+4?[[G.bus.x+40,`${f==="num"?"N6":"N8"} &nbsp; ${f==="dest"?"HOME":"MAPLE AVE"}`,f==="dest"?"终点站：家":f==="num"?"N6 路，开往 Maple Ave":"N8 路，开往 Maple Ave"]]:[])]}
   return C}
 function look(){if(!G||G.busy||G.over)return;const c=closeups().map(o=>[Math.abs(o[0]-G.x),o]).sort((a,b)=>a[0]-b[0])[0];
@@ -312,14 +312,14 @@ async function finale(){
   G.mode="bus";G.x=120;G.face=1;G.an=null;G.busy=true;G.min=23*60+39;hud();setAmb("drone",.06);
   await say("The bus stop. Finally. It's 23:39.","公交站。终于到了。23:39。");
   G.busFake=Math.random()<.5?rnd(Object.keys(BUSV)):null;
-  await say("Headlights. The last bus is coming.","车灯。末班车来了。");
+  await say("Bright lights. The last bus is coming.","车灯。末班车来了。");
   sfx("bus");G.bus={x:CX+VW+40,tx:430};G.busy=false;idle();SUB.innerHTML='<div class="idle">车停下后可以走近看清楚（🔍 也能用）。准备好了就做决定。</div>';
   await wait(3500);sfx("door");G.choosing=true;
   const c=await choose([["Get on the bus","上车","on"],["Let it go","不上这辆车","off"]]);G.choosing=false;G.busy=true;
   if(c==="on"){if(G.busFake)return ending("wrong");return ending(G.mist<=1?"true":"home")}
   if(!G.busFake){await say("The doors close. The N8 drives away without me.","车门关上了。N8 开走了，没有等我。");return ending("caught","missed")}
   await say("The doors close. The bus drives into the fog... and disappears.","车门关上了。那辆车开进雾里……消失了。");
-  await say("Two minutes later, another pair of headlights.","两分钟后，又一对车灯亮了起来。");
+  await say("Two minutes later, another pair of bright lights.","两分钟后，又一对车灯亮了起来。");
   G.busFake=null;G.bus={x:CX+VW+40,tx:430};sfx("bus");G.busy=false;await wait(3500);G.busy=true;sfx("door");
   await say("N8. Maple Ave. The driver nods at me.","N8，Maple Ave。司机朝我点了点头。");return ending(G.mist<=1?"true":"home");
 }
@@ -365,7 +365,7 @@ function title(){const got=LS.get("end",[]);
 async function start(){ac();G.started=true;G.busy=true;setAmb("rain",.12);setAmb("drone",.025);hud();
   await say("23:21. If I hurry, I can still catch the last bus.","23:21。快点的话还能赶上末班车。");
   await say("The bus stop is at the end of Elm Street. Just a few blocks.","公交站在 Elm 街的尽头，就几个街区。");
-  await say("Same street as every night. Same lamps, same signs, same shop. I know it by heart.","每天晚上都走这条街。一样的路灯、一样的招牌、一样的店。我闭着眼都认得。");
+  await say("Same street as every night. Same lamps, same signs, same shop. I know every detail by heart.","每天晚上都走这条街。一样的路灯、一样的招牌、一样的店。每个细节我都记得。");
   G.busy=false;idle()}
 newGame();hud();requestAnimationFrame(frame);title();
 </script>
