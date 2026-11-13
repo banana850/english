@@ -243,7 +243,7 @@ function settings(){
 
 
 /* ================= words ================= */
-const WORDS={"blocks":"街区","caution":"小心","cheek":"脸颊","chef":"厨师","clue":"线索","confused":"困惑的","detail":"细节","identical":"相同的","identify":"认出","means":"意思是","ringing":"（电话）在响","rings":"（铃）响","saint":"圣（用于名字）","save":"留着；省着用","screen":"屏幕","spare":"空闲的","update":"更新","vanish":"消失","regular":"常客","regulars":"常客们","the usual":"老样子","cash":"现金","card":"银行卡","exact change":"正好的零钱","earring":"耳环","beard":"胡子","shaved":"剃掉了","dyed":"染了（头发）","closed":"打烊","camera":"监控","missing":"失踪","keys":"钥匙","tea":"茶","scar":"疤","eyebrow":"眉毛","dozen":"一打（12 个）","twins":"双胞胎","hurry":"赶时间","instrument":"乐器","copy":"模仿；复制","strange":"奇怪的","wrong":"不对的","quit":"不再做；戒掉","battery":"电池","fever":"发烧","medicine":"药","receipt":"收据","sign":"招牌","face":"脸","wear":"穿；戴","exactly":"完全一样地"};
+const WORDS={"replaced":"换了","average":"一般的","exhausting":"累人的","exhausted":"筋疲力尽的","transferred":"调动（工作）","deadline":"截止时间","schedule":"（工作）时间表","swallowed":"吞掉了","locate":"找到","distance":"距离","imitate":"模仿","awful":"糟糕的；难闻的","restocked":"补货","bother":"打扰","rude":"没礼貌的","contacted":"联系了","complained":"投诉","security":"安保","handle":"应付；搞定","cautious":"谨慎的","reward":"奖励","instant":"一瞬间","blocks":"街区","caution":"小心","cheek":"脸颊","chef":"厨师","clue":"线索","confused":"困惑的","detail":"细节","identical":"相同的","identify":"认出","means":"意思是","ringing":"（电话）在响","rings":"（铃）响","saint":"圣（用于名字）","save":"留着；省着用","screen":"屏幕","spare":"空闲的","update":"更新","vanish":"消失","regular":"常客","regulars":"常客们","the usual":"老样子","cash":"现金","card":"银行卡","exact change":"正好的零钱","earring":"耳环","beard":"胡子","shaved":"剃掉了","dyed":"染了（头发）","closed":"打烊","camera":"监控","missing":"失踪","keys":"钥匙","tea":"茶","scar":"疤","eyebrow":"眉毛","dozen":"一打（12 个）","twins":"双胞胎","hurry":"赶时间","instrument":"乐器","copy":"模仿；复制","strange":"奇怪的","wrong":"不对的","quit":"不再做；戒掉","battery":"电池","fever":"发烧","medicine":"药","receipt":"收据","sign":"招牌","face":"脸","wear":"穿；戴","exactly":"完全一样地"};
 const WKEYS=Object.keys(WORDS).sort((a,b)=>b.length-a.length);
 const WRE=new RegExp("\\b("+WKEYS.map(k=>k.replace(/ /g,"\\s")).join("|")+")\\b","gi");
 function markWords(en){const esc=en.replace(/&/g,"&amp;").replace(/</g,"&lt;");return esc.replace(WRE,m=>{const k=m.toLowerCase();if(G)G.words.add(k);return`<span class="kw" title="${WORDS[k]}">${m}</span>`})}
@@ -255,12 +255,12 @@ tom:{n:"Tom",role:["Office worker","上班族"],v:[.9,.92,1],look:{skin:"#d9b08c
  order:["The usual. Spicy noodles.","老样子，辣味杯面。"],orderAlt:["Noodles, please. Not spicy. I hate spicy food.","来杯面。不要辣的，我讨厌辣。"],orderTxt:["Spicy noodles","辣味杯面"],
  pay:["Card, as always.","刷卡，老样子。"],payAlt:["Cash. Here you go.","现金。给你。"],payTxt:["Pays by card","刷卡"],
  pq:["How's your cat? What's her name again?","你的猫还好吗？她叫什么来着？"],pa:["Mochi! She sleeps on my keyboard every night.","Mochi！她每天晚上都睡在我的键盘上。"],paAlt:["Her name? ...Coco. Yes. Coco.","她的名字？……Coco。对，Coco。"],paTxt:["Cat: Mochi","猫叫 Mochi"],
- mut:[{top:"#7a4a2a"},{tie:"#3b6fd0"},{glasses:null}],chgLook:[{glasses:"round"},"Tom got new glasses. Round ones now.","Tom 换了新眼镜，现在是圆框的。"]},
+ mut:[{top:"#7a4a2a"},{tie:"#3b6fd0"},{glasses:null}],chgLook:[{glasses:"round"},"Tom replaced his glasses. Round ones now.","Tom 换了新眼镜，现在是圆框的。"]},
 lily:{n:"Lily",role:["Student","学生"],v:[1.3,1.02,2],look:{skin:"#f0cfb0",hair:"#5a3a2a",style:"long",top:"#8a5bbf",hood:"#6e479c",phones:"#111"},lookTxt:["Purple sweater, long brown hair. Always listening to music.","紫色毛衣、棕色长发，总在听音乐。"],
- greet:["Hi! Is it cold, or is it just me?","嗨～是外面冷，还是我太怕冷？"],greetAlt:["Good evening. It is a normal temperature tonight.","晚上好。今晚气温正常。"],
+ greet:["Hi! Is it cold, or is it just me?","嗨～是外面冷，还是我太怕冷？"],greetAlt:["Good evening. The temperature is average tonight.","晚上好。今晚气温正常。"],
  order:["Green tea. No sugar, please!","绿茶，无糖，谢谢！"],orderAlt:["Green tea. Extra sugar, please!","绿茶，多加糖，谢谢！"],orderTxt:["Green tea, no sugar","无糖绿茶"],
  pay:["I'll pay with my phone.","我用手机付。"],payAlt:["Cash, please.","现金。"],payTxt:["Pays with her phone","手机支付"],
- pq:["What instrument do you play again?","你学的是什么乐器来着？"],pa:["Piano! Two hours a day. My fingers hurt.","钢琴！一天两个小时，手指好疼。"],paAlt:["The... violin. Yes. The violin.","那个……小提琴。对，小提琴。"],paTxt:["Plays the piano","弹钢琴"],
+ pq:["What instrument do you play again?","你学的是什么乐器来着？"],pa:["Piano! Two hours a day. It's exhausting.","钢琴！一天两个小时，累死了。"],paAlt:["The... violin. Yes. The violin.","那个……小提琴。对，小提琴。"],paTxt:["Plays the piano","弹钢琴"],
  chgPa:[["Guitar now! I quit piano last week.","现在弹吉他了！上周不学钢琴了。"],"Lily quit piano. She plays the guitar now.","Lily 不学钢琴了，现在弹吉他。"],
  mut:[{top:"#c23b3b",hood:"#9c2a2a"},{phones:"#eeeeee"},{hair:"#141010"}],chgLook:[{hair:"#e08a3a"},"Lily dyed her hair orange.","Lily 把头发染成了橙色。"]},
 grace:{n:"Grace",role:["Nurse","护士"],v:[1.05,.88,4],look:{skin:"#c99a78",hair:"#3a241a",style:"bun",top:"#5fa8a0",cardi:"#d9cbb0",badge:1},lookTxt:["Blue-green nurse uniform, light brown jacket, hospital badge, hair tied up.","青绿色护士服、浅棕色外套、医院工牌、头发盘起来。"],
@@ -268,7 +268,7 @@ grace:{n:"Grace",role:["Nurse","护士"],v:[1.05,.88,4],look:{skin:"#c99a78",hai
  order:["Medium black coffee, please.","中杯黑咖啡，谢谢。"],orderAlt:["Medium coffee with lots of milk, please.","中杯咖啡，多加奶，谢谢。"],orderTxt:["Medium black coffee","中杯黑咖啡"],coffee:1,
  pay:["Cash. I have exact change.","现金，我有正好的零钱。"],payAlt:["Card, please.","刷卡。"],payTxt:["Pays cash, exact change","现金，正好的零钱"],
  pq:["Which hospital do you work at again?","你在哪家医院上班来着？"],pa:["Saint Mary's. Night shift, like you.","圣玛丽医院。跟你一样上夜班。"],paAlt:["The big one. Downtown. You know.","大的那家。市中心。你知道的。"],paTxt:["Works at Saint Mary's Hospital","在圣玛丽医院上班"],
- chgPa:[["City Hospital! I just moved there this week.","市立医院！我这周刚调过去。"],"Grace works at City Hospital now. She just moved.","Grace 现在在市立医院上班了，刚调过去。"],
+ chgPa:[["City Hospital! I just transferred there this week.","市立医院！我这周刚调过去。"],"Grace works at City Hospital now. She just transferred.","Grace 现在在市立医院上班了，刚调过去。"],
  mut:[{top:"#d58fb0"},{badge:0},{cardi:null}]},
 okafor:{n:"Mr. Okafor",role:["Retired teacher","退休老师"],v:[.7,.85,5],look:{skin:"#7a4f34",hair:"#bbbbbb",style:"bald",beard:"#d8d8d8",cap:"#6b4a2f",top:"#3e6a4a"},lookTxt:["Brown cap, white beard, green sweater.","棕色帽子、白胡子、绿色毛衣。"],
  greet:["Good evening, young lady.","晚上好，小姑娘。"],greetAlt:["Hi. What's up?","嘿，咋样？"],
@@ -277,7 +277,7 @@ okafor:{n:"Mr. Okafor",role:["Retired teacher","退休老师"],v:[.7,.85,5],look
  pq:["How's your dog? What's his name again?","你的狗还好吗？他叫什么来着？"],pa:["Pepper. He's getting old, like me.","Pepper。他也老了，跟我一样。"],paAlt:["Max. Good dog. Good dog.","Max。好狗。好狗。"],paTxt:["Dog: Pepper","狗叫 Pepper"],
  mut:[{cap:"#3b6fd0"},{top:"#6a3a7a"},{cap:null}],chgLook:[{beard:null},"Mr. Okafor shaved off his beard.","Okafor 先生把胡子剃了。"]},
 dana:{n:"Dana",role:["Delivery driver","快递司机"],v:[1,1.05,6],look:{skin:"#e0b090",hair:"#8a3a1a",style:"long",cap:"#c33",top:"#e8782a",stripe:1,earring:"R"},lookTxt:["Orange work jacket, red cap, one gold earring.","橙色工装外套、红帽子、一只金耳环。"],
- greet:["Quick, quick, I'm in a hurry!","快快快，我赶时间！"],greetAlt:["No hurry. I have all night.","不急。我有一整晚的时间。"],
+ greet:["Quick, quick, I've got a deadline!","快快快，我在赶时间！"],greetAlt:["No hurry. I have all night.","不急。我有一整晚的时间。"],
  order:["Energy drink. The big one.","能量饮料。大罐的。"],orderAlt:["A cup of warm milk, please.","一杯热牛奶，谢谢。"],orderTxt:["Big energy drink","大罐能量饮料"],
  pay:["Card! Quick!","刷卡！快！"],payAlt:["Phone. Take your time.","手机付。你慢慢来。"],payTxt:["Pays by card","刷卡"],
  pq:["How many kids do you have again?","你有几个孩子来着？"],pa:["Twins! Two girls. Two little monsters.","双胞胎！两个女孩。两个小怪兽。"],paAlt:["One. One boy.","一个。一个男孩。"],paTxt:["Has twin girls","有一对双胞胎女儿"],
@@ -287,17 +287,17 @@ yuki:{n:"Yuki",role:["Chef","厨师"],v:[1.15,.95,7],look:{skin:"#f0d0b0",hair:"
  order:["Milk and a dozen eggs.","牛奶，再来一打鸡蛋。"],orderAlt:["Just... a dozen eggs. No milk.","就……一打鸡蛋。不要牛奶。"],orderTxt:["Milk and a dozen eggs","牛奶和一打鸡蛋"],
  pay:["Phone, please.","手机付。"],payAlt:["Card.","刷卡。"],payTxt:["Pays with phone","手机支付"],
  pq:["Where do you work again?","你在哪儿上班来着？"],pa:["Sakura Noodle House, two blocks down.","樱花拉面，往前两个街区。"],paAlt:["A restaurant. With food.","一家餐厅。有食物的。"],paTxt:["Works at Sakura Noodle House","在樱花拉面上班"],
- chgPa:[["Blue Moon Diner now. Better hours!","现在在蓝月亮餐厅了，上班时间好多了！"],"Yuki works at Blue Moon Diner now.","Yuki 现在在蓝月亮餐厅上班。"],
+ chgPa:[["Blue Moon Diner now. Better schedule!","现在在蓝月亮餐厅了，上班时间好多了！"],"Yuki works at Blue Moon Diner now.","Yuki 现在在蓝月亮餐厅上班。"],
  mut:[{top:"#262626"},{band:"#3b6fd0"},{mole:1}]}
 };
 const PAT={tom:2,lily:2,grace:3,okafor:3,dana:1,yuki:2};
-const EXC={tom:["Cash today. My card got stuck in the bank machine. Long story.","今天付现金。卡被取款机吞了，说来话长。"],lily:["Cash today. My phone is dead. Zero percent!","今天付现金。手机没电了，一格都没有！"],grace:["Card tonight, dear. I spent all my coins on the bus.","今晚刷卡，亲爱的。零钱都坐公交用光了。"],okafor:["Card today. My grandson set it up for me. Modern times!","今天刷卡。我孙子帮我弄好的。时代变啦！"],dana:["Phone today. I left my card in the truck. Quick!","今天手机付。卡落在车里了。快点！"],yuki:["Cash. My phone fell in the soup. Don't ask.","现金。手机掉汤里了。别问。"]};
+const EXC={tom:["Cash today. The bank machine swallowed my card. Long story.","今天付现金。卡被取款机吞了，说来话长。"],lily:["Cash today. My phone is dead. Zero percent!","今天付现金。手机没电了，一格都没有！"],grace:["Card tonight, dear. I spent all my coins on the bus.","今晚刷卡，亲爱的。零钱都坐公交用光了。"],okafor:["Card today. My grandson set it up for me. Modern times!","今天刷卡。我孙子帮我弄好的。时代变啦！"],dana:["Phone today. I left my card in the truck. Quick!","今天手机付。卡落在车里了。快点！"],yuki:["Cash. My phone fell in the soup. Don't ask.","现金。手机掉汤里了。别问。"]};
 const SQ=[["Where are you headed tonight?","你今晚要去哪儿？"],["Cash or card?","现金还是刷卡？"]];
 const SMIM=[["Where am I headed tonight? ...Where am I headed. Here. I am here.","我今晚要去哪儿？……我要去哪儿。这里。我就在这里。"],["Cash or card? Cash or card. ...Yes.","现金还是刷卡？现金还是刷卡。……是的。"]];
 const STR={
-tourist:{n:"Tourist",v:[1.2,1,8],look:{skin:"#f0cfb0",hair:"#d8b060",style:"long",top:"#3a8a7a",scarf:"#e8d070"},greet:["Hi! Sorry, I'm a little lost. Can I get a bottle of water?","嗨！不好意思，我有点迷路了。能买瓶水吗？"],h:[["The train station. Is it far?","去火车站。远吗？"],["Card. Oh wait, cash. Sorry!","刷卡。哦等等，现金吧。抱歉！"]]},
-courier:{n:"Courier",v:[.85,1,9],look:{skin:"#b98a60",hair:"#222",style:"short",cap:"#2a3a6a",top:"#7a5a3a"},greet:["Hi. Last delivery of the night. Just a sandwich, please.","嘿，今晚最后一单了。来个三明治就行。"],h:[["Home! Finally. My feet are killing me.","回家！终于。脚要累断了。"],["Card, thanks.","刷卡，谢了。"]]},
-white:{n:"Woman in White",v:[1.1,.8,10],look:{skin:"#ece6dc",hair:"#111",style:"long",top:"#e8e6e0"},greet:["Water. One bottle of water. Please.","水。一瓶水。拜托了。"],h:[["Home. My car broke down. I walked a long way.","回家。我的车坏了，走了好远。"],["Cash. Sorry, my hands are cold.","现金。抱歉，我手好冰。"]]},
+tourist:{n:"Tourist",v:[1.2,1,8],look:{skin:"#f0cfb0",hair:"#d8b060",style:"long",top:"#3a8a7a",scarf:"#e8d070"},greet:["Hi! Sorry, I can't locate my hotel. Can I get a bottle of water?","嗨！不好意思，我找不到我住的酒店了。能买瓶水吗？"],h:[["The train station. Is it far?","去火车站。远吗？"],["Card. Oh wait, cash. Sorry!","刷卡。哦等等，现金吧。抱歉！"]]},
+courier:{n:"Courier",v:[.85,1,9],look:{skin:"#b98a60",hair:"#222",style:"short",cap:"#2a3a6a",top:"#7a5a3a"},greet:["Hi. Last delivery of the night. Just a sandwich, please.","嘿，今晚最后一单了。来个三明治就行。"],h:[["Home! Finally. I'm totally exhausted.","回家！终于。累坏了。"],["Card, thanks.","刷卡，谢了。"]]},
+white:{n:"Woman in White",v:[1.1,.8,10],look:{skin:"#ece6dc",hair:"#111",style:"long",top:"#e8e6e0"},greet:["Water. One bottle of water. Please.","水。一瓶水。拜托了。"],h:[["Home. My car broke down. I walked a long distance.","回家。我的车坏了，走了好远。"],["Cash. Sorry, my hands are cold.","现金。抱歉，我手好冰。"]]},
 hood:{n:"Man in a Dark Coat",v:[.6,.9,11],look:{skin:"#c9a080",hair:"#222",style:"short",top:"#2a2a30",hood:"#1e1e24"},greet:["Hi. Do you sell... umbrellas?","嘿。你们卖……雨伞吗？"],h:[["Work. I drive a night bus.","上班。我开夜班公交。"],["Card.","刷卡。"]]},
 grandma:{n:"Old Woman",v:[1.3,.8,12],look:{skin:"#e8c8a8",hair:"#dddddd",style:"bun",top:"#7a5a8a",scarf:"#c9a24a"},greet:["I've been walking for a long, long time. Do you have cold medicine?","我走了好久好久。你们有感冒药吗？"],h:[["Home. My grandson has a fever, poor thing.","回家。我孙子发烧了，可怜的孩子。"],["Cash, dear. Let me find my purse.","现金，孩子。我找找钱包。"]]}
 };
@@ -305,12 +305,12 @@ const PARK={look:{skin:"#e0b894",hair:"#5a5a5a",style:"short",top:"#4a4033",scar
 const KEV={look:{skin:"#e8c3a0",hair:"#6a4a2a",style:"short",top:"#e3be38",hood:"#c9a42a",bandage:1},facts:[["Kevin has a bandage on his cheek. Cut himself shaving.","Kevin 脸上贴着创可贴，刮胡子刮破的。"],["Kevin says \"Good morning\" to everyone. Even at night.","Kevin 跟谁都说“早上好”，大半夜也是。"],["Kevin's favorite food: spicy noodles. Extra hot.","Kevin 最爱吃：辣味杯面，特辣。"]]};
 const RIDDLE=[["fridge","Where the cold drinks sleep.","冷饮睡觉的地方。"],["register","Under the place where the money sleeps.","钱睡觉的地方的下面。"],["trash","Where everything nobody wants goes.","没人要的东西都去的地方。"],["coffee","Where it is always warm and smells like morning.","永远暖和、闻起来像早晨的地方。"],["stock","Behind the boxes, where customers never go.","箱子后面，客人从来不去的地方。"]];
 const KNOTE=[
- [["If you found this, you got the job. Good luck.","你能找到这张，说明你被录用了。祝你好运。"],["Real people have bad days. They forget things, they change their minds. But when they do, they tell you WHY. The things never explain. That's your clue.","真正的人也会有状态不好的时候，会忘事、会改主意。但他们会告诉你为什么。那些东西从来不解释。"],["P.S. Mr. Park has a scar over one eyebrow.","附：朴店长一边眉毛上有道疤。"],["P.P.S. If I ever come back... I'm the one with the bandage on my cheek.","再附：如果我哪天回来了……脸上贴创可贴的那个才是我。"]],
+ [["If you found this, you got the job. Good luck.","你能找到这张，说明你被录用了。祝你好运。"],["Real people have bad days. They forget things, they change their minds. But when they do, they tell you WHY. The things never explain. They just imitate. That's your clue.","真正的人也会有状态不好的时候，会忘事、会改主意。但他们会告诉你为什么。那些东西从来不解释，只会模仿。"],["P.S. Mr. Park has a scar over one eyebrow.","附：朴店长一边眉毛上有道疤。"],["P.P.S. If I ever come back... I'm the one with the bandage on my cheek.","再附：如果我哪天回来了……脸上贴创可贴的那个才是我。"]],
  [["The camera doesn't lie. But the battery is dying. Save it for the ones you can't check in the book.","监控不会说谎。但电池快没电了。留给名册里查不到的那些。"],["Strangers are the worst. You can't identify them with the book. Listen to HOW they answer.","陌生人最难办，名册没法帮你认出它们。听它们回答的方式。"],["P.S. Mr. Park calls everyone \"kid\". Everyone.","附：朴店长管谁都叫“kid”。谁都是。"],["P.P.S. I say \"good morning\" to everyone, even at 3 a.m. My mom thinks it's funny.","再附：我跟谁都说“早上好”，凌晨三点也是。我妈觉得特别好笑。"]],
  [["I let one in. Just one. Then things started to vanish from my memory. My phone number. My own name.","我放进来了一个。就一个。然后我开始忘事。电话号码。我自己的名字。"],["They want two things: the keys, and a way in. Don't give them either.","它们想要两样东西：钥匙，和进门的路。哪样都别给。"],["P.S. Park never drinks coffee. Only tea.","附：朴店长从不喝咖啡，只喝茶。"],["P.P.S. I'd kill for a cup of spicy noodles right now. Extra hot. — K","再附：我现在超想来一碗辣味杯面，特辣。—— K"]]
 ];
 const SPOTS=[["fridge","Drinks fridge","饮料冰柜"],["register","Under the register","收银机下面"],["coffee","Coffee machine","咖啡机"],["trash","Trash can","垃圾桶"],["stock","Stockroom","仓库"]];
-const SPOTX={fridge:["Cold bottles. Nothing else.","冰凉的瓶子。没别的。"],register:["Old receipts and a broken pen.","旧收据和一支坏掉的笔。"],coffee:["The coffee pot is still warm.","咖啡壶还是温的。"],trash:["It smells bad. Nothing here.","好臭。什么都没有。"],stock:["Boxes. And... was that a sound? No. Just the fridge making noise.","一堆箱子。还有……刚才是什么声音？不，只是冰柜在嗡嗡响。"]};
+const SPOTX={fridge:["Cold bottles. Nothing else.","冰凉的瓶子。没别的。"],register:["Old receipts and a broken pen.","旧收据和一支坏掉的笔。"],coffee:["The coffee pot is still warm.","咖啡壶还是温的。"],trash:["It smells awful. Nothing here.","好臭。什么都没有。"],stock:["Boxes waiting to be restocked. And... was that a sound? No. Just the fridge making noise.","一堆等着补货的箱子。还有……刚才是什么声音？不，只是冰柜在嗡嗡响。"]};
 const BYE=[["Thanks. Good night!","谢谢，晚安！"],["Thank you. See you tomorrow.","谢谢，明天见。"],["Thanks! Stay warm.","谢啦！别着凉。"]];
 const NO=[["What? But the sign says OPEN... Fine.","什么？门口不是写着营业中吗……行吧。"],["...Okay.","……好吧。"],["Oh. Okay. Good night, then.","哦。好吧。那晚安。"]];
 const TIMES=[[22*60+38,23*60+2,23*60+26,23*60+55,24*60+18,24*60+40],[22*60+36,22*60+58,23*60+22,23*60+50,24*60+12,24*60+35],[22*60+35,22*60+57,23*60+20,23*60+48,24*60+10,24*60+33]];
@@ -437,10 +437,10 @@ async function ask(){
   const q=await choose(opts);if(q===null)return;
   (c.asked=c.asked||[]).push(q);G.asks--;const o=opts.find(x=>x[2]===q);
   await say("mia",o[0],o[1]);
-  if(c.kind==="kev"){if(q==="food"){if(c.fake&&G.kWrong==="food")await say("cust","Food? Anything. Bread. Milk. Anything is fine.","吃的？什么都行。面包。牛奶。什么都行。");else await say("cust","Spicy noodles. Extra hot. I dream about them.","辣味杯面，特辣。我做梦都在想。")}else await say("cust","I don't know. It was dark. So dark. I could hear the door bell, but I couldn't find the door.","我不知道。很黑。特别黑。我能听见门铃声，可就是找不到门。");return}
+  if(c.kind==="kev"){if(q==="food"){if(c.fake&&G.kWrong==="food")await say("cust","Food? Anything. Bread. Milk. Anything is fine.","吃的？什么都行。面包。牛奶。什么都行。");else await say("cust","Spicy noodles. Extra hot. I dream about them.","辣味杯面，特辣。我做梦都在想。")}else await say("cust","I don't know. It was dark. So dark. I could hear the door bell, but I couldn't locate the door.","我不知道。很黑。特别黑。我能听见门铃声，可就是找不到门。");return}
   if(c.kind==="park"){if(q==="drink"){if(c.fake&&G.parkWrong==="drink")await say("cust","Coffee? Sure. Coffee sounds great.","咖啡？好啊，来杯咖啡不错。");else await say("cust","Coffee? No thanks, kid. Never touch the stuff. Got any tea?","咖啡？不了，小家伙。我从来不碰那玩意儿。有茶吗？")}else await say("cust","Rainy. The roads are empty tonight.","下雨。今晚路上一个人都没有。");return}
   if(c.kind==="reg"){const a=c[q];await say("cust",a[0],a[1])}else{const a=c.h[q];await say("cust",a[0],a[1])}
-  if(G.asks<=0)await say("think","They look impatient. No more questions.","对方看起来不耐烦了。不能再问了。");
+  if(G.asks<=0)await say("think","They look impatient. I'd better not bother them with more questions.","对方看起来不耐烦了。别再问了，免得惹人烦。");
 }
 
 /* ================= book ================= */
@@ -509,13 +509,13 @@ async function card(n){
 }
 function parkNote(n){
   const L=[];const b=(e,z)=>L.push([e,z]);
-  if(n===1){b("Mia — welcome to the night shift.","Mia——欢迎来上夜班。");b("Lately, some things come in wearing our regulars' faces. They look identical. They talk the same. But they always get one small thing wrong.","最近，有些东西会顶着常客的脸进店。长得一样，说话也一样。但它们总会弄错一个小地方。");b("Before you sell anything, check THE REGULARS BOOK under the counter.","卖东西之前，先查柜台下面的《常客名册》。");b("If any detail is wrong, say \"Sorry, we're closed.\" Don't sell them anything.","如果哪里不对，就说“抱歉，我们打烊了。”什么都别卖给它们。");b("But our real regulars are good people, and everyone has bad days. Don't turn them away.","但真正的常客都是好人，谁都有状态不好的时候。别把他们赶走。");b("I'll come by on Friday at 1 a.m. for the money and the keys. — Park","周五凌晨 1 点我会过来拿钱和钥匙。——朴")}
+  if(n===1){b("Mia — welcome to the night shift.","Mia——欢迎来上夜班。");b("Lately, some things come in wearing our regulars' faces. They look identical. They talk the same. But they always get one small detail wrong.","最近，有些东西会顶着常客的脸进店。长得一样，说话也一样。但它们总会弄错一个小细节。");b("Before you sell anything, check THE REGULARS BOOK under the counter.","卖东西之前，先查柜台下面的《常客名册》。");b("If any detail is wrong, say \"Sorry, we're closed.\" Don't sell them anything.","如果哪里不对，就说“抱歉，我们打烊了。”什么都别卖给它们。");b("But our real regulars are good people, and everyone has bad days. Don't be rude to them, and don't turn them away.","但真正的常客都是好人，谁都有状态不好的时候。别对他们没礼貌，也别把他们赶走。");b("I'll come by on Friday at 1 a.m. for the money and the keys. — Park","周五凌晨 1 点我会过来拿钱和钥匙。——朴")}
   else{
     b("Morning, Mia. Thanks for last night.","早，Mia。昨晚辛苦了。");
 
-    for(const id of G.pendShown||[])b(`${REG[id].n} didn't come home last night. The family is looking everywhere.`,`${REG[id].n} 昨晚没有回家。家里人到处在找。`);
-    for(const id of G.newRef||[])b(`${REG[id].n} says you wouldn't serve them. Be careful, okay?`,`${REG[id].n} 说你不肯卖东西给他们。小心点，好吗？`);
-    if(n===2){const u=REG[G.chgA].chgLook;G.updates.push([u[1],u[2]]);b("Update for the book: "+u[1],"名册更新："+u[2]);b("Also, the camera under the counter works again. The battery is almost dead, so use it with caution. It has to last until Friday.","另外，柜台下面的监控又能用了。电池快没电了，省着点用，要撑到周五。")}
+    for(const id of G.pendShown||[])b(`${REG[id].n} didn't come home last night. The family has contacted the police.`,`${REG[id].n} 昨晚没有回家。家里人已经报了警。`);
+    for(const id of G.newRef||[])b(`${REG[id].n} complained that you wouldn't serve them. Be careful, okay?`,`${REG[id].n} 投诉说你不肯卖东西给他们。小心点，好吗？`);
+    if(n===2){const u=REG[G.chgA].chgLook;G.updates.push([u[1],u[2]]);b("Update for the book: "+u[1],"名册更新："+u[2]);b("Also, the security camera under the counter works again. The battery is almost dead, so use it with caution. It has to last until Friday.","另外，柜台下面的监控又能用了。电池快没电了，省着点用，要撑到周五。")}
     if(n===3){const u=REG[G.chgB].chgPa;G.updates.push([u[1],u[2]]);b("Update for the book: "+u[1],"名册更新："+u[2]);b("Tonight is Friday. I'll be there at 1 a.m. Have the keys ready. — Park","今晚是周五。我凌晨 1 点到。把钥匙准备好。——朴")}
   }
   return modal(`<div class="paper"><h3>${n===1?"Note from Mr. Park":"Text from Mr. Park"}</h3>${L.map(l=>`<div class="rule"><div>${markWords(l[0])}</div><div class="z">${l[1]}</div></div>`).join("")}</div><p class="hint">点一句可以看中文。更新内容会记在名册的「笔记」页。</p><div class="row"><button class="btn" id="allz">全部显示中文</button><button class="btn pri" data-close>好</button></div>`,m=>{m.querySelectorAll(".rule").forEach(r=>r.onclick=()=>r.classList.toggle("on"));m.querySelector("#allz").onclick=()=>m.querySelector(".paper").classList.toggle("allz")});
@@ -526,7 +526,7 @@ async function night(n){
   if(n===3){const c=shuf(Object.keys(REG).filter(i=>REG[i].chgPa&&!G.missing[i]&&i!==G.chgA));G.chgB=c[0]||"grace"}
   await card(n);setAmb("rain",.06);setAmb("hum",.05);setAmb("drone",[0,.03,.07][n-1]);
   await parkNote(n);
-  if(n===1){await say("think","Okay. The book is under the counter. I can do this.","好。名册在柜台下面。我能行。")}
+  if(n===1){await say("think","Okay. The book is under the counter. I can handle this.","好。名册在柜台下面。我能搞定。")}
   const S=build(n);
   for(let i=0;i<S.length;i++){
     G.clock=TIMES[n-1][i];refresh();await wait(700);
@@ -549,7 +549,7 @@ async function finale(){
   if(allies.length>=4){const a=REG[allies[0]];sfx("ring");await wait(900);WHO.phone.n="📞 "+a.n;
     await say("think","The store phone is ringing.","店里的电话响了。");
     if(pf)await say("phone",`Mia? It's ${a.n}. Listen. I just saw Mr. Park across town. He's in the hospital. He can't be coming to the store.`,`Mia？我是 ${a.n}。听着，我刚在城另一头看到朴店长了。他在医院。他不可能去店里。`);
-    else await say("phone",`Mia? It's ${a.n}. Kevin's mom was at the bus stop again tonight, with his poster. Nobody has seen him in a year. Be careful.`,`Mia？我是 ${a.n}。Kevin 的妈妈今晚又拿着寻人海报在公交站。一年了，没人见过他。小心点。`);
+    else await say("phone",`Mia? It's ${a.n}. Kevin's mom was at the bus stop again tonight, with his poster. Nobody has seen him in a year. Be cautious.`,`Mia？我是 ${a.n}。Kevin 的妈妈今晚又拿着寻人海报在公交站。一年了，没人见过他。小心点。`);
     await say("think","Thank you.","谢谢你。");}
   G.clock=25*60;refresh();sfx("buzz");G.flick=1;await wait(500);G.flick=0;
   G.noCam=1;await say("think","One o'clock. The camera screen just went black.","一点了。监控屏幕突然黑了。");
@@ -580,7 +580,7 @@ async function finale(){
 const END={
  replaced:{t:"Full House",z:"满座",L:[["The next night, the store is full when you arrive.","第二天晚上，你到店里时，店里已经挤满了人。"],["Tom. Lily. Grace. Everyone you know.","Tom、Lily、Grace。所有你认识的人。"],["They turn to you at the same time, with identical smiles.","他们同时转过头来看你，脸上是一模一样的笑容。"],["\"Long day, right?\" they all say. Together.","“今天好漫长啊，是吧？”他们一起说。"],["Under the counter, the book has a new page.","柜台下面，名册多了一页。"],["It has your face on it.","上面是你的脸。"]]},
  last:{t:"Open 24 Hours",z:"二十四小时营业",L:[]},
- dawn:{t:"Morning Shift",z:"早班",L:[["The sun comes up. The rain stops.","太阳升起来了。雨停了。"],["Mr. Park counts the money twice. Then he hands you an envelope.","朴店长把钱数了两遍，然后递给你一个信封。"],["\"You're good at this, kid. Same time next week?\"","“你干得不错，小家伙。下周同一时间？”"],["On your way out, you look back at the window.","出门时，你回头看了一眼橱窗。"],["For a second, you see a young man in a green uniform behind the counter. He waves.","有那么一瞬间，你看到柜台后面站着一个穿绿色制服的年轻男人。他朝你挥了挥手。"],["Then he's gone.","然后他就不见了。"]]},
+ dawn:{t:"Morning Shift",z:"早班",L:[["The sun comes up. The rain stops.","太阳升起来了。雨停了。"],["Mr. Park counts the money twice. Then he hands you an envelope. A reward.","朴店长把钱数了两遍，然后递给你一个信封。是奖金。"],["\"You're good at this, kid. Same time next week?\"","“你干得不错，小家伙。下周同一时间？”"],["On your way out, you look back at the window.","出门时，你回头看了一眼橱窗。"],["For an instant, you see a young man in a green uniform behind the counter. He waves.","有那么一瞬间，你看到柜台后面站着一个穿绿色制服的年轻男人。他朝你挥了挥手。"],["Then he's gone.","然后他就不见了。"]]},
  true:{t:"Two Names in the Book",z:"名册上的两个名字",L:[["At 5 a.m., the young man in the raincoat is still asleep by the heater.","凌晨五点，穿雨衣的年轻人还在暖气旁睡着。"],["He wakes up. Warm. Confused.","他醒了。暖和了，但一脸茫然。"],["\"What day is it?\" Kevin asks again. \"I... I think I work here.\"","“今天几号？”他问，“我……我好像在这里上班。”"],["Behind him, Mr. Park drops his tea.","他身后，朴店长手里的茶掉在了地上。"],["\"Kevin?\"","“Kevin？”"],["You didn't let them take one more face. So they had to give one back.","你没让它们再拿走一张脸。所以它们只好还回来一张。"],["You add a new page to the book. KEVIN — night shift. Always comes back.","你在名册上加了新的一页：KEVIN——夜班。总会回来。"]]}
 };
 const LASTV={kevin:[["He steps inside and shakes the rain off his coat.","他走进来，抖了抖雨衣上的水。"],["\"Thanks,\" he says. Then he walks behind the counter. Next to you.","“谢了。”他说。然后他走到柜台后面。站在你旁边。"],["\"I'll take it from here.\"","“接下来交给我吧。”"],["When Mr. Park arrives, there are two night clerks smiling at him.","朴店长到的时候，有两个夜班店员对着他微笑。"],["One of them is wearing your name tag.","其中一个别着你的名牌。"]],keys:[["He takes the keys. His smile is a little too wide.","他接过钥匙。笑容咧得有点太开了。"],["\"Thanks, kid,\" it says, in Mr. Park's voice.","“谢了，小家伙。”它用朴店长的声音说。"],["The lights go out, one by one.","灯一盏一盏地灭了。"],["The next night, CORNER STOP is open 24 hours.","第二天晚上，街角便利店变成了 24 小时营业。"],["Mr. Park is behind the counter. So are you.","朴店长在柜台后面。你也在。"],["Neither of you ever closes your eyes.","你们俩都没有眨眼。"]],locked:[["\"Kid. Please.\"","“小家伙。求你了。”"],["You don't open the door.","你没有开门。"],["At 3 a.m., something else starts knocking. Then the knocking stops.","凌晨三点，有别的东西开始敲门。然后，敲门声停了。"],["In the morning, Mr. Park's car is still outside. The door is open. Nobody is in it.","早上，朴店长的车还停在外面。车门开着，里面没有人。"],["The next Friday, a man in a brown coat comes to pick up the keys.","下个周五，一个穿棕色外套的男人来拿钥匙。"],["\"Hello, Mia,\" he says.","“你好，Mia。”他说。"]]};
