@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#fff3ea">
+<title>Boba Days</title>
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Fredoka:wght@500;600&display=swap" media="print" onload="this.media='all'">
+<style>
+:root{--bg:#fff3ea;--ink:#4a3a3a;--dim:#9a8682;--pink:#ff8fab;--pink2:#ffd1dc;--mint:#8fd9c0;--card:#ffffff;--line:#f1dcd2;--brown:#8a5a44}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+.f{font-family:Fredoka,"PingFang SC",system-ui,sans-serif}
+#app{max-width:980px;margin:0 auto;min-height:100%;display:grid;grid-template-columns:1fr;gap:10px;padding:10px 12px calc(14px + env(safe-area-inset-bottom))}
+@media(min-width:820px){#app{grid-template-columns:1.1fr 1fr;align-items:start}#right{position:sticky;top:10px}}
+#top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pill{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px 12px;font-size:14px;white-space:nowrap}
+#set{background:var(--card);border:1px solid var(--line);border-radius:999px;width:34px;height:30px}
+#scene{width:100%;display:block;border-radius:22px;background:#ffe4ec;box-shadow:0 6px 18px rgba(200,120,120,.12)}
+#sub{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 14px;min-height:96px;cursor:pointer;box-shadow:0 3px 10px rgba(200,120,120,.08)}
+#sub .who{font-size:12.5px;font-weight:700;color:var(--pink)}
+#sub .en{font-size:18px;line-height:1.45}
+#sub .zh{color:var(--dim);font-size:14px;margin-top:3px}
+.tools{display:flex;gap:6px;margin-top:8px;align-items:center}
+.tb{background:#fff6f2;border:1px solid var(--line);border-radius:999px;padding:1px 10px;font-size:13px}
+.nx{margin-left:auto;color:var(--dim);font-size:12px}
+.kw{border-bottom:2px dotted var(--pink);cursor:help}
+.choices{display:grid;gap:7px;margin-top:8px}
+.ch{text-align:left;background:#fff6f2;border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+.ch small{display:block;color:var(--dim);font-size:12.5px}
+#right{display:flex;flex-direction:column;gap:10px}
+#bench{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:12px;display:grid;grid-template-columns:110px 1fr;gap:12px;box-shadow:0 6px 18px rgba(200,120,120,.1)}
+#bench.off{opacity:.45;pointer-events:none}
+#cup{width:110px;height:154px;display:block;align-self:center}
+.grp{margin-bottom:8px}.grp b{font-size:12px;color:var(--dim);display:block;margin-bottom:3px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{background:#fff6f2;border:1.5px solid var(--line);border-radius:12px;padding:3px 9px;font-size:13.5px;line-height:1.25;text-align:center}
+.chip small{display:block;font-size:10.5px;color:var(--dim)}
+.chip.on{background:var(--pink2);border-color:var(--pink)}
+.chip[hidden]{display:none}
+#acts{grid-column:1/-1;display:flex;gap:8px}
+#acts button{flex:1;border-radius:14px;padding:10px;border:0;font-size:16px}
+#again{background:#fff0e6}
+#serve{background:var(--pink);color:#fff;font-weight:700}
+#pat{height:6px;border-radius:3px;background:#f6e2da;overflow:hidden;margin-top:6px}#pat i{display:block;height:100%;background:var(--mint);width:100%;transition:width .3s linear}
+#modal{position:fixed;inset:0;background:rgba(90,60,60,.35);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+#modal.show{display:flex}
+.mbox{background:#fffaf6;border-radius:22px;padding:18px;max-width:520px;width:100%;max-height:100%;overflow:auto;box-shadow:0 20px 50px rgba(120,60,60,.25)}
+.mbox h2{margin:0 0 6px;font-size:22px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{background:#fff0e6;border:1px solid var(--line);border-radius:14px;padding:9px 16px}
+.btn.pri{background:var(--pink);color:#fff;border-color:var(--pink);font-weight:700}
+.hint{color:var(--dim);font-size:12.5px}
+.title{font-size:56px;line-height:1;color:var(--pink);letter-spacing:1px}
+.res{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 12px;margin-top:8px;font-size:14px}
+.res .x{color:#d9534f}.res .o{color:#2e9e78}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.gal div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px;font-size:12.5px}
+.gal b{display:block;font-size:13px}.gal .lock{color:#c9b8b2}
+.end p.e{font-size:16.5px;margin:10px 0 0}.end p.z{color:var(--dim);font-size:13.5px;margin:2px 0 0}
+.tog{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.sw{width:46px;height:26px;border-radius:13px;background:#e8d6cf;border:0;position:relative}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.15s}
+.sw.on{background:var(--pink)}.sw.on::after{left:23px}
+@media(max-width:819px){#bench{grid-template-columns:72px 1fr;padding:10px;gap:8px}#cup{width:72px;height:101px;align-self:start;position:sticky;top:8px}.chip{padding:2px 7px;font-size:13px}.grp{margin-bottom:5px}#acts{position:sticky;bottom:calc(8px + env(safe-area-inset-bottom));background:#fff;padding-top:6px;border-radius:14px}#scene{max-height:30vh}}
+.pop{animation:pop .35s}@keyframes pop{40%{transform:scale(1.06)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="left">
+    <div id="top"><span class="pill f" id="day">Day 1 · Monday</span><span class="pill" id="rep">⭐ 3.0</span><span class="pill" id="cash">💰 $0</span><button id="set">⚙</button></div>
+    <svg id="scene" viewBox="0 0 360 210"></svg>
+    <div id="pat"><i></i></div>
+  </div>
+  <div id="right">
+    <div id="sub"></div>
+    <div id="bench" class="off">
+      <svg id="cup" viewBox="0 0 100 140"></svg>
+      <div id="opts"></div>
+      <div id="acts"><button id="again">🔁 再听一遍</button><button id="serve" class="f">🧋 Serve</button></div>
+    </div>
+  </div>
+</div>
+<div id="modal"></div>
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const LS={get(k,d){try{const v=localStorage.getItem("bd_"+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem("bd_"+k,JSON.stringify(v))}catch(e){}}};
+const SET=Object.assign({sfx:true,voice:true,zh:false},LS.get("set",{}));
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const rnd=a=>a[Math.random()*a.length|0];
+
+/* ===== sound ===== */
+let AC=null,master=null;
+function ac(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();master=AC.createGain();master.gain.value=SET.sfx?.8:0;master.connect(AC.destination)}catch(e){}}if(AC&&AC.state==="suspended")AC.resume();return AC}
+function tone(f,d,type="sine",v=.15,t0=0,sl){const t=AC.currentTime+t0,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(sl)o.frequency.exponentialRampToValueAtTime(sl,t+d);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(master);o.start(t);o.stop(t+d+.05)}
+const SFX={bell(){tone(1320,.6,"sine",.12);tone(1760,.8,"sine",.08,.12)},pop(){tone(520,.08,"sine",.12,0,900)},tap(){tone(900,.04,"triangle",.06)},shake(){for(let i=0;i<6;i++)tone(300+Math.random()*200,.05,"triangle",.05,i*.07)},cash(){tone(1046,.12,"triangle",.12);tone(1568,.3,"triangle",.1,.1)},yay(){[523,659,784,1046].forEach((f,i)=>tone(f,.25,"sine",.1,i*.08))},meh(){tone(330,.25,"triangle",.1);tone(262,.35,"triangle",.1,.2)}};
+function sfx(n){if(!SET.sfx||!ac())return;try{SFX[n]()}catch(e){}}
+const tts=window.speechSynthesis,NOV=/Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Kathy|Fred|Princess|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley/i;
+function speak(t,p=1,r=.92){if(!tts||!SET.voice)return;try{tts.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[*"“”—]/g," "));u.lang="en-US";u.rate=r;u.pitch=p;const vs=tts.getVoices().filter(v=>/^en[-_]US/i.test(v.lang)&&!NOV.test(v.name));if(vs.length)u.voice=vs[Math.abs(Math.round(p*7))%vs.length];tts.speak(u)}catch(e){}}
+
+/* ===== words (CET-4) ===== */
+const WORDS={"regular":"常客；普通的","strict":"严格的","diet":"节食","boost":"提神；提升","refreshing":"提神的；清爽的","exhausted":"累坏了","deadline":"截止时间","appetite":"胃口","ingredient":"原料","recommend":"推荐","preference":"偏好","option":"选择","available":"有供应的","request":"要求","complain":"抱怨","patiently":"耐心地","picky":"挑剔的","slightly":"稍微","tiny":"很小的","average":"一般的；普通的","replace":"换掉","grab":"匆匆拿","quit":"辞职；戒掉","anniversary":"纪念日","memory":"记忆","celebrate":"庆祝","nervous":"紧张的","honest":"诚实的","favorite":"最喜欢的","awake":"醒着的","stomach":"胃","temperature":"温度","sweet":"甜的","fans":"粉丝","review":"评价","perfect":"完美的","appearance":"外观","delightful":"令人愉快的","budget":"预算","discount":"折扣","exam":"考试","vocabulary":"词汇","confidence":"自信","courage":"勇气","exactly":"正好；完全","usual":"老样子的","surprise":"惊喜","customer":"顾客","rush":"匆忙","schedule":"日程","loyal":"忠实的","generous":"大方的","impress":"给……留下好印象","tasteless":"没味道的","complicated":"复杂的","remind":"提醒","reward":"奖励","fancy":"花哨的","modest":"朴素的"};
+const WRE=new RegExp("\\b("+Object.keys(WORDS).sort((a,b)=>b.length-a.length).map(k=>k.replace(/ /g,"\\s")).join("|")+")\\b","gi");
+const mark=en=>en.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(WRE,m=>`<span class="kw" title="${WORDS[m.toLowerCase()]}">${m}</span>`);
+
+/* ===== menu ===== */
+const BASE={milk:["Milk Tea","奶茶","#d9b38c",1,1],green:["Green Tea","绿茶","#c9d98a",0,1],taro:["Taro Milk","芋头鲜奶","#c9a6d9",1,0],fresh:["Fresh Milk","鲜牛奶","#f6f1e6",1,0],mango:["Lemon Tea","柠檬茶","#ffe066",0,1],oolong:["Oolong Tea","乌龙茶","#c98a4a",0,1]};// [en,zh,color,dairy,caffeine]
+const TOP={pearls:["Pearls","珍珠"],pudding:["Pudding","布丁"],coco:["Coconut Jelly","椰果"],bean:["Red Beans","红豆"]};
+const SUG=[[0,"0%","无糖"],[30,"30%","三分糖"],[50,"50%","半糖"],[100,"100%","全糖"]];
+const ICE=[["hot","Hot","热的"],["none","No ice","去冰"],["less","Less ice","少冰"],["reg","Regular","正常冰"]];
+const UNLOCK=[{b:["milk","green","taro","fresh"],t:["pearls"]},{b:[],t:["pudding"]},{b:["mango"],t:["coco"]},{b:["oolong"],t:["bean"]},{b:[],t:[]}];
+
+/* ===== people ===== */
+const LOOK={
+ mei:{skin:"#ffd9c2",hair:"#3a2a2a",style:"pony",shirt:"#8fb8ff",acc:"glasses",name:"Mei",v:1.3},
+ chen:{skin:"#f0c9a8",hair:"#d9d4cf",style:"bald",shirt:"#a8826a",acc:"cap",name:"Mr. Chen",v:.7},
+ leo:{skin:"#e6b48f",hair:"#2a2020",style:"short",shirt:"#ffb547",acc:"helmet",name:"Leo",v:1},
+ sophie:{skin:"#ffe0cc",hair:"#f2c46b",style:"long",shirt:"#ff9fc0",acc:"bow",name:"Sophie",v:1.4},
+ sam:{skin:"#f5cfb0",hair:"#5a3a2a",style:"messy",shirt:"#7cc4a8",acc:"",name:"Sam",v:.9},
+ hana:{skin:"#ffdcc8",hair:"#2b2b38",style:"bob",shirt:"#ffe08a",acc:"flower",name:"Hana",v:1.2}
+};
+const RLOOKS=[{skin:"#ffd9c2",hair:"#7a4a2a",style:"bob",shirt:"#b8e0d2"},{skin:"#c98f6a",hair:"#1f1a1a",style:"short",shirt:"#ffc8a8"},{skin:"#f3d2b8",hair:"#c9663a",style:"long",shirt:"#c8b8ff"},{skin:"#8a5a44",hair:"#1a1414",style:"messy",shirt:"#ffe28a"},{skin:"#ffe6d6",hair:"#9a9a9a",style:"bun",shirt:"#ffb3c6"},{skin:"#e0b090",hair:"#3a2a1a",style:"short",shirt:"#9fd0ff",acc:"glasses"},{skin:"#f5d0b0",hair:"#e8c070",style:"pony",shirt:"#a8e6a1"},{skin:"#b07850",hair:"#2a1a1a",style:"bald",shirt:"#d0b0ff",acc:"cap"}];
+const RNAMES=["Customer","Customer","Customer"];
+
+/* ===== order phrases (random customers) ===== */
+const P={
+ size:{M:[["a medium","中杯"],["a regular size","普通杯"]],L:[["a large","大杯"],["the biggest","最大杯的"]]},
+ base:{milk:[["classic milk tea","经典奶茶"],["milk tea, the original one","奶茶，原味的"]],green:[["green tea","绿茶"],["plain green tea","纯绿茶"]],taro:[["taro milk","芋头鲜奶"],["that purple taro drink","那个紫色的芋头饮料"]],fresh:[["fresh milk, no tea","鲜牛奶，不要茶"],["just milk","只要牛奶"]],mango:[["lemon tea","柠檬茶"],["the yellow fruit tea with lemon","那个黄色的柠檬果茶"]],oolong:[["oolong tea","乌龙茶"],["oolong, the dark tea","乌龙，那个颜色深的茶"]]},
+ sug:{0:[["no sugar","不要糖"],["zero sugar — I'm on a strict diet","零糖，我在严格节食"],["sugar-free","无糖"]],30:[["just a little sugar","一点点糖"],["thirty percent sugar","三分糖"],["slightly sweet","微甜"]],50:[["half sugar","半糖"],["fifty percent sugar","五成糖"],["medium sweet","中等甜度"]],100:[["full sugar","全糖"],["as sweet as possible","越甜越好"],["normal sugar, the full amount","正常糖，加满"]]},
+ ice:{hot:[["hot","要热的"],["warm, please — my stomach hurts","要热的，我胃不舒服"]],none:[["no ice","去冰"],["without any ice","一点冰都不要"]],less:[["less ice","少冰"],["just a tiny bit of ice","只要一点点冰"]],reg:[["regular ice","正常冰"],["normal ice","正常冰"]]},
+ top:{pearls:[["pearls","珍珠"],["those soft black balls","那种软软的黑色小球"]],pudding:[["pudding","布丁"],["the soft yellow pudding","软软的黄色布丁"]],coco:[["coconut jelly","椰果"],["the clear white coconut cubes","透明的白色椰果块"]],bean:[["red beans","红豆"],["sweet red beans","甜红豆"]]}
+};
+const COND={dairy:[["Milk makes me sick, so nothing with milk in it.","我喝牛奶会不舒服，所以不要任何含奶的。"],b=>!BASE[b][3]],nocaf:[["I need to sleep tonight, so no tea at all.","我今晚要睡觉，所以一点茶都不要。"],b=>!BASE[b][4]],caf:[["I have a deadline tonight. I need some tea to stay awake!","我今晚有截止任务，得喝点茶熬夜！"],b=>BASE[b][4]],fruit:[["Something with fruit in it, and refreshing.","来点带水果的、清爽的。"],b=>b==="mango"]};
+const OPEN=[["Hi! Can I get","嗨！我要"],["Hello. I'd like","你好。我想要"],["Hi there. One","你好呀。来一杯"],["Good afternoon. Could I have","下午好。可以给我"]];
+
+/* ===== state ===== */
+let G=null;
+function newGame(){G={day:0,rep:3,cash:0,f:{mei:0,chen:0,leo:0,sophie:0,sam:0},flag:{},cur:null,drink:null,busy:false,over:false,served:0,perfect:0,words:new Set()}}
+function unlocked(){const b=[],t=[];for(let i=0;i<=G.day;i++){b.push(...UNLOCK[i].b);t.push(...UNLOCK[i].t)}return{b,t}}
+function blank(){return{base:null,size:null,sug:null,ice:null,tops:[]}}
+
+/* ===== drawing ===== */
+const SV=(t,a)=>`<${t} ${Object.entries(a).map(([k,v])=>`${k}="${v}"`).join(" ")}/>`;
+function person(L,x=180,y=210,mood="ok"){
+  const s=[];const hx=x,hy=y-112;
+  s.push(`<path d="M${x-46} ${y} Q${x-44} ${y-62} ${x} ${y-66} Q${x+44} ${y-62} ${x+46} ${y} Z" fill="${L.shirt}"/>`);
+  if(L.acc==="helmet")s.push(`<path d="M${x-30} ${y-60} L${x+30} ${y-60} L${x+26} ${y-48} L${x-26} ${y-48}Z" fill="#fff" opacity=".6"/>`);
+  s.push(SV("rect",{x:x-9,y:y-76,width:18,height:16,rx:6,fill:L.skin}));
+  if(L.style==="long")s.push(`<path d="M${hx-40} ${hy} Q${hx-44} ${hy+58} ${hx-30} ${hy+62} L${hx+30} ${hy+62} Q${hx+44} ${hy+58} ${hx+40} ${hy}Z" fill="${L.hair}"/>`);
+  if(L.style==="bob")s.push(`<path d="M${hx-40} ${hy-6} Q${hx-42} ${hy+34} ${hx-30} ${hy+36} L${hx+30} ${hy+36} Q${hx+42} ${hy+34} ${hx+40} ${hy-6}Z" fill="${L.hair}"/>`);
+  if(L.style==="pony")s.push(`<ellipse cx="${hx+40}" cy="${hy+8}" rx="10" ry="20" fill="${L.hair}"/>`);
+  if(L.style==="bun")s.push(SV("circle",{cx:hx,cy:hy-40,r:13,fill:L.hair}));
+  s.push(SV("circle",{cx:hx,cy:hy,r:36,fill:L.skin}));
+  const top=L.style==="bald"?`<path d="M${hx-36} ${hy+4} Q${hx-38} ${hy-10} ${hx-30} ${hy-14}" stroke="${L.hair}" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M${hx+36} ${hy+4} Q${hx+38} ${hy-10} ${hx+30} ${hy-14}" stroke="${L.hair}" stroke-width="7" fill="none" stroke-linecap="round"/>`:
+   L.style==="messy"?`<path d="M${hx-37} ${hy-2} Q${hx-30} ${hy-44} ${hx} ${hy-38} Q${hx+34} ${hy-46} ${hx+37} ${hy-2} Q${hx+24} ${hy-20} ${hx+10} ${hy-14} Q${hx-6} ${hy-24} ${hx-14} ${hy-12} Q${hx-26} ${hy-22} ${hx-37} ${hy-2}Z" fill="${L.hair}"/>`:
+   `<path d="M${hx-37} ${hy} Q${hx-34} ${hy-40} ${hx} ${hy-38} Q${hx+34} ${hy-40} ${hx+37} ${hy} Q${hx+20} ${hy-22} ${hx-37} ${hy}Z" fill="${L.hair}"/>`;
+  s.push(top);
+  if(L.acc==="cap")s.push(`<path d="M${hx-34} ${hy-14} Q${hx} ${hy-48} ${hx+34} ${hy-14}Z" fill="#7a9cc6"/><rect x="${hx-6}" y="${hy-18}" width="50" height="7" rx="3" fill="#7a9cc6"/>`);
+  if(L.acc==="helmet")s.push(`<path d="M${hx-38} ${hy-6} Q${hx} ${hy-58} ${hx+38} ${hy-6}Z" fill="#ff7a59"/><rect x="${hx-38}" y="${hy-10}" width="76" height="6" rx="3" fill="#e0603e"/>`);
+  if(L.acc==="bow")s.push(`<path d="M${hx+18} ${hy-34} l14 -9 l0 18z M${hx+18} ${hy-34} l-12 -10 l2 18z" fill="#ff5c8a"/>`);
+  if(L.acc==="flower")s.push(`<g transform="translate(${hx-26} ${hy-26})">${[0,72,144,216,288].map(a=>`<circle cx="${7*Math.cos(a*Math.PI/180)}" cy="${7*Math.sin(a*Math.PI/180)}" r="6" fill="#ff9fc0"/>`).join("")}<circle r="4" fill="#ffd34d"/></g>`);
+  const ey=hy+4,blink=G&&(G.t%4)<.12;
+  if(blink)s.push(`<path d="M${hx-17} ${ey} h9 M${hx+8} ${ey} h9" stroke="#3a2a2a" stroke-width="3" stroke-linecap="round"/>`);
+  else s.push(SV("circle",{cx:hx-13,cy:ey,r:4.5,fill:"#3a2a2a"}),SV("circle",{cx:hx+13,cy:ey,r:4.5,fill:"#3a2a2a"}),SV("circle",{cx:hx-11.5,cy:ey-1.5,r:1.5,fill:"#fff"}),SV("circle",{cx:hx+14.5,cy:ey-1.5,r:1.5,fill:"#fff"}));
+  if(L.acc==="glasses")s.push(`<g fill="none" stroke="#3a2a2a" stroke-width="2.4"><circle cx="${hx-13}" cy="${ey}" r="10"/><circle cx="${hx+13}" cy="${ey}" r="10"/><path d="M${hx-3} ${ey} h6"/></g>`);
+  s.push(SV("ellipse",{cx:hx-22,cy:hy+16,rx:7,ry:4,fill:"#ff9fb0",opacity:.55}),SV("ellipse",{cx:hx+22,cy:hy+16,rx:7,ry:4,fill:"#ff9fb0",opacity:.55}));
+  const m=mood==="happy"?`<path d="M${hx-9} ${hy+18} Q${hx} ${hy+28} ${hx+9} ${hy+18}" stroke="#3a2a2a" stroke-width="3" fill="#ff8a8a" stroke-linecap="round"/>`:mood==="sad"?`<path d="M${hx-8} ${hy+24} Q${hx} ${hy+17} ${hx+8} ${hy+24}" stroke="#3a2a2a" stroke-width="3" fill="none" stroke-linecap="round"/>`:`<path d="M${hx-6} ${hy+20} Q${hx} ${hy+24} ${hx+6} ${hy+20}" stroke="#3a2a2a" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  s.push(m);return s.join("");
+}
+function drawScene(){
+  const sc=$("#scene");const c=G&&G.cur;let s=`<defs><linearGradient id="w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffeef3"/><stop offset="1" stop-color="#ffe0e9"/></linearGradient></defs><rect width="360" height="210" fill="url(#w)"/>`;
+  s+=`<rect x="22" y="18" width="104" height="78" rx="14" fill="#cdeefc"/><path d="M22 70 Q60 52 126 72 V96 H22Z" fill="#b9e6c9"/><circle cx="104" cy="38" r="9" fill="#fff6c2"/><rect x="70" y="18" width="4" height="78" fill="#fff"/><rect x="22" y="55" width="104" height="4" fill="#fff"/>`;
+  s+=`<rect x="232" y="30" width="110" height="6" rx="3" fill="#e8b8a8"/><rect x="232" y="72" width="110" height="6" rx="3" fill="#e8b8a8"/>`;
+  [["#ffd166",242],["#c9a6d9",268],["#8fd9c0",294],["#ffb3c6",318]].forEach(([col,x])=>s+=`<rect x="${x}" y="8" width="18" height="22" rx="5" fill="${col}"/><rect x="${x+2}" y="4" width="14" height="6" rx="2" fill="#fff"/>`);
+  [["#3a2a2a",246],["#fff3c4",272],["#f4f4f4",298],["#b0504a",322]].forEach(([col,x])=>{s+=`<rect x="${x-2}" y="48" width="20" height="24" rx="6" fill="#ffffffaa"/>`;for(let i=0;i<5;i++)s+=`<circle cx="${x+3+(i%3)*6}" cy="${62+(i/3|0)*6}" r="2.6" fill="${col}"/>`});
+  s+=`<text x="180" y="30" text-anchor="middle" font-family="Fredoka,sans-serif" font-size="20" fill="#ff8fab">Boba Days</text>`;
+  if(c&&c.look)s+=`<g opacity="${c.vis||1}">${person(c.look,180,206,c.mood)}</g>`;
+  s+=`<rect x="0" y="168" width="360" height="42" fill="#f8c8a8"/><rect x="0" y="164" width="360" height="8" rx="3" fill="#ffd9c0"/><rect x="290" y="140" width="46" height="26" rx="6" fill="#ffffff"/><rect x="296" y="146" width="34" height="10" rx="3" fill="#bff0dc"/><text x="313" y="154" text-anchor="middle" font-size="8" fill="#2e9e78" font-family="Fredoka,sans-serif">$${G?G.cash:0}</text>`;
+  sc.innerHTML=s;
+}
+function drawCup(){
+  const d=G.drink,b=d.base?BASE[d.base]:null,L=d.size==="L";
+  const top=L?18:30,w1=L?40:36;let s=`<path d="M${50-w1} ${top} L${50-w1+8} 132 L${50+w1-8} 132 L${50+w1} ${top}Z" fill="#fff" stroke="#e8c8bc" stroke-width="2"/>`;
+  if(b){const lv=top+8;s+=`<path d="M${50-w1+1.5} ${lv} L${50-w1+9} 131 L${50+w1-9} 131 L${50+w1-1.5} ${lv}Z" fill="${b[2]}" opacity=".92"/>`;
+    if(d.ice&&d.ice!=="hot"&&d.ice!=="none"){const n=d.ice==="less"?2:4;for(let i=0;i<n;i++)s+=`<rect x="${30+i*11}" y="${lv+4+(i%2)*8}" width="10" height="10" rx="2" fill="#fff" opacity=".55" transform="rotate(${i*13} ${35+i*11} ${lv+9})"/>`}
+    if(d.ice==="hot")s+=`<path d="M38 ${top-6} q4 -6 0 -12 M50 ${top-6} q4 -6 0 -12 M62 ${top-6} q4 -6 0 -12" stroke="#d8b8b0" stroke-width="2.4" fill="none" stroke-linecap="round"/>`}
+  let ly=126;for(const t of d.tops){
+    if(t==="pearls")for(let i=0;i<9;i++)s+=`<circle cx="${30+(i%5)*9+(i>4?4:0)}" cy="${ly-(i>4?7:0)}" r="4" fill="#3a2a2a"/>`;
+    if(t==="pudding")s+=`<rect x="34" y="${ly-10}" width="32" height="12" rx="4" fill="#ffd166"/>`;
+    if(t==="coco")for(let i=0;i<5;i++)s+=`<rect x="${30+i*8}" y="${ly-6-(i%2)*4}" width="7" height="7" rx="1.5" fill="#fbfbf3" stroke="#e8e0c8"/>`;
+    if(t==="bean")for(let i=0;i<8;i++)s+=`<ellipse cx="${30+(i%4)*11}" cy="${ly-(i>3?6:0)}" rx="4" ry="3" fill="#a8423c"/>`;
+    ly-=14}
+  s+=`<rect x="${50-w1-3}" y="${top-5}" width="${w1*2+6}" height="7" rx="3" fill="#ffb3c6"/><rect x="56" y="${top-26}" width="7" height="${L?118:104}" rx="3" fill="#ff8fab" opacity=".85"/>`;
+  if(d.sug!==null)s+=`<text x="50" y="${top+30}" text-anchor="middle" font-size="9" font-family="Fredoka,sans-serif" fill="#6a4a40" opacity=".8">${d.sug}%</text>`;
+  $("#cup").innerHTML=s;
+}
+
+/* ===== bench UI ===== */
+function buildOpts(){
+  const u=unlocked(),d=G.drink;
+  const chip=(grp,val,en,zh,on)=>`<button class="chip ${on?"on":""}" data-g="${grp}" data-v="${val}">${en}<small>${zh}</small></button>`;
+  $("#opts").innerHTML=
+   `<div class="grp"><b>TEA · 茶底</b><div class="chips">${Object.keys(BASE).filter(k=>u.b.includes(k)).map(k=>chip("base",k,BASE[k][0],BASE[k][1],d.base===k)).join("")}</div></div>`+
+   `<div class="grp"><b>SIZE · 杯型</b><div class="chips">${chip("size","M","Medium","中杯",d.size==="M")}${chip("size","L","Large","大杯",d.size==="L")}</div></div>`+
+   `<div class="grp"><b>SUGAR · 糖度</b><div class="chips">${SUG.map(x=>chip("sug",x[0],x[1],x[2],d.sug===x[0])).join("")}</div></div>`+
+   `<div class="grp"><b>ICE · 冰量</b><div class="chips">${ICE.map(x=>chip("ice",x[0],x[1],x[2],d.ice===x[0])).join("")}</div></div>`+
+   `<div class="grp"><b>EXTRAS · 小料（最多 2 种）</b><div class="chips">${Object.keys(TOP).filter(k=>u.t.includes(k)).map(k=>chip("tops",k,TOP[k][0],TOP[k][1],d.tops.includes(k))).join("")}</div></div>`;
+  $("#opts").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{ac();sfx("tap");const g=b.dataset.g;let v=b.dataset.v;if(g==="sug")v=+v;
+    if(g==="tops"){const i=d.tops.indexOf(v);if(i>=0)d.tops.splice(i,1);else{if(d.tops.length>=2)d.tops.shift();d.tops.push(v)}}else d[g]=d[g]===v?null:v;
+    buildOpts();drawCup()});
+}
+function bench(on){$("#bench").classList.toggle("off",!on);if(on){G.drink=blank();buildOpts();drawCup()}}
+
+/* ===== dialogue ===== */
+const SUB=$("#sub");let adv=null,last=null;
+function line(who,en,zh,tap){return`<div class="who">${who}</div><div class="en">${mark(en)}</div><div class="zh"${SET.zh?"":" hidden"}>${zh}</div><div class="tools"><button class="tb" data-a="spk">🔊 听</button><button class="tb" data-a="zh">中文</button>${tap?'<span class="nx">点击继续 ▼</span>':""}</div>`}
+function track(en){(en.match(WRE)||[]).forEach(w=>G.words.add(w.toLowerCase()))}
+function say(who,en,zh,p){return new Promise(r=>{last=[en,p];track(en);SUB.innerHTML=line(who,en,zh,true);speak(en,p||1);adv=()=>{adv=null;r()}})}
+function show(who,en,zh,p){last=[en,p];track(en);SUB.innerHTML=line(who,en,zh,false);speak(en,p||1)}
+function choose(opts){return new Promise(r=>{SUB.innerHTML=`<div class="choices">${opts.map((o,i)=>`<button class="ch" data-i="${i}">${o[0]}<small>${o[1]}</small></button>`).join("")}</div>`;SUB.querySelectorAll(".ch").forEach(b=>b.onclick=e=>{e.stopPropagation();sfx("tap");r(opts[+b.dataset.i][2])})})}
+SUB.addEventListener("click",e=>{ac();const a=e.target.dataset&&e.target.dataset.a;if(a==="spk"){e.stopPropagation();if(last)speak(last[0],last[1]||1,.8);return}if(a==="zh"){e.stopPropagation();const z=SUB.querySelector(".zh");if(z)z.hidden=!z.hidden;return}if(adv)adv()});
+addEventListener("keydown",e=>{if((e.key===" "||e.key==="Enter")&&adv){e.preventDefault();adv()}});
+const ME="You（你）";
+
+/* ===== modal ===== */
+const MOD=$("#modal");let mseq=0;
+function modal(html,setup){return new Promise(res=>{const id=++mseq;let done=0;MOD.className="show";MOD.innerHTML=`<div class="mbox">${html}</div>`;const close=v=>{if(done)return;done=1;if(id===mseq){MOD.className="";MOD.innerHTML=""}res(v)};MOD.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>{sfx("tap");close(b.dataset.close)});setup&&setup(MOD,close)})}
+
+/* ===== orders ===== */
+function randomOrder(){
+  const u=unlocked(),o={},en=[],zh=[];const op=rnd(OPEN);en.push(op[0]);zh.push(op[1]);
+  let cond=null;
+  if(Math.random()<.28){const ks=Object.keys(COND).filter(k=>u.b.some(COND[k][1]));cond=rnd(ks)}
+  o.size=Math.random()<.85?rnd(["M","L"]):null;
+  if(cond){o.base=u.b.filter(COND[cond][1])}else{o.base=[rnd(u.b)]}
+  o.sug=Math.random()<.9?rnd([0,30,50,100]):null;
+  o.ice=Math.random()<.85?rnd(["hot","none","less","reg"]):null;
+  if(o.base.length===1&&o.base[0]==="mango"&&o.ice==="hot")o.ice="reg";
+  const nt=Math.random()<.25?0:Math.random()<.65?1:2;const ts=[...u.t].sort(()=>Math.random()-.5).slice(0,nt);o.tops=ts;o.noTops=nt===0&&Math.random()<.5;
+  const sz=o.size?rnd(P.size[o.size]):["a","一杯"];
+  if(cond){en.push(sz[0]+" drink.");zh.push(sz[1]+"饮料。");en.push(COND[cond][0][0]);zh.push(COND[cond][0][1])}
+  else{const b=rnd(P.base[o.base[0]]);en.push(sz[0]+" "+b[0]+",");zh.push(sz[1]+b[1]+"，")}
+  const parts=[];if(o.sug!==null)parts.push(rnd(P.sug[o.sug]));if(o.ice)parts.push(rnd(P.ice[o.ice]));
+  if(ts.length)parts.push([`with ${ts.map(t=>rnd(P.top[t])[0]).join(" and ")}`,`加${ts.map(t=>TOP[t][1]).join("和")}`]);else if(o.noTops)parts.push(["nothing extra in it","什么都不加"]);
+  if(parts.length){en.push((cond?"Make it ":"")+parts.map(p=>p[0]).join(", ")+".");zh.push(parts.map(p=>p[1]).join("，")+"。")}
+  else{en[en.length-1]=en[en.length-1].replace(/,$/,".");en.push("Anything else is fine.");zh.push("其他随便。")}
+  if(!ts.length&&!o.noTops)o.tops=null;
+  return{o,en:en.join(" ").replace(" ,",","),zh:zh.join("")};
+}
+function grade(o,d){
+  const bad=[],minor=[];const nm=x=>x;
+  if(!d.base)bad.push(["没做茶底","no drink base"]);else if(o.base&&!o.base.includes(d.base))bad.push([`茶底：要的是 ${o.base.map(b=>BASE[b][0]).join(" / ")}`,`你做的是 ${BASE[d.base][0]}`]);
+  if(o.size&&d.size!==o.size)minor.push([`杯型：要 ${o.size==="M"?"Medium":"Large"}`,`你做的是 ${d.size||"未选"}`]);
+  if(o.sug!=null){const ok=Array.isArray(o.sug)?o.sug.includes(d.sug):d.sug===o.sug;if(!ok)minor.push([`糖度：要 ${Array.isArray(o.sug)?o.sug.join("% 或 "):o.sug}%`,`你做的是 ${d.sug==null?"未选":d.sug+"%"}`])}
+  if(o.ice&&d.ice!==o.ice)minor.push([`冰量：要 ${ICE.find(x=>x[0]===o.ice)[1]}`,`你做的是 ${d.ice?ICE.find(x=>x[0]===d.ice)[1]:"未选"}`]);
+  if(o.tops){const want=[...o.tops].sort().join(),got=[...d.tops].sort().join();if(want!==got)minor.push([`小料：要 ${o.tops.length?o.tops.map(t=>TOP[t][0]).join(" + "):"不加"}`,`你加的是 ${d.tops.length?d.tops.map(t=>TOP[t][0]).join(" + "):"没加"}`])}
+  if(o.ntops&&d.tops.length!==o.ntops)minor.push([`小料：要 ${o.ntops} 种`,`你加了 ${d.tops.length} 种`]);
+  if(!o.size&&!d.size)minor.push(["没选杯型",""]);if(!o.ice&&!d.ice)minor.push(["没选冰量",""]);if(o.sug==null&&d.sug==null)minor.push(["没选糖度",""]);
+  const score=bad.length?0:minor.length===0?3:minor.length===1?2:minor.length===2?1:0;
+  return{score,list:bad.concat(minor)};
+}
+const REACT={3:[["Oh, this is perfect! Thank you!","哦，太完美了！谢谢！"],["Oh! Exactly what I wanted.","嗯！正是我想要的。"],["How delightful. I'll be back!","哇，太棒了。我还会再来！"]],2:[["Well, almost. It's fine, thanks.","嗯，差一点。没事，谢谢。"],["Close enough. Thanks!","差不多啦，谢谢！"]],1:[["This isn't quite what I asked for... but okay.","这不太是我点的……不过算了。"]],0:[["Sorry, but this is not what I ordered at all.","呃……这完全不是我点的。"],["I asked for something else. Never mind.","我点的不是这个。算了。"]]};
+
+/* ===== serving ===== */
+let serveRes=null,patT=0,patMax=60,patTimer=null;
+$("#serve").onclick=()=>{ac();if(serveRes){sfx("shake");const r=serveRes;serveRes=null;r()}};
+$("#again").onclick=()=>{ac();if(G&&G.cur&&G.cur.order)show(G.cur.who,G.cur.order.en,G.cur.order.zh,G.cur.look.v)};
+function patience(sec){patMax=sec;patT=sec;clearInterval(patTimer);const bar=$("#pat i");bar.style.width="100%";patTimer=setInterval(()=>{if(MOD.className==="show")return;patT=Math.max(0,patT-.25);bar.style.width=(patT/patMax*100)+"%";bar.style.background=patT/patMax<.3?"#ffb3a0":"#8fd9c0"},250)}
+async function takeOrder(c,order,opts={}){
+  c.order=order;show(c.who,order.en,order.zh,c.look.v);patience(opts.pat||70);bench(true);
+  await new Promise(r=>serveRes=r);bench(false);clearInterval(patTimer);
+  const g=grade(order.o,G.drink),late=patT<=0;let sc=g.score;
+  drawCup();await wait(200);sfx(sc>=2?"cash":"meh");
+  const tip=[0,1,2,4][sc]+(late?0:sc===3?1:0);G.cash+=3+tip;G.rep=Math.max(1,Math.min(5,G.rep+[-.25,-.08,.05,.15][sc]-(late?.05:0)));G.served++;if(sc===3)G.perfect++;
+  c.mood=sc>=2?"happy":"sad";hud();drawScene();
+  if(g.list.length)await modal(`<h2>${sc>=2?"差一点点":"没做对"}</h2>${g.list.map(x=>`<div class="res"><span class="x">✗ ${x[0]}</span>${x[1]?`<br><span class="hint">${x[1]}</span>`:""}</div>`).join("")}<p class="hint">顾客原话：${mark(order.en)}</p><div class="row"><button class="btn pri" data-close>好</button></div>`);
+  if(!opts.noReact){const r=rnd(REACT[sc]);await say(c.who,r[0],r[1],c.look.v)}
+  return{score:sc,late};
+}
+function hud(){$("#day").textContent=`Day ${G.day+1} · ${["Monday","Tuesday","Wednesday","Thursday","Friday"][G.day]}`;$("#rep").textContent="⭐ "+G.rep.toFixed(1);$("#cash").textContent="💰 $"+G.cash}
+async function enter(look,who){G.cur={look,who,vis:0,mood:"ok"};sfx("bell");for(let i=1;i<=6;i++){G.cur.vis=i/6;drawScene();await wait(50)}}
+async function leave(){if(!G.cur)return;for(let i=5;i>=0;i--){G.cur.vis=i/6;drawScene();await wait(45)}G.cur=null;drawScene();await wait(300)}
+async function randomCustomer(){const L=Object.assign({},rnd(RLOOKS),{v:.8+Math.random()*.6});await enter(L,"Customer");await takeOrder(G.cur,randomOrder());await leave()}
+
+/* ===== regulars ===== */
+const ord=(o,en,zh)=>({o,en,zh});
+async function mei(){
+  const L=LOOK.mei,who="Mei";await enter(L,who);
+  if(G.day===0){
+    await say(who,"Hi! Sorry, I look terrible. I've been studying all night. My English exam is on Friday!","嗨！不好意思我看起来很糟。我通宵在学习。我的英语考试在周五！",1.3);
+    const r=await takeOrder(G.cur,ord({base:["milk"],size:"L",sug:100,ice:"reg",tops:["pearls"]},"A large milk tea, full sugar, regular ice, with pearls. I need a big boost.","一杯大杯奶茶，全糖，正常冰，加珍珠。我需要好好提提神。"));
+    G.flag.meiD1=r.score===3;
+    const c=await choose([["You'll do great. Take a break sometimes, okay?","你会考好的。时不时也休息一下，好吗？","rest"],["Try learning ten new words a day. Small steps!","试试每天学十个新单词。一点一点来！","words"],["Good luck!","祝你好运！","bye"]]);
+    if(c==="rest"){G.f.mei++;await say(who,"A break? ...Maybe you're right. Thanks!","休息？……也许你说得对。谢谢！",1.3)}
+    else if(c==="words"){G.f.mei++;G.flag.meiWords=1;await say(who,"Ten a day... I can do that. I'll try it!","一天十个……我能做到。我试试！",1.3)}
+    else await say(who,"Thanks. I'll need it.","谢谢。我很需要。",1.3);
+  }else if(G.day===2){
+    await say(who,G.flag.meiWords?"Ten words a day — it works! I remember them so much better now.":"Hi again. Still studying. Still exhausted.",G.flag.meiWords?"一天十个单词——真的有用！我现在记得牢多了。":"又见面了。还在学习。还是累坏了。",1.3);
+    const r=await takeOrder(G.cur,ord({base:["milk"],size:"L",sug:[30,50],ice:"reg",tops:["pearls"]},"Can I get the same drink as Monday? But with less sugar this time. My mom says I'm addicted.","能给我做周一那杯一样的吗？不过这次少放点糖。我妈说我上瘾了。"));
+    if(r.score===3){G.f.mei++;await say(who,"You remembered! That's so sweet. Unlike my drink now.","你还记得！好贴心。不像我现在这杯，没那么甜了。",1.3)}
+  }else if(G.day===4){
+    await say(who,"The exam is over! I want to celebrate.","考完啦！我要庆祝一下。",1.3);
+    const r=await takeOrder(G.cur,ord({base:null,size:"L",sug:null,ice:null,tops:null,ntops:2},"Surprise me! Any large drink, but it must have two different extras. It's a special day!","给我个惊喜吧！大杯，什么都行，但一定要加两种不同的小料。今天是特别的日子！"));
+    if(r.score>=2)G.f.mei++;
+    if(G.f.mei>=2)await say(who,"Oh, and the exam? I think I did really well. The reading part was full of words I learned here, in your shop. Isn't that funny?","哦对了，考试？我觉得考得很好。阅读里好多词都是我在你店里学会的。是不是很好笑？",1.3);
+    else await say(who,"I don't know how the exam went. I'm just happy it's over.","我也不知道考得怎么样。考完了就很开心。",1.3);
+  }
+  await leave();
+}
+async function chen(){
+  const L=LOOK.chen,who="Mr. Chen";await enter(L,who);
+  if(G.day===0){
+    await say(who,"Good afternoon. You're new here, aren't you?","下午好。你是新来的吧？",.7);
+    await takeOrder(G.cur,ord({base:["taro"],size:"M",sug:50,ice:"hot",tops:[]},"A medium taro milk, hot, half sugar, nothing extra in it, please. My wife always ordered that.","一杯中杯芋头鲜奶，热的，半糖，不加小料。我太太以前总点这个。"),{pat:90});
+    const c=await choose([["Does she like this shop too?","她也喜欢这家店吗？","ask"],["Enjoy your afternoon!","祝你下午愉快！","bye"]]);
+    if(c==="ask"){G.f.chen++;G.flag.chenTold=1;await say(who,"She did. She passed away last spring. I still come here every week. Old habits.","她以前很喜欢。她去年春天走了。我还是每周来。老习惯了。",.7);await say(who,"Thank you for asking. People usually don't.","谢谢你问起。一般没人会问。",.7)}
+    else await say(who,"You too, young lady.","你也是，小姑娘。",.7);
+  }else if(G.day===3){
+    await say(who,"Good afternoon again. Today is a special day for me.","又见面了。今天对我来说是个特别的日子。",.7);
+    const r=await takeOrder(G.cur,ord({base:["taro"],size:"M",sug:50,ice:"hot",tops:[]},G.flag.chenTold?"It's our wedding anniversary. Do you remember what my wife used to drink? I'd like one for her.":"Do you remember what I ordered on Monday? I'd like the same one, please.",G.flag.chenTold?"今天是我们的结婚纪念日。你还记得我太太以前喝什么吗？我想给她点一杯。":"你还记得我周一点的是什么吗？我想要一样的。"),{pat:100,noReact:1});
+    if(r.score===3){G.f.chen++;await say(who,"...Yes. Exactly like that. You have a good memory.","……对。就是这样。你记性真好。",.7)}else await say(who,"Well. Not quite, but thank you for trying.","嗯。不太对，不过谢谢你尽力了。",.7);
+    const c=await choose([["This one is on me today.","今天这杯我请。","free"],["That's $5, please.","一共 5 美元。","pay"]]);
+    if(c==="free"){G.f.chen++;G.cash-=5;hud();await say(who,"You're very kind. She would have liked you.","你人真好。她一定会喜欢你的。",.7)}else await say(who,"Here you are. Keep the change.","给你。零钱不用找了。",.7);
+  }
+  await leave();
+}
+async function leo(){
+  const L=LOOK.leo,who="Leo";await enter(L,who);
+  if(G.day===1){
+    await say(who,"Hi! Delivery rider. No time. I'll say it fast, okay?","嗨！送外卖的。没时间。我说快点，行吗？",1);
+    const r=await takeOrder(G.cur,ord({base:["green"],size:"L",sug:30,ice:"less",tops:["pearls"]},"L, green, thirty, less ice, pearls. Go, go, go!","大杯，绿茶，三分糖，少冰，珍珠。快快快！"),{pat:28});
+    if(r.score===3&&!r.late){G.f.leo++;await say(who,"Fast AND right? You're my new favorite shop.","又快又对？你们是我新的最爱。",1)}
+  }else if(G.day===3){
+    await say(who,"Me again! The usual! I've got four orders waiting!","又是我！老样子！还有四单在等我！",1);
+    const r=await takeOrder(G.cur,ord({base:["green"],size:"L",sug:30,ice:"less",tops:["pearls"]},"The usual! You know it! Quick!","老样子！你懂的！快！"),{pat:32,noReact:1});
+    if(r.score===3){G.f.leo++;await say(who,"Perfect! See? Loyal customer, loyal shop.","完美！看吧？忠实顾客，靠谱的店。",1)}else await say(who,"Oh no, that's not my usual... no time, I'll take it!","嗯，这不是我平常喝的……没时间了，拿走了！",1);
+  }else if(G.day===4){
+    await say(who,"Hi. No rush today, for once.","嘿。今天终于不赶了。",1);
+    await say(who,"I quit the delivery job. I start at a bank on Monday. Suit and tie, can you believe it?","我把外卖的工作辞了。周一去银行上班。西装领带，你敢信？",1);
+    const c=await choose([["Congratulations! I'll miss the fast orders.","恭喜！我会想念那些快单的。","miss"],["A bank? You'll be bored!","银行？你会无聊死的！","joke"]]);
+    if(c==="miss"){G.f.leo++;await say(who,"Don't worry, I'll still come by. Slowly, this time.","放心，我还会来的。这次慢慢来。",1)}else await say(who,"Probably! But my mom is very happy.","大概吧！不过我妈特别高兴。",1);
+    await takeOrder(G.cur,randomOrder());
+  }
+  await leave();
+}
+async function sophie(){
+  const L=LOOK.sophie,who="Sophie";await enter(L,who);
+  if(G.day===2){
+    await say(who,"Hi! I review drink shops online. I have forty thousand fans.","嗨！我在网上点评饮品店。我有四万粉丝。",1.4);
+    await say(who,"I'm a little picky. Just so you know.","我有点挑剔。先跟你说一声。",1.4);
+    const r=await takeOrder(G.cur,ord({base:["mango"],size:"L",sug:0,ice:"reg",tops:["coco"]},"A large lemon tea, no sugar — I'm on a strict diet — regular ice, and coconut jelly. Nothing else. It has to look perfect.","一杯大杯柠檬茶，无糖——我在严格节食——正常冰，加椰果。别的都不要。必须看起来很完美。"),{noReact:1});
+    G.flag.sophie=r.score;
+    if(r.score===3){G.f.sophie+=2;G.rep=Math.min(5,G.rep+.4);sfx("yay");await say(who,"Oh. My. Goodness. This is perfect! I'm posting it right now. Five stars!","天哪。太完美了！我现在就发。五星！",1.4)}
+    else{G.rep=Math.max(1,G.rep-.3);await say(who,"Well. This isn't what I asked for. Three stars. Sorry, I have to be honest with my fans.","嗯。这不是我点的。三星。抱歉，我得对粉丝诚实。",1.4)}
+    hud();
+  }else if(G.day===4){
+    await say(who,G.flag.sophie===3?"Hi! My post about you got ten thousand likes. You're famous now!":"Hi. I came back to give you a second chance.",G.flag.sophie===3?"嗨！我发的你们家那条有一万个赞。你们出名啦！":"嗨。我回来再给你们一次机会。",1.4);
+    const r=await takeOrder(G.cur,ord({base:["oolong"],size:"M",sug:30,ice:"none",tops:["pudding","bean"]},"Today I want something fancy. A medium oolong, slightly sweet, no ice, with pudding AND red beans.","今天我想要点花哨的。一杯中杯乌龙，微甜，去冰，加布丁和红豆。"));
+    if(r.score===3)G.f.sophie++;
+  }
+  await leave();
+}
+async function sam(){
+  const L=LOOK.sam,who="Sam";
+  if(G.day===3){await enter(LOOK.hana,"Hana");
+    await say("Hana","Hi! I work at the flower shop next door. I'm Hana.","嗨！我在隔壁花店上班。我叫 Hana。",1.2);
+    await takeOrder(G.cur,ord({base:["oolong"],size:"M",sug:50,ice:"none",tops:["bean"]},"A medium oolong tea, half sugar, no ice, with red beans, please. That's my favorite.","一杯中杯乌龙茶，半糖，去冰，加红豆。这是我最喜欢的。"));
+    await say("Hana","Can I ask you something? There's a guy who buys two green teas here every day. Then he gives one to me.","能问你个事吗？有个男生每天在这儿买两杯绿茶，然后给我一杯。",1.2);
+    await say("Hana","He's really nice... but I don't like green tea at all. Please don't tell him!","他人真的很好……可我一点都不喜欢绿茶。千万别告诉他！",1.2);
+    G.flag.hana=1;await leave();return}
+  await enter(L,who);
+  if(G.day===0){
+    await say(who,"Oh, hi. Two drinks, please. One is for... a friend.","呃，你好。两杯饮料。一杯是给……一个朋友的。",.9);
+    const r=await takeOrder(G.cur,ord({base:["green"],size:"M",sug:0,ice:"less",tops:[]},"Two medium green teas. No sugar, less ice, nothing extra. Thanks.","两杯中杯绿茶。无糖，少冰，不加小料。谢谢。"));
+  }else if(G.day===1){
+    await say(who,"Hi again. Same as yesterday, please. Two of them.","又来了。跟昨天一样，两杯。",.9);
+    const r=await takeOrder(G.cur,ord({base:["green"],size:"M",sug:0,ice:"less",tops:[]},"Same as yesterday. You remember, right?","跟昨天一样。你记得的吧？"),{noReact:1});
+    if(r.score===3){G.f.sam++;await say(who,"Oh, you remembered. Thanks.","哇，你记得。谢谢。",.9)}else await say(who,"Oh... that's not it, but it's okay.","哦……不是这个，不过没关系。",.9);
+  }else if(G.day===2){
+    await say(who,"Can I ask for some advice? The second drink is for Hana. She works at the flower shop next door.","能跟你要点建议吗？第二杯是给 Hana 的。她在隔壁花店上班。",.9);
+    await say(who,"I want to ask her out. But I'm so nervous. What should I do?","我想约她出去。可我好紧张。我该怎么办？",.9);
+    const c=await choose([["Just be honest. Tell her how you feel.","诚实一点。告诉她你的感受。","honest"],["Find out what she really likes first.","先弄清楚她真正喜欢什么。","learn"],["Wait. Maybe she'll ask you first.","等着吧。说不定她会先约你。","wait"]]);
+    if(c!=="wait")G.f.sam++;G.flag.samAdv=c;
+    await say(who,c==="wait"?"Wait... yeah. That's easier. Okay.":"Okay... okay. I'll try. On Friday.",c==="wait"?"等……对。这样比较轻松。好吧。":"好……好。我试试。周五。",.9);
+    await takeOrder(G.cur,ord({base:["green"],size:"M",sug:0,ice:"less",tops:[]},"Two green teas, the usual, please.","两杯绿茶，老样子。"));
+  }else if(G.day===4){
+    await say(who,"Today's the day. I'm going to talk to Hana.","就是今天了。我要去跟 Hana 说。",.9);
+    await say(who,"I'll bring her a drink, like always. Should I get the usual green tea?","我还是像往常一样给她带一杯。还是拿平常的绿茶吗？",.9);
+    const c=await choose([["Yes, the usual is fine.","对，老样子就好。","green"],["Let me make her something else.","让我给她做杯别的。","other"]]);
+    if(c==="other"){
+      await say(who,"Something else? Okay... I trust you.","别的？好吧……我相信你。",.9);
+      const r=await takeOrder(G.cur,ord({base:["oolong"],size:"M",sug:50,ice:"none",tops:["bean"]},"Please make Hana's drink. Whatever you think she likes.","请给 Hana 做一杯。你觉得她喜欢什么就做什么。"),{pat:100,noReact:1});
+      G.flag.samWin=r.score>=2;if(r.score>=2)G.f.sam++;
+    }else{await takeOrder(G.cur,ord({base:["green"],size:"M",sug:0,ice:"less",tops:[]},"One green tea, the usual.","一杯绿茶，老样子。"),{noReact:1});G.flag.samWin=false}
+    await say(who,"Wish me luck!","祝我好运！",.9);
+  }
+  await leave();
+}
+
+/* ===== days ===== */
+const DAYS=[[mei,"r",chen,"r",sam,"r"],["r",leo,sam,"r","r"],[mei,"r",sophie,sam,"r"],[leo,"r",sam,chen,"r"],["r",mei,leo,sophie,sam,"r"]];
+const MORNING=[["Your aunt's milk tea shop is yours for a week. Make the drinks. Listen carefully. Smile.","姑姑的奶茶店这一周交给你了。做饮料，认真听，记得微笑。"],["Tuesday. New on the menu: pudding!","周二。新上架：布丁！"],["Wednesday. New today: lemon tea and coconut jelly!","周三。今天新上：柠檬茶和椰果！"],["Thursday. New today: oolong tea and red beans!","周四。今天新上：乌龙茶和红豆！"],["Friday. The last day of the week. Make it count.","周五。这周最后一天。好好干。"]];
+async function day(n){
+  G.day=n;hud();drawScene();
+  await modal(`<div style="text-align:center"><div class="f" style="color:var(--dim)">DAY ${n+1} / 5</div><div class="title f" style="font-size:44px">${["Monday","Tuesday","Wednesday","Thursday","Friday"][n]}</div><p>${mark(MORNING[n][0])}</p><p class="hint">${MORNING[n][1]}</p></div><div class="row"><button class="btn pri" data-close style="flex:1">开门营业</button></div>`);
+  for(const c of DAYS[n]){if(c==="r")await randomCustomer();else await c()}
+  sfx("bell");await modal(`<h2>打烊啦 · Closing time</h2><p>今天收入 <b>$${G.cash}</b>（累计）· 口碑 <b>⭐ ${G.rep.toFixed(1)}</b></p><p class="hint">做完美的饮料会让口碑上升。</p><div class="row"><button class="btn pri" data-close>${n<4?"明天见":"看看这一周"}</button></div>`);
+  if(n<4)return day(n+1);return ending();
+}
+
+/* ===== endings ===== */
+function friends(){return Object.values(G.f).filter(v=>v>=2).length}
+const END={best:["The Corner Everyone Loves","大家都爱的街角小店"],good:["A Good Week","不错的一周"],quiet:["Quiet Street","安静的街"]};
+const ORDER=["quiet","good","best"];
+async function ending(){
+  G.over=true;const fr=friends();const id=G.rep>=4.2&&fr>=4?"best":G.rep>=3.4||fr>=3?"good":"quiet";
+  const got=LS.get("end",[]);if(!got.includes(id)){got.push(id);LS.set("end",got)}
+  const L=[];const b=(e,z)=>L.push([e,z]);
+  b("On Saturday morning, your aunt comes back from her trip.","周六早上，姑姑旅行回来了。");
+  if(id==="best")b("She can't believe it. There is a line outside the door, and everyone knows your name.","她不敢相信。门外排着队，每个人都知道你的名字。");
+  else if(id==="good")b("She looks at the money and smiles. \"Not bad at all. Want to help again next summer?\"","她看了看收入，笑了。“相当不错嘛。明年暑假还来帮忙吗？”");
+  else b("The street is quiet. \"Running a shop is hard,\" she says kindly. \"You tried. That matters.\"","街上很安静。“开店不容易，”她温和地说，“你努力过了，这很重要。”");
+  if(G.f.mei>=2)b("Mei sends a photo of her exam score with ten little hearts.","Mei 发来了考试成绩的照片，后面跟着十个小爱心。");
+  if(G.f.chen>=2)b("Mr. Chen leaves a small card on the counter: \"For the kind young lady. — Chen\"","陈先生在柜台上留了一张小卡片：“给那位善良的小姑娘。——陈”");
+  if(G.f.leo>=2)b("Leo comes by in a suit. He walks in slowly, and orders the usual.","Leo 穿着西装来了。他慢慢走进来，点了老样子。");
+  if(G.f.sophie>=2)b("Sophie's video about the shop is everywhere. \"Best little milk tea shop in town!\"","Sophie 拍的小店视频到处都是。“城里最好的小奶茶店！”");
+  if(G.flag.samWin)b("Through the window, you see Sam and Hana laughing, each holding an oolong tea.","透过窗户，你看到 Sam 和 Hana 在笑，每人手里拿着一杯乌龙茶。");
+  else b("Sam still buys two green teas every day. One of them always comes back full.","Sam 还是每天买两杯绿茶。其中一杯总是原封不动地回来。");
+  const words=[...G.words].slice(0,28);
+  await modal(`<div class="end"><p class="hint" style="margin:0">ENDING ${ORDER.indexOf(id)+1} / 3</p><h2 class="f" style="font-size:26px;margin:2px 0;color:var(--pink)">${END[id][0]}</h2><p class="hint" style="margin-top:0">${END[id][1]}</p>${L.map(l=>`<p class="e">${mark(l[0])}</p><p class="z">${l[1]}</p>`).join("")}
+  <p class="hint" style="margin-top:14px">这一周：做了 ${G.served} 杯，其中 ${G.perfect} 杯完美。</p>
+  <h3 style="margin:14px 0 4px;font-size:15px">这周遇到的四级词</h3><div style="display:flex;flex-wrap:wrap;gap:6px">${words.map(w=>`<span class="pill" style="font-size:12.5px">${w} <span class="hint">${WORDS[w]}</span></span>`).join("")||"—"}</div>
+  <div class="row"><button class="btn pri" data-close="again">再开一周</button><button class="btn" data-close="title">回标题</button></div></div>`).then(v=>{newGame();hud();drawScene();if(v==="again")start();else title()});
+}
+
+/* ===== shell ===== */
+function settings(){const row=(k,t)=>`<div class="tog"><span>${t}</span><button class="sw ${SET[k]?"on":""}" data-k="${k}"></button></div>`;
+  return modal(`<h2>设置</h2>${row("sfx","音效")}${row("voice","自动朗读顾客的话")}${row("zh","字幕默认显示中文")}<p class="hint">建议先不看中文，听不懂再点「中文」。</p><div class="row"><button class="btn pri" data-close>好</button></div>`,m=>m.querySelectorAll(".sw").forEach(b=>b.onclick=()=>{const k=b.dataset.k;SET[k]=!SET[k];b.classList.toggle("on",SET[k]);LS.set("set",SET);if(k==="sfx"&&master)master.gain.value=SET.sfx?.8:0;if(k==="voice"&&!SET.voice&&tts)tts.cancel()}))}
+$("#set").onclick=()=>{ac();settings()};
+function title(){const got=LS.get("end",[]);
+  modal(`<div style="text-align:center"><div class="title f">Boba Days</div><p class="hint" style="font-size:14px;margin:6px 0 0">奶茶店的一周 · 轻松 · 英文字幕</p></div>
+  <p style="margin-top:14px">姑姑出门旅行，把街角的奶茶店交给你看一周。</p>
+  <p>听懂顾客的英文点单，选茶底、杯型、糖度、冰量和小料，做出他们想要的那一杯。有几位常客，每天都会来。</p>
+  <p class="hint">玩法：顾客说完就可以开始做，听不清点「🔁 再听一遍」。做好了点「Serve」。大约 20–30 分钟。</p>
+  <div class="gal">${ORDER.map((id,i)=>got.includes(id)?`<div><b>${END[id][0]}</b>${END[id][1]}</div>`:`<div class="lock"><b>???</b>结局 ${i+1}</div>`).join("")}</div>
+  <div class="row"><button class="btn pri" data-close="go" style="flex:1;font-size:17px">开店</button><button class="btn" id="ts">设置</button></div>
+  <p class="hint" style="text-align:center"><a href="../" style="color:var(--dim)">← 回到游戏大厅</a></p>`,m=>{m.querySelector("#ts").onclick=()=>settings().then(title)}).then(v=>{if(v==="go")start()})}
+function start(){ac();day(0).catch(e=>console.error(e))}
+newGame();hud();drawScene();bench(false);G.drink=blank();drawCup();
+SUB.innerHTML='<div class="hint">欢迎光临。</div>';
+setInterval(()=>{if(G){G.t=(G.t||0)+.1;if(G.cur)drawScene()}},100);
+title();
+</script>
+</body>
+</html>
